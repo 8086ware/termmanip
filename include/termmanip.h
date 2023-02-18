@@ -16,4 +16,8 @@ typedef struct _Tm_window {
 	int content_len;
 } Tm_window;
 
+void tmgscrsize(int* x, int* y);
+void tmsscrsize(int x, int y);
+
 #endif
+
