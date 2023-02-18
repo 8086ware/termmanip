@@ -24,4 +24,12 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	return win;
 }
 
+void tm_get_winsize(struct Window* win, int* columns, int* rows) {
+	*columns = win->columns;
+	*rows = win->rows;
+}
 
+void tm_get_winpos(struct Window* win, int* position_x, int* position_y) {
+	*position_x = win->position_x;
+	*position_y = win->position_y;
+}
