@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include <sys/ioctl.h>
 
-void tmgscrsize(int* x, int* y) {
+void tm_get_scrsize(int* x, int* y) {
 	struct winsize ws;
 
 	ioctl(1, TIOCGWNSZ, &ws);
@@ -10,7 +10,7 @@ void tmgscrsize(int* x, int* y) {
 	*y = ws.ws_row;
 }
 
-void tmsscrsize(int x, int y) {
+void tm_set_scrsize(int x, int y) {
 	struct winsize ws;
 
 	ws.ws_col = x;
