@@ -29,6 +29,7 @@ else
 endif
 
 OBJECTS=$(OBJ_DIR)/exit_log.o \
+		$(OBJ_DIR)/window.o \
 
 all: make_dirs $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -36,6 +37,7 @@ $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
+$(OBJ_DIR)/window.o: $(SRC_DIR)/window.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
