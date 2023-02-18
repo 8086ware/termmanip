@@ -1,6 +1,9 @@
 #ifndef TERMMANIP_H
 #define TERMMANIP_H
 
+#define TM_WIN_NULL 1
+#define TM_WIN_INVALID_DIMENSIONS 2
+
 #include <wchar.h>
 
 typedef struct _Tm_window {
