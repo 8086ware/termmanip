@@ -37,12 +37,21 @@ $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
-$(OBJ_DIR)/window.o: $(SRC_DIR)/window.c
+$(OBJ_DIR)/window.o: $(SRC_DIR)/window/window.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
 
-.PHONY: clean make_dirs
+.PHONY: clean make_dirs test install uninstall
+
+uninstall:
+	$(RM) /usr/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/include/termmanip.h
+
+install:
+	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
+
+test:
+	$(MAKE) && $(MAKE) install && cd test && (MAKE) && $(MAKE) run
 
 make_dirs:
 	$(MD) $(BUILD_DIR) $(OBJ_DIR)
