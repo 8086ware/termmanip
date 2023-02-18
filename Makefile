@@ -51,7 +51,7 @@ install:
 	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
 
 test:
-	$(MAKE) && $(MAKE) install && cd test && (MAKE) && $(MAKE) run
+	$(MAKE) && sudo $(MAKE) install && cd test && $(MAKE) && $(MAKE) run
 
 make_dirs:
 	$(MD) $(BUILD_DIR) $(OBJ_DIR)
