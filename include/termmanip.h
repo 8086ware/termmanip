@@ -22,8 +22,11 @@ typedef struct _Tm_window {
 void tm_get_scrsize(int* x, int* y);
 void tm_set_scrsize(int x, int y);
 
-void tm_get_winsize(struct Window* win, int* columns, int* rows);
-void tm_get_winsize(struct Window* win, int* position_x, int* position_y);
+void tm_get_winsize(Tm_window* win, int* columns, int* rows);
+void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
 
+void tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
+
+void tm_win_update(Tm_window* win);
 #endif
 
