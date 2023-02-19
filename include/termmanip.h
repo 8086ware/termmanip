@@ -3,8 +3,12 @@
 
 #define TM_WIN_NULL 1
 #define TM_WIN_INVALID_DIMENSIONS 2
+#define TM_INVALID_CURSOR 3
 
-#include <wchar.h>
+#define TM_ESC_ENTER_ALT_SCREEN "\x1b[?1049h"
+#define TM_ESC_LEAVE_ALT_SCREEN "\x1b[?1049l"
+
+#include <stddef.h>
 
 typedef struct _Tm_window {
 	int position_x, position_y, columns, rows;
@@ -15,9 +19,12 @@ typedef struct _Tm_window {
 
 	int children_amount;
 
-	wchar_t* contents;
+	char* contents;
 	int content_len;
 } Tm_window;
+
+Tm_window* tm_window(int x, int y, int columns, int rows);
+void tm_win_free(Tm_window* win);
 
 void tm_get_scrsize(int* x, int* y);
 void tm_set_scrsize(int x, int y);
@@ -28,5 +35,15 @@ void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
 
 void tm_win_update(Tm_window* win);
+
+int tm_win_print_str(Tm_window* win, char* text);
+int tm_win_print_ch(Tm_window* win, char ch);
+
+int tm_win_cursor(Tm_window* win, int x, int y);
+
+void tm_init();
+void tm_exit();
+
+void tm_win_border(Tm_window* win);
 #endif
 
