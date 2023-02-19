@@ -45,5 +45,7 @@ void tm_init();
 void tm_exit();
 
 void tm_win_border(Tm_window* win);
+void tm_win_parent(Tm_window* parent, Tm_window* child);
+
 #endif
 

@@ -40,6 +40,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/init.o \
 		$(OBJ_DIR)/exit.o \
 		$(OBJ_DIR)/border.o \
+		$(OBJ_DIR)/parent.o \
 
 
 all: make_dirs $(BUILD_DIR)/$(OUTPUT_NAME)
@@ -62,6 +63,7 @@ $(OBJ_DIR)/getsize.o: $(SRC_DIR)/window/getsize.c
 $(OBJ_DIR)/init.o: $(SRC_DIR)/init.c
 $(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
 $(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
+$(OBJ_DIR)/parent.o: $(SRC_DIR)/window/parent.c
 
 $(OBJECTS):
 	@echo "CC $<"
