@@ -25,7 +25,6 @@ ifeq ($(BUILD_TYPE),debug)
 	OUTPUT_NAME=libtermmanipdebug.a
 else
 	CFLAGS+=-O3
-	CFLAGS+=-DDEBUG
 endif
 
 OBJECTS=$(OBJ_DIR)/append_win.o \
@@ -41,6 +40,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit.o \
 		$(OBJ_DIR)/border.o \
 		$(OBJ_DIR)/parent.o \
+		$(OBJ_DIR)/clear.o \
 
 
 all: make_dirs $(BUILD_DIR)/$(OUTPUT_NAME)
@@ -64,6 +64,7 @@ $(OBJ_DIR)/init.o: $(SRC_DIR)/init.c
 $(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
 $(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
 $(OBJ_DIR)/parent.o: $(SRC_DIR)/window/parent.c
+$(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 
 $(OBJECTS):
 	@echo "CC $<"

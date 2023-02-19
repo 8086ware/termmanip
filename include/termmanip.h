@@ -4,6 +4,7 @@
 #define TM_WIN_NULL 1
 #define TM_WIN_INVALID_DIMENSIONS 2
 #define TM_INVALID_CURSOR 3
+#define TM_WIN_CONTENTS_NULL 4
 
 #define TM_ESC_ENTER_ALT_SCREEN "\x1b[?1049h"
 #define TM_ESC_LEAVE_ALT_SCREEN "\x1b[?1049l"
@@ -46,6 +47,8 @@ void tm_exit();
 
 void tm_win_border(Tm_window* win);
 void tm_win_parent(Tm_window* parent, Tm_window* child);
+
+int tm_win_clear(Tm_window* win);
 
 #endif
 
