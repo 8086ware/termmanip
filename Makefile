@@ -28,18 +28,43 @@ else
 	CFLAGS+=-DDEBUG
 endif
 
-OBJECTS=$(OBJ_DIR)/exit_log.o \
+OBJECTS=$(OBJ_DIR)/append_win.o \
+		$(OBJ_DIR)/exit_log.o \
+		$(OBJ_DIR)/screen_size.o \
 		$(OBJ_DIR)/window.o \
+		$(OBJ_DIR)/print.o \
+		$(OBJ_DIR)/modify.o \
+		$(OBJ_DIR)/update.o \
+		$(OBJ_DIR)/cursor.o \
+		$(OBJ_DIR)/getsize.o \
+		$(OBJ_DIR)/init.o \
+		$(OBJ_DIR)/exit.o \
+		$(OBJ_DIR)/border.o \
+
 
 all: make_dirs $(BUILD_DIR)/$(OUTPUT_NAME)
 
+.SILENT:
+
 $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
+	@echo "Linking Library $@"
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
+$(OBJ_DIR)/screen_size.o: $(SRC_DIR)/screen_size.c
+$(OBJ_DIR)/append_win.o: $(SRC_DIR)/window/append_win.c
 $(OBJ_DIR)/window.o: $(SRC_DIR)/window/window.c
+$(OBJ_DIR)/print.o: $(SRC_DIR)/window/print.c
+$(OBJ_DIR)/modify.o: $(SRC_DIR)/window/modify.c
+$(OBJ_DIR)/update.o: $(SRC_DIR)/window/update.c
+$(OBJ_DIR)/cursor.o: $(SRC_DIR)/window/cursor.c
+$(OBJ_DIR)/getsize.o: $(SRC_DIR)/window/getsize.c
+$(OBJ_DIR)/init.o: $(SRC_DIR)/init.c
+$(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
+$(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
 
 $(OBJECTS):
+	@echo "CC $<"
 	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: clean make_dirs test install uninstall
@@ -48,10 +73,10 @@ uninstall:
 	$(RM) /usr/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/include/termmanip.h
 
 install:
-	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
+	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/local/include/
 
 test:
-	$(MAKE) && sudo $(MAKE) install && cd test && $(MAKE) && $(MAKE) run
+	$(MAKE) && sudo $(MAKE) install && cd test && $(MAKE) clean && $(MAKE) && $(MAKE) run
 
 make_dirs:
 	$(MD) $(BUILD_DIR) $(OBJ_DIR)
