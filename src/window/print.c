@@ -5,7 +5,7 @@
 int check_wrap_line(Tm_window* win) {
 	int ret = 0;
 
-	if(win->cursor_x > win->columns) {
+	if(win->cursor_x > win->columns - 1) {
 		if((ret = tm_win_cursor(win, 0, win->cursor_y + 1))) {
 			return ret;
 		}
