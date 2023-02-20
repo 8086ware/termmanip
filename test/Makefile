@@ -1,5 +1,5 @@
 test: test.c
-	gcc $^ -o $@ -ltermmanipdebug
+	gcc $^ -o $@ -L. -ltermmanipdebug
 
 clean:
 	$(RM) test

@@ -1,4 +1,4 @@
-#include <termmanip.h>
+#include "termmanip.h"
 
 int main(void) {
 	tm_init();

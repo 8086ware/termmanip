@@ -79,7 +79,7 @@ install:
 	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/local/include/
 
 test:
-	$(MAKE) && sudo $(MAKE) install && cd test && $(MAKE) clean && $(MAKE) && $(MAKE) run
+	$(MAKE) && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) clean && $(MAKE) && $(MAKE) run
 
 make_dirs:
 	$(MD) $(BUILD_DIR) $(OBJ_DIR)
