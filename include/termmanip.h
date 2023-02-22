@@ -24,6 +24,8 @@ typedef struct _Tm_window {
 	int content_len;
 } Tm_window;
 
+extern Tm_window* default_win;
+
 Tm_window* tm_window(int x, int y, int columns, int rows);
 void tm_win_free(Tm_window* win);
 
@@ -50,5 +52,10 @@ void tm_win_parent(Tm_window* parent, Tm_window* child);
 
 int tm_win_clear(Tm_window* win);
 
+#define tm_update() tm_win_update(default_win);
+#define tm_print_str(text) tm_win_print_str(default_win, text);
+#define tm_print_ch(ch) tm_win_print_ch(default_win, ch)
+#define tm_cursor(x, y) tm_win_cursor(default_win, x, y);
+#define tm_update() tm_win_update(default_win);
 #endif
 

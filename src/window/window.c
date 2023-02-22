@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "exit_log.h"
 
+Tm_window* default_win = NULL;
+
 Tm_window* tm_window(int x, int y, int columns, int rows) {
 	Tm_window* win = malloc(sizeof(Tm_window));
 
