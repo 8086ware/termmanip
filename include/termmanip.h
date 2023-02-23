@@ -9,6 +9,44 @@
 #define TM_ESC_ENTER_ALT_SCREEN "\x1b[?1049h"
 #define TM_ESC_LEAVE_ALT_SCREEN "\x1b[?1049l"
 
+#define TM_ATTRIB_FG_BLACK 30
+#define TM_ATTRIB_FG_RED 31
+#define TM_ATTRIB_FG_YELLOW 32
+#define TM_ATTRIB_FG_GREEN 33
+#define TM_ATTRIB_FG_BLUE 34
+#define TM_ATTRIB_FG_MAGENTA 35
+#define TM_ATTRIB_FG_CYAN 36
+#define TM_ATTRIB_FG_WHITE 37
+
+#define TM_ATTRIB_BG_BLACK 40
+#define TM_ATTRIB_BG_RED 41
+#define TM_ATTRIB_BG_YELLOW 42
+#define TM_ATTRIB_BG_GREEN 43
+#define TM_ATTRIB_BG_BLUE 44
+#define TM_ATTRIB_BG_MAGENTA 45
+#define TM_ATTRIB_BG_CYAN 46
+#define TM_ATTRIB_BG_WHITE 47
+
+#define TM_ATTRIB_FG_BRIGHTBLACK 90
+#define TM_ATTRIB_FG_BRIGHTRED 91
+#define TM_ATTRIB_FG_BRIGHTYELLOW 92
+#define TM_ATTRIB_FG_BRIGHTGREEN 93
+#define TM_ATTRIB_FG_BRIGHTBLUE 94
+#define TM_ATTRIB_FG_BRIGHTMAGENTA 95
+#define TM_ATTRIB_FG_BRIGHTCYAN 96
+#define TM_ATTRIB_FG_BRIGHTWHITE 97
+
+#define TM_ATTRIB_BG_BRIGHTBLACK 100
+#define TM_ATTRIB_BG_BRIGHTRED 101
+#define TM_ATTRIB_BG_BRIGHTYELLOW 102
+#define TM_ATTRIB_BG_BRIGHTGREEN 103
+#define TM_ATTRIB_BG_BRIGHTBLUE 104
+#define TM_ATTRIB_BG_BRIGHTMAGENTA 105
+#define TM_ATTRIB_BG_BRIGHTCYAN 106
+#define TM_ATTRIB_BG_BRIGHTWHITE 107
+
+#define TM_ATTRIB_RESET 0
+
 #include <stddef.h>
 
 typedef struct _Tm_window {
@@ -52,14 +90,18 @@ void tm_win_parent(Tm_window* parent, Tm_window* child);
 
 int tm_win_clear(Tm_window* win);
 
-int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch);
+int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, int attrib);
+
+void tm_win_attrib(Tm_window* win, int attrib);
+
 
 #define tm_update() tm_win_update(default_win);
 #define tm_print_str(text) tm_win_print_str(default_win, text);
 #define tm_print_ch(ch) tm_win_print_ch(default_win, ch)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y);
 #define tm_update() tm_win_update(default_win);
-#define tm_fill(from_x, from_y, to_x, to_y, ch) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch)
+#define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
+#define tm_attrib(attrib) tm_win_attrib(default_win, attrib);
 
 #endif
 
