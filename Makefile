@@ -43,7 +43,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/clear.o \
 
 
-all: make_dirs $(BUILD_DIR)/$(OUTPUT_NAME)
+all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
 .SILENT:
 
@@ -81,8 +81,11 @@ install:
 test:
 	$(MAKE) && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) clean && $(MAKE) && $(MAKE) run
 
-make_dirs:
-	$(MD) $(BUILD_DIR) $(OBJ_DIR)
+$(BUILD_DIR):
+	$(MD) $(BUILD_DIR)
+
+$(OBJ_DIR):
+	$(MD) $(OBJ_DIR)
 
 clean:
 	$(RM) $(OBJ_DIR) $(BUILD_DIR)
