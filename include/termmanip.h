@@ -94,6 +94,7 @@ int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char
 
 void tm_win_attrib(Tm_window* win, int attrib);
 
+void tm_win_background(Tm_window* win, int attrib);
 
 #define tm_update() tm_win_update(default_win);
 #define tm_print_str(text) tm_win_print_str(default_win, text);
@@ -102,6 +103,6 @@ void tm_win_attrib(Tm_window* win, int attrib);
 #define tm_update() tm_win_update(default_win);
 #define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
 #define tm_attrib(attrib) tm_win_attrib(default_win, attrib);
-
+#define tm_background(attrib) tm_win_background(default_win, attrib);
 #endif
 
