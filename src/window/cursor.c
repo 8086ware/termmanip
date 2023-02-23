@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
-	if(x < 0 || y < 0 || x > win->columns || y > win->rows) {
+	if(x < 0 || y < 0 || x >= win->columns || y >= win->rows) {
 		return TM_INVALID_CURSOR;
 	}
 
