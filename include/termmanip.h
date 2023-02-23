@@ -52,10 +52,14 @@ void tm_win_parent(Tm_window* parent, Tm_window* child);
 
 int tm_win_clear(Tm_window* win);
 
+int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch);
+
 #define tm_update() tm_win_update(default_win);
 #define tm_print_str(text) tm_win_print_str(default_win, text);
 #define tm_print_ch(ch) tm_win_print_ch(default_win, ch)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y);
 #define tm_update() tm_win_update(default_win);
+#define tm_fill(from_x, from_y, to_x, to_y, ch) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch)
+
 #endif
 

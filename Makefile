@@ -41,7 +41,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/border.o \
 		$(OBJ_DIR)/parent.o \
 		$(OBJ_DIR)/clear.o \
-
+		$(OBJ_DIR)/fill.o \
 
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -65,6 +65,7 @@ $(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
 $(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
 $(OBJ_DIR)/parent.o: $(SRC_DIR)/window/parent.c
 $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
+$(OBJ_DIR)/fill.o: $(SRC_DIR)/window/fill.c
 
 $(OBJECTS):
 	@echo "CC $<"
@@ -79,7 +80,7 @@ install:
 	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/local/include/
 
 test:
-	$(MAKE) && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) clean && $(MAKE) && $(MAKE) run
+	$(MAKE) && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
 
 $(BUILD_DIR):
 	$(MD) $(BUILD_DIR)
