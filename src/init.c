@@ -46,6 +46,7 @@ void tm_init() {
 	append_win(default_win, "\x1b[2J");
 
 	tm_win_cursor(default_win, 0, 0);
+	tm_update();
 	tm_echo(0);
 }
 
