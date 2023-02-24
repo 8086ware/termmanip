@@ -44,6 +44,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/fill.o \
 		$(OBJ_DIR)/attrib.o \
 		$(OBJ_DIR)/background.o \
+		$(OBJ_DIR)/echo.o \
 
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -70,6 +71,7 @@ $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/fill.o: $(SRC_DIR)/window/fill.c
 $(OBJ_DIR)/attrib.o: $(SRC_DIR)/window/attrib.c
 $(OBJ_DIR)/background.o: $(SRC_DIR)/window/background.c
+$(OBJ_DIR)/echo.o: $(SRC_DIR)/term/echo.c
 
 $(OBJECTS):
 	@echo "CC $<"
