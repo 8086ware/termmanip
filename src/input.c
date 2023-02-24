@@ -19,4 +19,6 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 		str[i] = ch;
 		i++;
 	}
+
+	str[i] = '\0';
 }
