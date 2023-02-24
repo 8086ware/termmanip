@@ -1,5 +1,4 @@
 bin/
 test/*
-!test/test.c
 !test/Makefile
 compile_commands.json
