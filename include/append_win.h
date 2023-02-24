@@ -3,6 +3,6 @@
 
 #include "termmanip.h"
 
-void append_win(Tm_window* win, char* data);
-
+void append_win_str(Tm_window* win, char* data);
+void append_win_ch(Tm_window* win, char data);
 #endif
