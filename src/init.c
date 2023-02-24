@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include "exit_log.h"
 #include "append_win.h"
+#include "signal_handler.h"
+#include <signal.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -22,6 +24,13 @@ void tm_init() {
 	
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), console_mode);
 #endif
+	signal(SIGINT, signal_handle);
+	signal(SIGABRT, signal_handle);
+	signal(SIGSEGV, signal_handle);
+	signal(SIGTERM, signal_handle);
+	signal(SIGKILL, signal_handle);
+	signal(SIGILL, signal_handle);	
+
 	int scr_columns, scr_rows;
 
 	tm_get_scrsize(&scr_columns, &scr_rows);

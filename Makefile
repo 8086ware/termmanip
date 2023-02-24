@@ -27,7 +27,7 @@ else
 	CFLAGS+=-O3
 endif
 
-OBJECTS=$(OBJ_DIR)/append_win.o \
+OBJECTS=	$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit_log.o \
 		$(OBJ_DIR)/screen_size.o \
 		$(OBJ_DIR)/window.o \
@@ -47,6 +47,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/echo.o \
 		$(OBJ_DIR)/rawinput.o \
 		$(OBJ_DIR)/input.o \
+		$(OBJ_DIR)/signal_handler.o
 		
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -76,6 +77,7 @@ $(OBJ_DIR)/background.o: $(SRC_DIR)/window/background.c
 $(OBJ_DIR)/echo.o: $(SRC_DIR)/term/echo.c
 $(OBJ_DIR)/rawinput.o: $(SRC_DIR)/term/rawinput.c
 $(OBJ_DIR)/input.o: $(SRC_DIR)/input.c
+$(OBJ_DIR)/signal_handler.o: $(SRC_DIR)/signal_handler.c
 
 $(OBJECTS):
 	@echo "CC $<"
