@@ -100,6 +100,7 @@ void tm_echo(int state);
 void tm_rawinput(int state);
 
 char tm_input_ch();
+void tm_win_input_str(Tm_window* win, char* str, int max_size);
 
 #define tm_update() tm_win_update(default_win)
 #define tm_print_str(text) tm_win_print_str(default_win, text)
@@ -109,5 +110,6 @@ char tm_input_ch();
 #define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
 #define tm_attrib(attrib) tm_win_attrib(default_win, attrib)
 #define tm_background(attrib) tm_win_background(default_win, attrib)
+#define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #endif
 
