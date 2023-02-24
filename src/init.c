@@ -17,9 +17,9 @@ void tm_init() {
 	console_mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 	
 	SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), console_mode);
+#endif
 
 	int scr_columns, scr_rows;
-#endif
 	tm_get_scrsize(&scr_columns, &scr_rows);
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
 	write(fileno(stdout), TM_ESC_ENTER_ALT_SCREEN, strlen(TM_ESC_ENTER_ALT_SCREEN));
