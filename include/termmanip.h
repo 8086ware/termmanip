@@ -100,6 +100,7 @@ void tm_echo(int state);
 void tm_rawinput(int state);
 
 char tm_input_ch();
+void tm_win_input_str(Tm_window* win, char* str, int max_size);
 
 #define tm_update() tm_win_update(default_win);
 #define tm_print_str(text) tm_win_print_str(default_win, text);
