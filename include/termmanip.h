@@ -97,6 +97,7 @@ void tm_win_attrib(Tm_window* win, int attrib);
 void tm_win_background(Tm_window* win, int attrib);
 
 void tm_echo(int state);
+void tm_rawinput(int state);
 
 #define tm_update() tm_win_update(default_win);
 #define tm_print_str(text) tm_win_print_str(default_win, text);
