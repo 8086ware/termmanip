@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <stdlib.h>
 #include "exit_log.h"
+#include <stdlib.h>
 
 Tm_window* default_win = NULL;
 
