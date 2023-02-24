@@ -6,11 +6,11 @@ void tm_rawinput(int state) {
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
 
-	if(state <= 0) {
+	if(state > 0) {
 		term.c_lflag &= ~ICANON;
 	}
 
-	else if(state > 0) {	
+	else if(state <= 0) {	
 		term.c_lflag |= ICANON;
 	}
 
