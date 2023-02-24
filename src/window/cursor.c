@@ -20,7 +20,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 
 	sprintf(buffer, "\x1b[%d;%dH", y + win->position_y + 1, x + win->position_x + 1);
 	
-	append_win(win, buffer);
+	append_win_str(win, buffer);
 
 	return 0;
 }

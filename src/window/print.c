@@ -3,9 +3,13 @@
 #include <string.h>
 
 void handle_escape_codes(Tm_window* win, char escape) {
-	if(escape == '\n') {
+	switch(escape) {
+	case '\n': {
 		tm_win_cursor(win, 0, win->cursor_y + 1);
+		break;
 	}
+	}
+
 }
 
 int check_wrap_line(Tm_window* win) {
@@ -39,12 +43,12 @@ int tm_win_print_ch(Tm_window* win, char ch) {
 			return ret;
 	}
 	
-	if(ch == '\n') {
+	if(ch == '\n' || ch == '\b') {
 		handle_escape_codes(win, ch);
 		return 0;
 	}
 
-	append_win(win, &ch);
+	append_win_ch(win, ch);
 
 	win->cursor_x++;
 
