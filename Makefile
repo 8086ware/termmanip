@@ -49,6 +49,7 @@ OBJECTS=	$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/input.o \
 		$(OBJ_DIR)/signal_handler.o \
 		$(OBJ_DIR)/button.o \
+		$(OBJ_DIR)/dialog.o \
 		
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -80,6 +81,7 @@ $(OBJ_DIR)/rawinput.o: $(SRC_DIR)/term/rawinput.c
 $(OBJ_DIR)/input.o: $(SRC_DIR)/input.c
 $(OBJ_DIR)/signal_handler.o: $(SRC_DIR)/signal_handler.c
 $(OBJ_DIR)/button.o: $(SRC_DIR)/widgets/button.c
+$(OBJ_DIR)/dialog.o: $(SRC_DIR)/widgets/dialog.c
 
 $(OBJECTS):
 	@echo "CC $<"
