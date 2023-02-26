@@ -40,14 +40,15 @@ OBJECTS=	$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit.o \
 		$(OBJ_DIR)/border.o \
 		$(OBJ_DIR)/parent.o \
-		$(OBJ_DIR)/clear.o \
+		$(OBJ_DIR)/memclear.o \
 		$(OBJ_DIR)/fill.o \
 		$(OBJ_DIR)/attrib.o \
 		$(OBJ_DIR)/background.o \
 		$(OBJ_DIR)/echo.o \
 		$(OBJ_DIR)/rawinput.o \
 		$(OBJ_DIR)/input.o \
-		$(OBJ_DIR)/signal_handler.o
+		$(OBJ_DIR)/signal_handler.o \
+		$(OBJ_DIR)/button.o \
 		
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
@@ -70,7 +71,7 @@ $(OBJ_DIR)/init.o: $(SRC_DIR)/init.c
 $(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
 $(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
 $(OBJ_DIR)/parent.o: $(SRC_DIR)/window/parent.c
-$(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
+$(OBJ_DIR)/memclear.o: $(SRC_DIR)/window/memclear.c
 $(OBJ_DIR)/fill.o: $(SRC_DIR)/window/fill.c
 $(OBJ_DIR)/attrib.o: $(SRC_DIR)/window/attrib.c
 $(OBJ_DIR)/background.o: $(SRC_DIR)/window/background.c
