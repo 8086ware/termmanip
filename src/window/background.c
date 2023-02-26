@@ -15,7 +15,7 @@ void tm_win_background(Tm_window* win, int attrib) {
 		for(int x = 0; x < win->columns; x++) {
 			tm_win_cursor(win, x, y);
 			tm_win_attrib(win, attrib);
-			tm_win_print_ch(win, ' ');
+			append_win_ch(win, ' ');
 		}
 	}
 
