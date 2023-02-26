@@ -2,8 +2,9 @@
 #include "exit_log.h"
 #include <stdlib.h>
 
-void tm_win_parent(Tm_window* parent, Tm_window* child) {
+void tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	child->parent = parent;
+	child->child_type = type;
 	
 	parent->children = realloc(parent->children, (parent->children_amount + 1) * sizeof(Tm_window*));
 
@@ -12,6 +13,6 @@ void tm_win_parent(Tm_window* parent, Tm_window* child) {
 	}
 
 	parent->children[parent->children_amount] = child;
-
+	
 	parent->children_amount++;
 }
