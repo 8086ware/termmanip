@@ -12,10 +12,14 @@ If you want to use your own compiler set it in the Makefile.
 
 Run these commands in your shell:
 
-<code>$ git clone https://github.com/8086ware/termmanip</code>
-<code>$ cd termmanip</code>
-<code>make BUILD_TYPE=release</code>
-<code>sudo make install BUILD_TYPE=release</code>
+<code>$ git clone https://github.com/8086ware/termmanip
+</code>
+<code>$ cd termmanip
+</code>
+<code>$make BUILD_TYPE=release
+</code>
+<code>$sudo make install BUILD_TYPE=release
+</code>
 
 
 By default the build type is debug so we need to set it to release.
