@@ -27,6 +27,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->content_len = 0;
 
 	tm_win_cursor(win, 0, 0);
+	tm_win_attrib(win, TM_ATTRIB_RESET);
 
 	return win;
 }
