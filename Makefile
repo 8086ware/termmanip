@@ -79,6 +79,7 @@ $(OBJ_DIR)/echo.o: $(SRC_DIR)/term/echo.c
 $(OBJ_DIR)/rawinput.o: $(SRC_DIR)/term/rawinput.c
 $(OBJ_DIR)/input.o: $(SRC_DIR)/input.c
 $(OBJ_DIR)/signal_handler.o: $(SRC_DIR)/signal_handler.c
+$(OBJ_DIR)/button.o: $(SRC_DIR)/widgets/button.c
 
 $(OBJECTS):
 	@echo "CC $<"
