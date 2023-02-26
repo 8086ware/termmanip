@@ -6,6 +6,10 @@
 #define TM_INVALID_CURSOR 3
 #define TM_WIN_CONTENTS_NULL 4
 
+#define TM_CHILD_NONE 0
+#define TM_CHILD_NORMAL 1
+#define TM_CHILD_BUTTON 2
+
 #define TM_ESC_ENTER_ALT_SCREEN "\x1b[?1049h"
 #define TM_ESC_LEAVE_ALT_SCREEN "\x1b[?1049l"
 
