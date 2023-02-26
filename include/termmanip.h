@@ -89,6 +89,7 @@ int tm_win_print_str(Tm_window* win, char* text);
 int tm_win_print_ch(Tm_window* win, char ch);
 
 int tm_win_cursor(Tm_window* win, int x, int y);
+void tm_win_cursor_visible(Tm_window* win, int state);
 
 void tm_init();
 void tm_exit();

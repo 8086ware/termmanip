@@ -24,3 +24,14 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 
 	return 0;
 }
+
+void tm_win_cursor_visible(Tm_window* win, int state) {
+	if(state <= 0) {
+		append_win_str(win, TM_ESC_DISABLE_CURSOR, strlen(TM_ESC_DISABLE_CURSOR));
+	}
+	
+	else if(state > 0) {
+		append_win_str(win, TM_ESC_ENABLE_CURSOR, strlen(TM_ESC_ENABLE_CURSOR));
+	}
+}
+
