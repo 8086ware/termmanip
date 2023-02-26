@@ -62,6 +62,8 @@ typedef struct _Tm_window {
 	struct _Tm_window* parent;
 	struct _Tm_window** children;
 
+	int child_type;
+
 	int children_amount;
 
 	char* contents;
