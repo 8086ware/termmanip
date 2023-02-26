@@ -6,7 +6,7 @@
 void tm_win_background(Tm_window* win, int attrib) {
 	char* temp = malloc(win->content_len * sizeof(char));
 	int temp_len = win->content_len;
-	
+	int cursor_x = win->cursor_x, cursor_y = win->cursor_y;	
 	strncpy(temp, win->contents, temp_len);
 
 	tm_win_memclear(win);
@@ -20,4 +20,7 @@ void tm_win_background(Tm_window* win, int attrib) {
 	}
 
 	append_win_str(win, temp, temp_len);
+
+	win->cursor_x = cursor_x;
+	win->cursor_y = cursor_y;
 }
