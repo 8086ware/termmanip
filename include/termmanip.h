@@ -12,6 +12,8 @@
 
 #define TM_ESC_ENTER_ALT_SCREEN "\x1b[?1049h"
 #define TM_ESC_LEAVE_ALT_SCREEN "\x1b[?1049l"
+#define TM_ESC_ENABLE_CURSOR "\x1b[?25h"
+#define TM_ESC_DISABLE_CURSOR "\x1b[?25l"
 
 #define TM_ATTRIB_FG_BLACK 30
 #define TM_ATTRIB_FG_RED 31
