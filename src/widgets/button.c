@@ -42,7 +42,9 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	int option = 0;
 
 	while(1) {
-		tm_win_update(win);
+		for(int i = 0; i < button_children_amount; i++) {
+			tm_win_update(button_children[i]);
+		}
 
 		char c = tm_input_ch();
 
