@@ -1,8 +1,15 @@
 #include "termmanip.h"
 #include "append_win.h"
+#include <stdlib.h>
+#include <string.h>
 
 void tm_win_background(Tm_window* win, int attrib) {
-	int cur_x = win->cursor_x, cur_y = win->cursor_y;
+	char* temp = malloc(win->content_len * sizeof(char));
+	int temp_len = win->content_len;
+	
+	strncpy(temp, win->contents, temp_len);
+
+	tm_win_memclear(win);
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
@@ -12,5 +19,5 @@ void tm_win_background(Tm_window* win, int attrib) {
 		}
 	}
 
-	tm_win_cursor(win, cur_x, cur_y);
+	append_win_str(win, temp, temp_len);
 }
