@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-void tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...) {
+int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...) {
 	va_list option_args;
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
@@ -35,10 +35,15 @@ void tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* me
 		option_x += columns / option_amount;
 	}
 
+	va_end(option_args);
 	tm_win_update(dialog);
 
-	tm_win_button_select(dialog);
+	Tm_window* selection = tm_win_button_select(dialog);
+	for(int i = 0; i < option_amount; i++) {
+		if(selection == buttons[i]) {
+			return i;
+		}
+	}
 
-	va_end(option_args);
-
+	return -1;
 }
