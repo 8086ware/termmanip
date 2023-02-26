@@ -48,5 +48,5 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 		}
 	}
 
-	return -1;
+	return TM_DIALOG_NO_SELECT;
 }
