@@ -39,6 +39,9 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	tm_win_update(dialog);
 
 	Tm_window* selection = tm_win_button_select(dialog);
+
+	tm_win_clear(win);
+	tm_win_update(win);
 	for(int i = 0; i < option_amount; i++) {
 		if(selection == buttons[i]) {
 			return i;
