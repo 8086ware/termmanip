@@ -5,4 +5,4 @@ clean:
 	$(RM) test
 
 run:
-	gdb test
+	gdb test --eval-command run
