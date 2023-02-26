@@ -9,7 +9,7 @@ void tm_win_update(Tm_window* win) {
 		}
 	}
 
-	write(fileno(stdout), win->contents, win->content_len +  1);
+	write(fileno(stdout), win->contents, win->content_len);
 
 	tm_win_memclear(win);
 }
