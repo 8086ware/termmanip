@@ -32,8 +32,12 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 }
 
 void tm_win_free(Tm_window* win) {
+	for(int i = 0; i < win->children_amount; i++) {
+		tm_win_free(win->children[i]);
+	}
+	
+	free(win->children);
 	free(win->contents);
-	win->contents = NULL;
 	free(win);
 	win = NULL;
 }
