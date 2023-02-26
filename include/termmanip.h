@@ -115,6 +115,9 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 Tm_window* tm_win_button_select(Tm_window* win);
 
 int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...);
+
+void tm_win_clear(Tm_window* win);
+
 #define tm_update() tm_win_update(default_win)
 #define tm_print_str(text) tm_win_print_str(default_win, text)
 #define tm_print_ch(ch) tm_win_print_ch(default_win, ch)
