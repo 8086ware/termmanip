@@ -127,5 +127,10 @@ void tm_win_clear(Tm_window* win);
 #define tm_attrib(attrib) tm_win_attrib(default_win, attrib)
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
+#define tm_dialog(x, y, columns, rows, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, message, option_amount, __VA_ARGS__)
+#define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
+#define tm_button_select() tm_win_button_select(default_win);
+#define tm_clear() tm_win_clear(default_win)
+
 #endif
 
