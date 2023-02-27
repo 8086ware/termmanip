@@ -118,14 +118,14 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 void tm_win_clear(Tm_window* win);
 
-#define tm_print(text,...) tm_win_print(default_win, text, __VA_ARGS__)
+#define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
 #define tm_update() tm_win_update(default_win)
 #define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
 #define tm_attrib(attrib) tm_win_attrib(default_win, attrib)
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
-#define tm_dialog(x, y, columns, rows, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, message, option_amount, __VA_ARGS__)
+#define tm_dialog(x, y, columns, rows, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, message, option_amount, ## __VA_ARGS__)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
