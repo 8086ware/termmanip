@@ -1,4 +1,4 @@
-CC=gcc
+CC=clang
 AR=ar
 
 INCLUDES=include
@@ -27,7 +27,7 @@ else
 	CFLAGS+=-O3
 endif
 
-OBJECTS=	$(OBJ_DIR)/append_win.o \
+OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit_log.o \
 		$(OBJ_DIR)/screen_size.o \
 		$(OBJ_DIR)/window.o \
