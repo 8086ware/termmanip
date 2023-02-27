@@ -1,6 +1,9 @@
 #include "termmanip.h"
 #include "append_win.h"
 #include <string.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void handle_escape_codes(Tm_window* win, char escape) {
 	switch(escape) {
@@ -24,33 +27,33 @@ int check_wrap_line(Tm_window* win) {
 	return 0;
 }
 
-int tm_win_print_str(Tm_window* win, char* text) {
+int tm_win_print(Tm_window* win, char* fmt, ...) {
 	int ret = 0;
 
-	for(; *text!= '\0'; text++) {
-		if((ret = tm_win_print_ch(win, *text))) {
+	va_list args;
+
+	va_start(args, fmt);
+
+	char buffer[4096];
+
+	vsprintf(buffer, fmt, args);
+
+	for(int i = 0; buffer[i] != '\0'; i++) {
+		if((ret = check_wrap_line(win))) {
 			return ret;
 		}
-	}
-
-	return 0;
-}
-
-int tm_win_print_ch(Tm_window* win, char ch) {
-	int ret = 0;
-
-	if((ret = check_wrap_line(win))) {
-			return ret;
-	}
 	
-	if(ch == '\n' || ch == '\b') {
-		handle_escape_codes(win, ch);
-		return 0;
+		if(buffer[i] == '\n' || buffer[i] == '\b') {
+			handle_escape_codes(win, *buffer);
+			return 0;
+		}
+
+		append_win(win, "%c", buffer[i]);
+
+		win->cursor_x++;
 	}
 
-	append_win_ch(win, ch);
-
-	win->cursor_x++;
-
+	va_end(args);
 	return 0;
 }
+
