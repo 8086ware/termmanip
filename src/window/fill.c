@@ -1,4 +1,5 @@
 #include "termmanip.h"
+#include "append_win.h"
 
 int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, int attrib) {
 	int ret = 0;
@@ -13,9 +14,7 @@ int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char
 				return ret;
 			}
 
-			if((ret = tm_win_print_ch(win, ch))) {
-				return ret;
-			}
+			append_win(win, "%c", ch);
 		}
 	}
 

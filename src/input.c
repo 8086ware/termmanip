@@ -14,7 +14,7 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 
 	while(i != max_size && ch != '\n') {
 		ch = tm_input_ch();
-		tm_win_print_ch(win, ch);
+		tm_win_print(win, "%c", ch);
 		tm_win_update(win);
 		str[i] = ch;
 		i++;

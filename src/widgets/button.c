@@ -12,7 +12,7 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 
 	tm_win_cursor(button, columns / 2 - strlen(text) / 2, rows / 2);
 
-	tm_win_print_str(button, text);
+	tm_win_print(button, text);
 
 	return button;
 }
