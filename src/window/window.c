@@ -14,9 +14,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	int ret = 0;
 	
-	if((ret = tm_win_modify(win, x, y, columns, rows))) {
-		return (Tm_window*)ret;
-	}
+	tm_win_modify(win, x, y, columns, rows);
 
 	win->parent = NULL;
 	win->children = NULL;
@@ -33,6 +31,10 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 }
 
 void tm_win_free(Tm_window* win) {
+	if(win == NULL) {
+		return;
+	}
+
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_free(win->children[i]);
 	}
@@ -40,5 +42,4 @@ void tm_win_free(Tm_window* win) {
 	free(win->children);
 	free(win->contents);
 	free(win);
-	win = NULL;
 }
