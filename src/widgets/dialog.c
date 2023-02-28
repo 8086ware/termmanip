@@ -22,7 +22,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	x++;
 	y++;
 
-	int option_columns = columns / option_amount - 2;
+	int option_columns = columns / option_amount - 1;
 	int option_rows = rows / 4;
 	int option_x = x + 1;
 	int option_y = (rows - rows / 4) - 1;
