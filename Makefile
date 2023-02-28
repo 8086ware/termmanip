@@ -19,7 +19,7 @@ RM=rm -rf
 MD=mkdir -p
 
 ifeq ($(BUILD_TYPE),debug)
-	CFLAGS+=-g3
+	CFLAGS+=-gdwarf-5
 	CFLAGS+=-DDEBUG
 	
 	OUTPUT_NAME=libtermmanipdebug.a
@@ -54,10 +54,7 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
-.SILENT:
-
 $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
-	@echo "Linking Library $@"
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
@@ -86,7 +83,6 @@ $(OBJ_DIR)/dialog.o: $(SRC_DIR)/widgets/dialog.c
 $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 
 $(OBJECTS):
-	@echo "CC $<"
 	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: clean make_dirs test install uninstall
@@ -107,5 +103,5 @@ $(OBJ_DIR):
 	$(MD) $(OBJ_DIR)
 
 clean:
-	$(RM) $(OBJ_DIR) $(BUILD_DIR)
+	$(RM) $(OBJ_DIR) $(BUILD_DIR) && cd test/ && $(MAKE) clean
 
