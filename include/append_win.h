@@ -3,5 +3,5 @@
 
 #include "termmanip.h"
 
-void append_win(Tm_window* win, char* fmt, ...);
+int append_win(Tm_window* win, char* fmt, ...);
 #endif

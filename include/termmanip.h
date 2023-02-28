@@ -78,8 +78,8 @@ void tm_win_free(Tm_window* win);
 void tm_get_scrsize(int* x, int* y);
 void tm_set_scrsize(int x, int y);
 
-void tm_get_winsize(Tm_window* win, int* columns, int* rows);
-void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
+int tm_get_winsize(Tm_window* win, int* columns, int* rows);
+int tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
 
@@ -88,21 +88,21 @@ void tm_win_update(Tm_window* win);
 int tm_win_print(Tm_window* win, char* fmt, ...);
 
 int tm_win_cursor(Tm_window* win, int x, int y);
-void tm_win_cursor_visible(Tm_window* win, int state);
+int tm_win_cursor_visible(Tm_window* win, int state);
 
 void tm_init();
 void tm_exit();
 
-void tm_win_border(Tm_window* win);
-void tm_win_parent(Tm_window* parent, Tm_window* child, int type);
+int tm_win_border(Tm_window* win);
+int tm_win_parent(Tm_window* parent, Tm_window* child, int type);
 
 int tm_win_memclear(Tm_window* win);
 
 int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, int attrib);
 
-void tm_win_attrib(Tm_window* win, int attrib);
+int tm_win_attrib(Tm_window* win, int attrib);
 
-void tm_win_background(Tm_window* win, int attrib);
+int tm_win_background(Tm_window* win, int attrib);
 
 void tm_echo(int state);
 void tm_rawinput(int state);
@@ -115,7 +115,9 @@ Tm_window* tm_win_button_select(Tm_window* win);
 
 int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...);
 
-void tm_win_clear(Tm_window* win);
+int tm_win_clear(Tm_window* win);
+
+int tm_error();
 
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
