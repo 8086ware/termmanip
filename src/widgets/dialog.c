@@ -5,6 +5,11 @@
 int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...) {
 	va_list option_args;
 
+	if(option_amount == 0) {
+		tm_error_number = TM_DIALOG_NO_OPTIONS;
+		return TM_ERROR;
+	}
+
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
