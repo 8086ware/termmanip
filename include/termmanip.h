@@ -1,11 +1,9 @@
 #ifndef TERMMANIP_H
 #define TERMMANIP_H
 
-#define TM_WIN_NULL 1
-#define TM_WIN_INVALID_DIMENSIONS 2
-#define TM_INVALID_CURSOR 3
-#define TM_WIN_CONTENTS_NULL 4
-#define TM_DIALOG_NO_SELECT -1
+#define TM_ERROR -1
+
+#define TM_DIALOG_NO_OPTIONS 3
 
 #define TM_CHILD_NONE 0
 #define TM_CHILD_NORMAL 1
@@ -72,6 +70,7 @@ typedef struct _Tm_window {
 } Tm_window;
 
 extern Tm_window* default_win;
+extern int tm_error_number;
 
 Tm_window* tm_window(int x, int y, int columns, int rows);
 void tm_win_free(Tm_window* win);
