@@ -1,4 +1,4 @@
-CC=clang
+CC=gcc
 AR=ar
 
 INCLUDES=include
@@ -19,7 +19,7 @@ RM=rm -rf
 MD=mkdir -p
 
 ifeq ($(BUILD_TYPE),debug)
-	CFLAGS+=-gdwarf-5
+	CFLAGS+=-g
 	CFLAGS+=-DDEBUG
 	
 	OUTPUT_NAME=libtermmanipdebug.a
