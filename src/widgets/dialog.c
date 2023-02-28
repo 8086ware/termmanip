@@ -6,6 +6,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	va_list option_args;
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
+
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
 	tm_win_border(dialog);
 	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, rows / 4);
@@ -15,6 +16,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	va_start(option_args, option_amount);
 	char* options[option_amount];
+
 	columns--;
 	rows--;
 	x++;
@@ -28,10 +30,15 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	for(int i = 0; i < option_amount; i++) {
 		options[i] = va_arg(option_args, char*);
 		buttons[i] = tm_window(option_x, option_y, option_columns, option_rows);
+
 		tm_win_border(buttons[i]);
+
 		tm_win_cursor(buttons[i], option_columns / 2 - strlen(options[i]) / 2, 1);
+
 		tm_win_print(buttons[i], options[i]);
+
 		tm_win_parent(dialog, buttons[i], TM_CHILD_BUTTON);
+
 		option_x += columns / option_amount;
 	}
 
@@ -40,13 +47,15 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	Tm_window* selection = tm_win_button_select(dialog);
 
-	tm_win_clear(win);
-	tm_win_update(win);
+	tm_win_clear(dialog);
+
 	for(int i = 0; i < option_amount; i++) {
 		if(selection == buttons[i]) {
 			return i;
 		}
 	}
+
+	tm_win_free(dialog);
 
 	return TM_DIALOG_NO_SELECT;
 }
