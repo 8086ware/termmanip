@@ -12,24 +12,17 @@ void handle_escape_codes(Tm_window* win, char escape) {
 		break;
 	}
 	}
-
 }
 
 int check_wrap_line(Tm_window* win) {
-	int ret = 0;
-
 	if(win->cursor_x >= win->columns) {
-		if((ret = tm_win_cursor(win, 0, win->cursor_y + 1))) {
-			return ret;
-		}
+		tm_win_cursor(win, 0, win->cursor_y + 1);
 	}
 
 	return 0;
 }
 
 int tm_win_print(Tm_window* win, char* fmt, ...) {
-	int ret = 0;
-
 	va_list args;
 
 	va_start(args, fmt);
@@ -39,9 +32,7 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 	vsprintf(buffer, fmt, args);
 
 	for(int i = 0; buffer[i] != '\0'; i++) {
-		if((ret = check_wrap_line(win))) {
-			return ret;
-		}
+		check_wrap_line(win);
 	
 		if(buffer[i] == '\n' || buffer[i] == '\b') {
 			handle_escape_codes(win, *buffer);
@@ -54,6 +45,7 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 	}
 
 	va_end(args);
+	
 	return 0;
 }
 
