@@ -22,6 +22,8 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	va_start(option_args, option_amount);
 	char* options[option_amount];
 
+	tm_get_winsize(dialog, &columns, &rows);
+
 	columns--;
 	rows--;
 	x++;
@@ -60,7 +62,5 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 		}
 	}
 
-	tm_win_free(dialog);
-
-	return TM_DIALOG_NO_SELECT;
+	return 0;
 }
