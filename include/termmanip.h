@@ -3,7 +3,10 @@
 
 #define TM_ERROR -1
 
+#define TM_INVALID_CURSOR 1
+#define TM_INVALID_DIMENSIONS 2
 #define TM_DIALOG_NO_OPTIONS 3
+#define TM_WIN_NULL 4
 
 #define TM_CHILD_NONE 0
 #define TM_CHILD_NORMAL 1
@@ -78,8 +81,8 @@ void tm_win_free(Tm_window* win);
 void tm_get_scrsize(int* x, int* y);
 void tm_set_scrsize(int x, int y);
 
-int tm_get_winsize(Tm_window* win, int* columns, int* rows);
-int tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
+void tm_get_winsize(Tm_window* win, int* columns, int* rows);
+void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
 
@@ -96,7 +99,7 @@ void tm_exit();
 int tm_win_border(Tm_window* win);
 int tm_win_parent(Tm_window* parent, Tm_window* child, int type);
 
-int tm_win_memclear(Tm_window* win);
+void tm_win_memclear(Tm_window* win);
 
 int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, int attrib);
 
