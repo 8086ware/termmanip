@@ -1,16 +1,24 @@
 #include "termmanip.h"
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
-	if(win == NULL) {
-		return TM_WIN_NULL;
-	}
-
 	int scr_x, scr_y;
 
 	tm_get_scrsize(&scr_x, &scr_y);
 
-	if(x > scr_x || y > scr_y || x < 0 || y < 0) {
-		return TM_WIN_INVALID_DIMENSIONS;
+	if(columns > scr_x) {
+		columns = scr_x;
+	}
+
+	if(rows > scr_y) {
+		rows = scr_y;
+	}
+
+	if(x < 0) {
+		x = 0;
+	}
+
+	if(y < 0) {
+		y = 0;
 	}
 
 	win->position_x = x;
