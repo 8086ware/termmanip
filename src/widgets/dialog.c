@@ -12,27 +12,23 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
+	tm_get_winsize(dialog, &columns, &rows);
+
+	int option_columns = columns / option_amount - 2;
+	int option_rows = 2;
+	int option_x = x + 2;
+	int option_y = rows - 4;
+
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
 	tm_win_border(dialog);
-	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, rows / 4);
+	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, option_rows / 2);
 	tm_win_print(dialog, message);
 
 	Tm_window* buttons[option_amount];
 
 	va_start(option_args, option_amount);
+
 	char* options[option_amount];
-
-	tm_get_winsize(dialog, &columns, &rows);
-
-	columns--;
-	rows--;
-	x++;
-	y++;
-
-	int option_columns = columns / option_amount - 1;
-	int option_rows = rows / 4;
-	int option_x = x + 1;
-	int option_y = (rows - rows / 4) - 1;
 
 	for(int i = 0; i < option_amount; i++) {
 		options[i] = va_arg(option_args, char*);
