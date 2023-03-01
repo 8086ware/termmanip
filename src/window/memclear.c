@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 int tm_win_memclear(Tm_window* win) {
-	if(win->contents == NULL) {
-		return TM_WIN_CONTENTS_NULL;
+	if(win->contents == NULL || win == NULL) {
+		return 0;
 	}
 
 	free(win->contents);
 	win->contents = NULL;
 	win->content_len = 0;
 
-	return 1;
+	return 0;
 }

@@ -2,7 +2,7 @@
 #include "exit_log.h"
 #include <stdlib.h>
 
-void tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
+int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	child->parent = parent;
 	child->child_type = type;
 	
@@ -15,4 +15,6 @@ void tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	parent->children[parent->children_amount] = child;
 	
 	parent->children_amount++;
+
+	return 0;
 }

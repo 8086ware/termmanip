@@ -6,7 +6,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-void append_win(Tm_window* win, char* fmt, ...) {
+int append_win(Tm_window* win, char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	char buffer[4096];
@@ -26,5 +26,7 @@ void append_win(Tm_window* win, char* fmt, ...) {
 	win->content_len += len;
 
 	va_end(args);
+
+	return 0;
 }
 
