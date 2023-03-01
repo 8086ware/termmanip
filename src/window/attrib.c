@@ -3,6 +3,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void tm_win_attrib(Tm_window* win, int attrib) {
-	append_win(win, "\x1b[%dm", attrib);
+int tm_win_attrib(Tm_window* win, int attrib) {
+	return append_win(win, "\x1b[%dm", attrib);
 }
