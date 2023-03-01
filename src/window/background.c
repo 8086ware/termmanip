@@ -5,6 +5,8 @@
 #include "exit_log.h"
 
 int tm_win_background(Tm_window* win, int attrib) {
+	int ret = 0;
+
 	char* temp = malloc(win->content_len * sizeof(char));
 
 	if(temp == NULL) {
@@ -16,11 +18,17 @@ int tm_win_background(Tm_window* win, int attrib) {
 
 	strncpy(temp, win->contents, temp_len);
 
-	tm_win_attrib(win, attrib);
+	if((ret = tm_win_attrib(win, attrib))) {
+		return ret;
+	}
 
-	tm_win_clear(win);	
+	if((ret = tm_win_clear(win)) == TM_ERROR) {
+		return ret;
+	}
 
-	append_win(win, temp);
+	if((ret = append_win(win, temp)) == TM_ERROR) {
+		return ret;
+	}
 
 	win->cursor_x = cursor_x;
 	win->cursor_y = cursor_y;
