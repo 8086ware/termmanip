@@ -48,13 +48,14 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 		if((ret = check_wrap_line(win)) == TM_ERROR) {
 			return ret;
 		}
-	
+
 		if(buffer[i] == '\n' || buffer[i] == '\b') {
 			if((ret = handle_escape_codes(win, buffer[i])) == TM_ERROR) {
 				return ret;
 			}
+			continue;
 		}
-
+	
 		if((ret = append_win(win, "%c", buffer[i])) == TM_ERROR) {
 			return ret;
 		}
