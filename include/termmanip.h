@@ -55,6 +55,9 @@
 
 #define TM_ATTRIB_RESET 0
 
+#define TM_FLAG_ECHO 0b10000000
+#define TM_FLAG_RAW  0b01000000
+
 #include <stddef.h>
 
 typedef struct _Tm_window {
@@ -70,6 +73,8 @@ typedef struct _Tm_window {
 
 	char* contents;
 	int content_len;
+
+	unsigned char flags;
 } Tm_window;
 
 extern Tm_window* default_win;
@@ -92,6 +97,9 @@ int tm_win_print(Tm_window* win, char* fmt, ...);
 
 int tm_win_cursor(Tm_window* win, int x, int y);
 int tm_win_cursor_visible(Tm_window* win, int state);
+
+void tm_win_echo(Tm_window* win, int state);
+void tm_win_raw(Tm_window* win, int state);
 
 void tm_init();
 void tm_exit();
@@ -130,6 +138,8 @@ int tm_error();
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_dialog(x, y, columns, rows, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, message, option_amount, ## __VA_ARGS__)
+#define tm_echo(state) tm_win_echo(default_win, state)
+#define tm_raw(state) tm_win_raw(default_win, state)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
