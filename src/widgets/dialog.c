@@ -22,8 +22,6 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, rows / 2);
 	tm_win_print(dialog, message);
 
-	tm_win_echo(dialog, 0);
-
 	Tm_window* buttons[option_amount];
 
 	va_start(option_args, option_amount);
