@@ -12,15 +12,17 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
-	int option_columns = columns / option_amount - 4;
+	int option_columns = columns / option_amount - 2;
 	int option_rows = 3;
-	int option_x = x + 2;
+	int option_x = x;
 	int option_y = rows - 4;
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
 	tm_win_border(dialog);
 	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, rows / 2);
 	tm_win_print(dialog, message);
+
+	tm_win_echo(dialog, 0);
 
 	Tm_window* buttons[option_amount];
 
