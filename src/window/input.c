@@ -7,14 +7,22 @@ int tm_win_input_ch(Tm_window* win) {
 	int ret = 0;
 	char ch[4096];
 
-	if(win->flags & ~TM_FLAG_RAW) {
-		if((ret = tm_win_input_str(win, ch, 4096)) == TM_ERROR) {
-			return ret;
+	if(win->flags & TM_FLAG_RAW) {	
+		read(fileno(stdin), ch, 1);
+
+		if(win->flags & TM_FLAG_ECHO) {
+			if((ret = tm_win_print(win, "%c", *ch)) == TM_ERROR) {
+				return TM_ERROR;
+			}
+
+			tm_win_update(win);
 		}
 	}
 
 	else {
-		read(fileno(stdin), ch, 1);
+		if((ret = tm_win_input_str(win, ch, 4096)) == TM_ERROR) {
+			return ret;
+		}
 	}
 
 	return *ch;
