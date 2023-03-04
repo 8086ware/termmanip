@@ -116,11 +116,8 @@ int tm_win_attrib(Tm_window* win, int attrib);
 
 int tm_win_background(Tm_window* win, int attrib);
 
-void tm_echo(int state);
-void tm_rawinput(int state);
-
-char tm_input_ch();
-void tm_win_input_str(Tm_window* win, char* str, int max_size);
+int tm_win_input_ch(Tm_window* win);
+int tm_win_input_str(Tm_window* win, char* str, int max_size);
 
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text);
 Tm_window* tm_win_button_select(Tm_window* win);
@@ -138,6 +135,7 @@ int tm_error();
 #define tm_attrib(attrib) tm_win_attrib(default_win, attrib)
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
+#define tm_input_ch() tm_win_input_ch(default_win)
 #define tm_dialog(x, y, columns, rows, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, message, option_amount, ## __VA_ARGS__)
 #define tm_echo(state) tm_win_echo(default_win, state)
 #define tm_raw(state) tm_win_raw(default_win, state)
