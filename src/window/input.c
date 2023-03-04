@@ -1,11 +1,23 @@
 #include "termmanip.h"
 #include <unistd.h>
 #include <stdio.h>
+#include "append_win.h"
 
-char tm_input_ch() {
-	char ch;
-	read(fileno(stdin), &ch, 1);
-	return ch;
+int tm_win_input_ch(Tm_window* win) {
+	int ret = 0;
+	char ch[4096];
+
+	if(win->flags & ~TM_FLAG_RAW) {
+		if((ret = tm_win_input_str(win, ch, 4096)) == TM_ERROR) {
+			return ret;
+		}
+	}
+
+	else {
+		read(fileno(stdin), ch, 1);
+	}
+
+	return *ch;
 }
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) {
