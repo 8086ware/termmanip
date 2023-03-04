@@ -20,9 +20,9 @@ int tm_win_input_ch(Tm_window* win) {
 	return *ch;
 }
 
-void tm_win_input_str(Tm_window* win, char* str, int max_size) {
+int tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	int i = 0;
-	char ch = 0;
+	int ch = 0;
 
 	int ret = 0;
 
