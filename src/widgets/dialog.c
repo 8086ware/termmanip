@@ -30,15 +30,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	for(int i = 0; i < option_amount; i++) {
 		options[i] = va_arg(option_args, char*);
-		buttons[i] = tm_window(option_x, option_y, option_columns, option_rows);
-
-		tm_win_border(buttons[i]);
-
-		tm_win_cursor(buttons[i], option_columns / 2 - strlen(options[i]) / 2, 1);
-
-		tm_win_print(buttons[i], options[i]);
-
-		tm_win_parent(dialog, buttons[i], TM_CHILD_BUTTON);
+		buttons[i] = tm_win_button(dialog, option_x, option_y, option_columns, option_rows, options[i]);
 
 		option_x += columns / option_amount;
 	}
