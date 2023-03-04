@@ -66,9 +66,9 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 
 		tm_win_print(win, "%c", ch);	
 		tm_win_update(win);
-		str[i] = ch;
-		i++;
 	}
 
-	str[i] = '\0';
+	str[i - 1] = '\0';
+
+	return 0;
 }
