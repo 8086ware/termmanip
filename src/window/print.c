@@ -44,6 +44,8 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 
 	vsprintf(buffer, fmt, args);
 
+	va_end(args);
+
 	for(int i = 0; buffer[i] != '\0'; i++) {
 		if((ret = check_wrap_line(win)) == TM_ERROR) {
 			return ret;
@@ -62,8 +64,6 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 
 		win->cursor_x++;
 	}
-
-	va_end(args);
 	
 	return 0;
 }
