@@ -4,11 +4,21 @@
 #include <string.h>
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
-	if(x < 0 || y < 0 || x >= win->columns || y >= win->rows) {
+	if(x >= win->columns) {
+		x = 0;
+		y++;
+	}
+
+	else if(x < 0) {
+		x = win->columns - 1;
+		y--;
+	}
+	
+	if(y >= win->rows || y < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
-	
+
 	win->cursor_x = x;
 	win->cursor_y = y;
 	
