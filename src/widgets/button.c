@@ -51,7 +51,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			tm_win_update(button_children[i]);
 		}
 
-		char c = tm_input_ch();
+		char c = tm_win_input_ch(win);
 
 		if(c == 'd') {
 			option++;
