@@ -44,7 +44,7 @@ int tm_win_border(Tm_window* win) {
 		}
 	}
 
-	if(((ret = tm_win_cursor(win, cur_x, cur_y))) == TM_ERROR) {
+	if((ret = tm_win_cursor(win, cur_x, cur_y)) == TM_ERROR) {
 		return ret;
 	}
 
