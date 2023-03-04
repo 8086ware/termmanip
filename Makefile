@@ -75,8 +75,8 @@ $(OBJ_DIR)/memclear.o: $(SRC_DIR)/window/memclear.c
 $(OBJ_DIR)/fill.o: $(SRC_DIR)/window/fill.c
 $(OBJ_DIR)/attrib.o: $(SRC_DIR)/window/attrib.c
 $(OBJ_DIR)/background.o: $(SRC_DIR)/window/background.c
-$(OBJ_DIR)/echo.o: $(SRC_DIR)/term/echo.c
-$(OBJ_DIR)/rawinput.o: $(SRC_DIR)/term/rawinput.c
+$(OBJ_DIR)/echo.o: $(SRC_DIR)/window/echo.c
+$(OBJ_DIR)/rawinput.o: $(SRC_DIR)/window/rawinput.c
 $(OBJ_DIR)/input.o: $(SRC_DIR)/window/input.c
 $(OBJ_DIR)/signal_handler.o: $(SRC_DIR)/signal_handler.c
 $(OBJ_DIR)/button.o: $(SRC_DIR)/widgets/button.c
