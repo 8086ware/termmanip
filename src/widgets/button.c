@@ -18,6 +18,11 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 }
 
 Tm_window* tm_win_button_select(Tm_window* win) {
+	unsigned char flags = win->flags;
+
+	tm_win_echo(win, 0);
+	tm_win_raw(win, 1);
+
 	Tm_window** button_children = NULL;
 	int button_children_amount = 0;
 
@@ -75,4 +80,6 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			}
 		}
 	}
+
+	win->flags = flags;
 }
