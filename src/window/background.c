@@ -30,6 +30,10 @@ int tm_win_background(Tm_window* win, int attrib) {
 		return ret;
 	}
 
+	if((ret = tm_win_attrib(win, attrib))) {
+		return ret;
+	}
+
 	win->cursor_x = cursor_x;
 	win->cursor_y = cursor_y;
 
