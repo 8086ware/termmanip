@@ -25,7 +25,11 @@ void tm_init() {
 	write(fileno(stdout), "\x1b[2J", strlen("\x1b[2J"));
 
 	struct termios term;
-	cfmakeraw(&term);
-	tcsetattr(fileno(stdout), TCSANOW, &term);
+	tcgetattr(fileno(stdin), &term);
+
+	term.c_lflag &= ~ECHO;
+	term.c_lflag &= ~ICANON;
+
+	tcsetattr(fileno(stdin), TCSANOW, &term);
 }
 
