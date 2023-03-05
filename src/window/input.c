@@ -37,7 +37,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	while(1) {
 		read(fileno(stdin), &ch, 1);
 
-		if(ch == '\r') {
+		if(ch == '\n') {
 			break;
 		}
 
