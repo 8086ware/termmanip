@@ -18,15 +18,6 @@ RM=rm -rf
 
 MD=mkdir -p
 
-ifeq ($(BUILD_TYPE),debug)
-	CFLAGS+=-g
-	CFLAGS+=-DDEBUG
-	
-	OUTPUT_NAME=libtermmanipdebug.a
-else
-	CFLAGS+=-O3
-endif
-
 OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit_log.o \
 		$(OBJ_DIR)/screen_size.o \
@@ -53,6 +44,13 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/clear.o \
 		$(OBJ_DIR)/error.o \
 		
+debug: CFLAGS += -g
+debug: CFLAGS += -DDEBUG
+debug: all
+
+release: CFLAGS += -O3
+release: all
+
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
 $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
@@ -96,7 +94,7 @@ install:
 	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/local/lib/ && install include/termmanip.h /usr/local/include/
 
 test:
-	$(MAKE) && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
+	$(MAKE) debug && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
 
 $(BUILD_DIR):
 	$(MD) $(BUILD_DIR)
