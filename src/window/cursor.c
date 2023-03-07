@@ -18,12 +18,22 @@ int tm_win_cursor_internal(Tm_window* win, int x, int y) {
 	win->cursor_x = x;
 	win->cursor_y = y;
 	
+	return 0;
+}
+
+int tm_win_cursor(Tm_window* win, int x, int y) {
+	int ret = 0;
+
+	if((ret = tm_win_cursor_internal(win, x, y)) == TM_ERROR) {
+		return ret;
+	}
+
 	if(win->parent != NULL) {
 		x += win->parent->position_x;
 		y += win->parent->position_y;
 	}
 
-	return append_win(win, "\x1b[%d;%dH", y + win->position_y + 1, x + win->position_x + 1);
+	return append_win(win, "\x1b[%d;%dH", win->cursor_y + win->position_y + 1, win->cursor_x + win->position_x + 1);
 }
 
 int tm_win_cursor_visible(Tm_window* win, int state) {
