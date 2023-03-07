@@ -1,5 +1,5 @@
-test: test.c libtermmanipdebug.a
-	gcc $^ -o $@ -L. -ltermmanipdebug -g
+test: test.c libtermmanip.a
+	gcc $^ -o $@ -L. -ltermmanip -g
 
 clean:
 	$(RM) test libtermmanipdebug.a termmanip.h
