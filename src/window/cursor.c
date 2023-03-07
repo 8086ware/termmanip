@@ -2,22 +2,18 @@
 #include "append_win.h"
 #include <stdio.h>
 #include <string.h>
+#include "internal.h"
 
-int tm_win_cursor(Tm_window* win, int x, int y) {
-	if(x >= win->columns) {
-		x = 0;
-		y++;
-	}
+int tm_win_cursor_internal(Tm_window* win, int x, int y) {
+	int i =	y * win->columns + x;
 
-	else if(x < 0) {
-		x = win->columns - 1;
-		y--;
-	}
-	
 	if(y >= win->rows || y < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
+
+	x = i % win->columns;
+	y = i / win->columns;
 
 	win->cursor_x = x;
 	win->cursor_y = y;
