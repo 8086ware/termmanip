@@ -12,9 +12,9 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
-	int option_columns = columns / option_amount - 2;
+	int option_columns = columns / option_amount;
 	int option_rows = 3;
-	int option_x = x;
+	int option_x = 0;
 	int option_y = rows - 4;
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
