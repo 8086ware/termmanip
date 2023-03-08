@@ -3,15 +3,11 @@
 
 int tm_win_clear(Tm_window* win) {
 	int ret = 0;
+	tm_win_cursor(win, 0, 0);
+
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
-				return ret;
-			}	
-
-			if((ret = append_win(win, " ")) == TM_ERROR) {
-				return ret;
-			}	
+			tm_win_print(win, " ");
 		}
 	}
 
