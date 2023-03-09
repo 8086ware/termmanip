@@ -1,4 +1,3 @@
-#include <termios.h>
 #include "termmanip.h"
 #include <stdio.h>
 

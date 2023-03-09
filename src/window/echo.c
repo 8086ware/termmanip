@@ -1,6 +1,5 @@
 #include "termmanip.h"
 #include <stdio.h>
-#include <termios.h>
 
 void tm_win_echo(Tm_window* win, int state) {
 	if(state <= 0) {
