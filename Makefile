@@ -1,5 +1,15 @@
-CC=gcc
 AR=ar
+
+PLATFORM=unix
+
+ifeq ($(PLATFORM), windows)
+	CC=x86_64-w64-mingw32-gcc
+endif
+
+ifeq ($(PLATFORM), unix)
+	CC=gcc
+endif
+
 
 INCLUDES=include
 
