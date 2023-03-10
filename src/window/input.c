@@ -21,7 +21,7 @@ int tm_win_input_ch(Tm_window* win) {
 
 		if(win->flags & TM_FLAG_ECHO) {
 			if((ret = tm_win_print(win, "%c", *ch)) == TM_ERROR) {
-				return TM_ERROR;
+				return *ch;
 			}
 
 			tm_win_update(win);
