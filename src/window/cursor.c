@@ -2,7 +2,6 @@
 #include "append_win.h"
 #include <stdio.h>
 #include <string.h>
-#include "internal.h"
 
 int tm_win_cursor_internal(Tm_window* win, int x, int y) {
 	int i =	y * win->columns + x;
