@@ -75,6 +75,8 @@ void tm_init() {
 	default_win->contents = NULL;
 	default_win->content_len = 0;
 
+	default_win->flags = 0;
+
 	append_win(default_win, TM_ESC_ENTER_ALT_SCREEN);
 	append_win(default_win, "\x1b[2J");
 
