@@ -30,7 +30,7 @@ void tm_exit() {
 		exit_log("tm_exit", "SetConsoleMode", 1);
 	}
 
-	mode |= ECHO_LINE_INPUT;
+	mode |= ENABLE_LINE_INPUT;
 	mode |= ENABLE_ECHO_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
