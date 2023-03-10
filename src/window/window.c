@@ -22,6 +22,8 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->contents = NULL;
 	win->content_len = 0;
 
+	win->flags = 0;
+
 	tm_win_echo(win, 1);
 	tm_win_raw(win, 1);
 
