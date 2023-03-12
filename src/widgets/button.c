@@ -22,6 +22,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 	tm_win_echo(win, 0);
 	tm_win_raw(win, 1);
+	int prev_state = tm_inputblock(1);
 
 	Tm_window** button_children = NULL;
 	int button_children_amount = 0;
@@ -51,7 +52,8 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			tm_win_update(button_children[i]);
 		}
 
-		char c = tm_win_input_ch(win);
+		char c = 0;
+		c = tm_win_input_ch(win);
 
 		if(c == 'd') {
 			option++;
@@ -81,5 +83,6 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 		}
 	}
 
+	tm_inputblock(prev_state);
 	win->flags = flags;
 }
