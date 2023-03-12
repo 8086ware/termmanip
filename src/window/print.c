@@ -40,7 +40,8 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 
 	va_start(args, fmt);
 
-	char buffer[4096];
+	const int size = strlen(fmt) + 2048;
+	char buffer[size];
 
 	vsprintf(buffer, fmt, args);
 
