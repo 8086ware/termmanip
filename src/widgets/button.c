@@ -63,7 +63,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			option--;
 		}
 
-		else if(c == '\n') {
+		else if(c == '\n' || c == '\r') {
 			free(button_children);
 			return win->children[option];
 		}
