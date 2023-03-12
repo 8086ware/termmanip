@@ -53,7 +53,8 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/dialog.o \
 		$(OBJ_DIR)/clear.o \
 		$(OBJ_DIR)/error.o \
-		
+		$(OBJ_DIR)/inputblock.o \
+
 debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
 debug: all
@@ -91,6 +92,7 @@ $(OBJ_DIR)/button.o: $(SRC_DIR)/widgets/button.c
 $(OBJ_DIR)/dialog.o: $(SRC_DIR)/widgets/dialog.c
 $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/error.o: $(SRC_DIR)/error.c
+$(OBJ_DIR)/inputblock.o: $(SRC_DIR)/inputblock.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
@@ -101,7 +103,7 @@ uninstall:
 	$(RM) /usr/local/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/local/include/termmanip.h
 
 install:
-	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/local/lib/ && install include/termmanip.h /usr/local/include/
+	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
 
 test:
 	$(MAKE) debug && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run

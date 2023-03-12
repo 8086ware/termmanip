@@ -128,6 +128,8 @@ int tm_win_clear(Tm_window* win);
 
 int tm_error();
 
+int tm_inputblock(int state);
+
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
 #define tm_update() tm_win_update(default_win)
