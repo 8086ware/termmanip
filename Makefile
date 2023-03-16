@@ -1,16 +1,5 @@
 AR=ar
 
-PLATFORM=unix
-
-ifeq ($(PLATFORM), windows)
-	CC=x86_64-w64-mingw32-gcc
-endif
-
-ifeq ($(PLATFORM), unix)
-	CC=gcc
-endif
-
-
 INCLUDES=include
 
 ARFLAGS=rcs
@@ -103,7 +92,7 @@ uninstall:
 	$(RM) /usr/local/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/local/include/termmanip.h
 
 install:
-	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
+	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/local/lib/ && install include/termmanip.h /usr/local/include/
 
 test:
 	$(MAKE) debug && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
