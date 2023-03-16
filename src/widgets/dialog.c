@@ -2,7 +2,16 @@
 #include <string.h>
 #include <stdarg.h>
 
-int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* message, const int option_amount, ...) {
+int tm_win_dialog(Tm_window* win, char* message, const int option_amount, ...) {
+	int scr_x = 0, scr_y = 0;
+	tm_get_scrsize(&scr_x, &scr_y);
+
+	int columns = strlen(message) + 2;
+	int rows = 8;
+
+	int x = scr_x / 2 - columns / 2;
+	int y = scr_y / 2 - rows / 2;
+
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
@@ -11,7 +20,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 
 	tm_win_border(dialog);
 
-	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, rows / 2);
+	tm_win_cursor(dialog, 1, 1);
 
 	tm_win_print(dialog, message);
 
@@ -24,18 +33,18 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, char* mes
 		return TM_ERROR;
 	}
 
-	int option_x = 0;
-	int option_y = rows - 4;
+	int option_x = 2;
+	int option_y = 3;
 
-	int option_columns = columns / option_amount;
-	int option_rows = 3;
+	int option_columns = (columns - option_amount - 3) / option_amount;
+ 	int option_rows = 3;
 
 	Tm_window* buttons[option_amount];
 
 	for(int i = 0; i < option_amount; i++) {
 		char* button_text = va_arg(option_args, char*);
 		buttons[i] = tm_win_button(dialog, option_x, option_y, option_columns, option_rows, button_text);
-		option_x += option_columns;
+		option_x += option_columns + 1;
 	}
 
 	tm_win_update(dialog);
