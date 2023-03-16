@@ -45,4 +45,5 @@ void tm_exit() {
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 #endif
+	tm_inputblock(1);
 }
