@@ -18,6 +18,8 @@ int tm_win_background(Tm_window* win, int attrib) {
 
 	strncpy(temp, win->contents, temp_len);
 
+	temp[temp_len] = '\0';
+
 	if((ret = tm_win_attrib(win, attrib))) {
 		return ret;
 	}
