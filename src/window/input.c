@@ -12,6 +12,8 @@ int tm_win_input_ch(Tm_window* win) {
 	char ch[4096];
 
 	tm_win_cursor(win, win->cursor_x, win->cursor_y);
+	
+	tm_win_update(win);
 
 	if(win->flags & TM_FLAG_RAW) {	
 #ifdef _WIN32
@@ -41,6 +43,8 @@ int tm_win_input_ch(Tm_window* win) {
 
 int tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	tm_win_cursor(win, win->cursor_x, win->cursor_y);
+
+	tm_win_update(win);
 
 	int i = 0;
 	int ch = 0;
