@@ -30,6 +30,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	tm_win_cursor(win, 0, 0);
 	tm_win_attrib(win, TM_ATTRIB_RESET);
 
+	tm_win_clear(win);
 	return win;
 }
 
