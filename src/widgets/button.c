@@ -48,12 +48,12 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	int option = 0;
 
 	while(1) {
+		char c = 0;
+		c = tm_win_input_ch(win);
+
 		for(int i = 0; i < button_children_amount; i++) {
 			tm_win_update(button_children[i]);
 		}
-
-		char c = 0;
-		c = tm_win_input_ch(win);
 
 		if(c == 'd') {
 			option++;
