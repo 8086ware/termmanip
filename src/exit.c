@@ -1,4 +1,5 @@
 #include "termmanip.h"
+#include "append_win.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
