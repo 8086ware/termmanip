@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdarg.h>
 
-int tm_win_dialog(Tm_window* win, char* message, const int option_amount, ...) {
+int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...) {
 	int scr_x = 0, scr_y = 0;
 	tm_get_scrsize(&scr_x, &scr_y);
 
@@ -16,9 +16,11 @@ int tm_win_dialog(Tm_window* win, char* message, const int option_amount, ...) {
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
 
-	tm_win_clear(dialog);
-
 	tm_win_border(dialog);
+
+	tm_win_cursor(dialog, columns / 2 - ((strlen(title) / 2) + 2), 0);
+
+	tm_win_print(dialog, "|%s|", title);	
 
 	tm_win_cursor(dialog, 1, 1);
 

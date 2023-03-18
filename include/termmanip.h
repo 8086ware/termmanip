@@ -129,7 +129,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size);
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text);
 Tm_window* tm_win_button_select(Tm_window* win);
 
-int tm_win_dialog(Tm_window* win, char* message, const int option_amount, ...);
+int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...);
 
 int tm_win_clear(Tm_window* win);
 
@@ -145,7 +145,7 @@ int tm_inputblock(int state);
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input_ch() tm_win_input_ch(default_win)
-#define tm_dialog(message, option_amount, ...) tm_win_dialog(default_win, message, option_amount, ## __VA_ARGS__)
+#define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
 #define tm_echo(state) tm_win_echo(default_win, state)
 #define tm_raw(state) tm_win_raw(default_win, state)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
