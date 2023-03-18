@@ -24,3 +24,6 @@ If you want to use your own compiler set it in the Makefile.
 
 By default the build type is debug so we need to set it to release.
 
+### Windows Building
+
+To build on windows, you will need MSYS2, it has only been tested to work on that. Run the same commands in the MSYS2 terminal after installing <strong>make</strong> and <strong>mingw-w64-x86_64-toolchain</strong>.
