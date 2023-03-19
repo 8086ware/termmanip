@@ -54,8 +54,10 @@ void tm_init() {
 	signal(SIGSEGV, signal_handle);
 	signal(SIGTERM, signal_handle);
 	signal(SIGILL, signal_handle);	
+#ifdef _WIN32
+#else
 	signal(SIGWINCH, signal_handle);	
-	
+#endif	
 	int scr_columns, scr_rows;
 
 	tm_get_scrsize(&scr_columns, &scr_rows);
