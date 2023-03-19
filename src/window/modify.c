@@ -5,11 +5,38 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 
 	tm_get_scrsize(&scr_x, &scr_y);
 
-	if(x < 0 || y < 0 || x > scr_x || y > scr_y) {
-		tm_error_number = TM_INVALID_DIMENSIONS;
-		return TM_ERROR;
+	if(columns > scr_x) {
+		columns = scr_x;
+	}
+
+	if(rows > scr_y) {
+		rows = scr_y;
+	}
+
+	if(rows < 0) {
+		rows = 0;
+	}
+
+	if(columns < 0) {
+		columns = 0;
+	}
+
+	if(x < 0) {
+		x = 0;
+	}
+
+	if(y < 0) {
+		y = 0;
+	}
+
+	if(x > scr_x) {
+		x = scr_x - columns;
 	}
 	
+	if(y > scr_y) {
+		y = scr_y - rows;
+	}
+
 	win->position_x = x;
 	win->position_y = y;
 
