@@ -10,38 +10,66 @@ int tm_win_border(Tm_window* win) {
 
 	tm_get_winsize(win, &columns, &rows);
 
+	append_win(win, "\x1b(0");
+
 	for(int y = 0; y < rows; y++) {
 		for(int x = 0; x < columns; x++) {
-			if((x == 0 && y == 0) || (x == columns - 1 && y == 0) || (x == 0 && y == rows - 1) || (x == columns - 1 && y == rows - 1)) {
+			if(x == 0 || x == columns - 1) {
 				if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
 					return ret;
 				}
 
-				if((ret = append_win(win, "+")) == TM_ERROR) {
+				if((ret = append_win(win, "\x78")) == TM_ERROR) {
 					return ret;
 				}
 			}
 
-			else if(x == 0 || x == columns - 1) {
+			if(y == 0 || y == rows - 1) {
 				if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
 					return ret;
 				}
 
-				if((ret = append_win(win, "|")) == TM_ERROR) {
-					return ret;
-				}
-			}
-
-			else if(y == 0 || y == rows - 1) {
-				if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
-					return ret;
-				}
-
-				if((ret = append_win(win, "-")) == TM_ERROR) {
+				if((ret = append_win(win, "\x71")) == TM_ERROR) {
 					return ret;
 				}
 			}
 		}
+	}
+
+	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = append_win(win, "\x6C")) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = tm_win_cursor(win, columns - 1, 0)) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = append_win(win, "\x6B")) == TM_ERROR) {
+		return ret;
+	}
+	
+	if((ret = tm_win_cursor(win, 0, rows - 1)) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = append_win(win, "\x6D")) == TM_ERROR) {
+		return ret;
+	}
+	
+	if((ret = tm_win_cursor(win, columns - 1, rows - 1)) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = append_win(win, "\x6A")) == TM_ERROR) {
+		return ret;
+	}
+
+	if((ret = append_win(win, "\x1b(B")) == TM_ERROR) {
+		return ret;
 	}
 
 	if((ret = tm_win_cursor(win, cur_x, cur_y)) == TM_ERROR) {
