@@ -7,20 +7,7 @@
 int tm_win_background(Tm_window* win, int attrib) {
 	int ret = 0;
 
-	char* temp = malloc(win->content_len * sizeof(char));
-
-	if(temp == NULL) {
-		exit_log("tm_win_background", "malloc", 1);
-	}
-	
-	int temp_len = win->content_len;
-	int cursor_x = win->cursor_x, cursor_y = win->cursor_y;	
-
-	strncpy(temp, win->contents, temp_len);
-
-	temp[temp_len] = '\0';
-
-	if((ret = tm_win_attrib(win, attrib))) {
+	if((ret = tm_win_attrib(win, attrib)) == TM_ERROR) {
 		return ret;
 	}
 
@@ -28,16 +15,9 @@ int tm_win_background(Tm_window* win, int attrib) {
 		return ret;
 	}
 
-	if((ret = append_win(win, temp)) == TM_ERROR) {
+	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
 		return ret;
 	}
-
-	if((ret = tm_win_attrib(win, attrib))) {
-		return ret;
-	}
-
-	win->cursor_x = cursor_x;
-	win->cursor_y = cursor_y;
 
 	return 0;
 }
