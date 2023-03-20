@@ -18,5 +18,10 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	
 	parent->children_amount++;
 
+	tm_win_cursor(child, 0, 0);
+	tm_win_attrib(child, TM_ATTRIB_RESET);
+
+	tm_win_clear(child);
+
 	return 0;
 }
