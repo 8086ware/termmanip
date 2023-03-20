@@ -10,6 +10,7 @@
 #endif
 
 void tm_exit() {
+	tm_win_memclear(default_win);
 	append_win(default_win, TM_ESC_ENABLE_CURSOR);
 	append_win(default_win, TM_ESC_LEAVE_ALT_SCREEN);
 	tm_update();
