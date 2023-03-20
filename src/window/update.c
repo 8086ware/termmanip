@@ -13,12 +13,10 @@ void tm_win_update(Tm_window* win) {
 #else
 	write(fileno(stdout), win->contents, win->content_len);
 #endif
+	tm_win_memclear(win);
 
-	if(win->children != NULL) {
-		for(int i = 0; i < win->children_amount; i++) {
-			tm_win_update(win->children[i]);
-		}
+	for(int i = 0; i < win->children_amount; i++) {
+		tm_win_update(win->children[i]);
 	}
 
-	tm_win_memclear(win);
 }
