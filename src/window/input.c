@@ -20,7 +20,7 @@ int tm_win_input_ch(Tm_window* win) {
 		DWORD bytes_read = 0;
 		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), ch, 1, &bytes_read, NULL);
 #else
-		read(fileno(stdout), ch, 1);
+		read(fileno(stdin), ch, 1);
 #endif
 
 		if(win->flags & TM_FLAG_ECHO) {
@@ -56,7 +56,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 		DWORD bytes_read = 0;
 		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
 #else
-		read(fileno(stdout), &ch, 1);
+		read(fileno(stdin), &ch, 1);
 #endif
 		if(ch == '\n' || ch == '\r') {
 			break;
