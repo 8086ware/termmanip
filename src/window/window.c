@@ -62,8 +62,10 @@ void tm_win_free(Tm_window* win) {
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_free(win->children[i]);
 	}
-	
+
 	free(win->children);
-	free(win->contents);
+	free(win->output);
+	free(win->buffer);
+	free(win->physical_buffer);
 	free(win);
 }
