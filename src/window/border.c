@@ -16,7 +16,7 @@ int tm_win_border(Tm_window* win) {
 					return ret;
 				}
 
-				if((ret = append_win(win, "\x78")) == TM_ERROR) {
+				if((ret = tm_win_print(win, "|")) == TM_ERROR) {
 					return ret;
 				}
 			}
@@ -26,7 +26,7 @@ int tm_win_border(Tm_window* win) {
 					return ret;
 				}
 
-				if((ret = append_win(win, "\x71")) == TM_ERROR) {
+				if((ret = tm_win_print(win, "-")) == TM_ERROR) {
 					return ret;
 				}
 			}
@@ -37,7 +37,7 @@ int tm_win_border(Tm_window* win) {
 		return ret;
 	}
 
-	if((ret = append_win(win, "\x6C")) == TM_ERROR) {
+	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
 		return ret;
 	}
 
@@ -45,7 +45,7 @@ int tm_win_border(Tm_window* win) {
 		return ret;
 	}
 
-	if((ret = append_win(win, "\x6B")) == TM_ERROR) {
+	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
 		return ret;
 	}
 	
@@ -53,7 +53,7 @@ int tm_win_border(Tm_window* win) {
 		return ret;
 	}
 
-	if((ret = append_win(win, "\x6D")) == TM_ERROR) {
+	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
 		return ret;
 	}
 	
@@ -61,10 +61,7 @@ int tm_win_border(Tm_window* win) {
 		return ret;
 	}
 
-	if((ret = append_win(win, "\x6A")) == TM_ERROR) {
-		return ret;
-	}
-
+	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
 		return ret;
 	}
 
