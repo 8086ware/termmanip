@@ -5,7 +5,6 @@
 #include "exit_log.h"
 #include "append_output.h"
 #include "signal_handler.h"
-#include "exit_log.h"
 #include <signal.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -50,10 +49,7 @@ void tm_init() {
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 #endif
 	signal(SIGINT, signal_handle);
-	signal(SIGABRT, signal_handle);
-	signal(SIGSEGV, signal_handle);
 	signal(SIGTERM, signal_handle);
-	signal(SIGILL, signal_handle);	
 #ifdef _WIN32
 #else
 	signal(SIGWINCH, signal_handle);	
