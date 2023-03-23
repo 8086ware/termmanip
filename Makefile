@@ -17,7 +17,7 @@ RM=rm -rf
 
 MD=mkdir -p
 
-OBJECTS=$(OBJ_DIR)/append_win.o \
+OBJECTS=$(OBJ_DIR)/append_output.o \
 		$(OBJ_DIR)/exit_log.o \
 		$(OBJ_DIR)/screen_size.o \
 		$(OBJ_DIR)/window.o \
@@ -30,7 +30,6 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/exit.o \
 		$(OBJ_DIR)/border.o \
 		$(OBJ_DIR)/parent.o \
-		$(OBJ_DIR)/memclear.o \
 		$(OBJ_DIR)/fill.o \
 		$(OBJ_DIR)/attrib.o \
 		$(OBJ_DIR)/background.o \
@@ -43,7 +42,8 @@ OBJECTS=$(OBJ_DIR)/append_win.o \
 		$(OBJ_DIR)/clear.o \
 		$(OBJ_DIR)/error.o \
 		$(OBJ_DIR)/inputblock.o \
-
+		$(OBJ_DIR)/put.o \
+	
 debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
 debug: all
@@ -58,7 +58,7 @@ $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
 $(OBJ_DIR)/screen_size.o: $(SRC_DIR)/screen_size.c
-$(OBJ_DIR)/append_win.o: $(SRC_DIR)/window/append_win.c
+$(OBJ_DIR)/append_output.o: $(SRC_DIR)/window/append_output.c
 $(OBJ_DIR)/window.o: $(SRC_DIR)/window/window.c
 $(OBJ_DIR)/print.o: $(SRC_DIR)/window/print.c
 $(OBJ_DIR)/modify.o: $(SRC_DIR)/window/modify.c
@@ -69,7 +69,6 @@ $(OBJ_DIR)/init.o: $(SRC_DIR)/init.c
 $(OBJ_DIR)/exit.o: $(SRC_DIR)/exit.c
 $(OBJ_DIR)/border.o: $(SRC_DIR)/window/border.c
 $(OBJ_DIR)/parent.o: $(SRC_DIR)/window/parent.c
-$(OBJ_DIR)/memclear.o: $(SRC_DIR)/window/memclear.c
 $(OBJ_DIR)/fill.o: $(SRC_DIR)/window/fill.c
 $(OBJ_DIR)/attrib.o: $(SRC_DIR)/window/attrib.c
 $(OBJ_DIR)/background.o: $(SRC_DIR)/window/background.c
@@ -82,6 +81,7 @@ $(OBJ_DIR)/dialog.o: $(SRC_DIR)/widgets/dialog.c
 $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/error.o: $(SRC_DIR)/error.c
 $(OBJ_DIR)/inputblock.o: $(SRC_DIR)/inputblock.c
+$(OBJ_DIR)/put.o: $(SRC_DIR)/window/put.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
