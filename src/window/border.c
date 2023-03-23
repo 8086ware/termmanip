@@ -1,5 +1,4 @@
 #include "termmanip.h"
-#include "append_win.h"
 
 int tm_win_border(Tm_window* win) {
 	int ret = 0;
@@ -9,8 +8,6 @@ int tm_win_border(Tm_window* win) {
 	int cur_x = win->cursor_x, cur_y = win->cursor_y;
 
 	tm_get_winsize(win, &columns, &rows);
-
-	append_win(win, "\x1b(0");
 
 	for(int y = 0; y < rows; y++) {
 		for(int x = 0; x < columns; x++) {
@@ -68,7 +65,6 @@ int tm_win_border(Tm_window* win) {
 		return ret;
 	}
 
-	if((ret = append_win(win, "\x1b(B")) == TM_ERROR) {
 		return ret;
 	}
 
