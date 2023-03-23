@@ -23,8 +23,8 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	win->children_amount = 0;
 
-	win->contents = NULL;
-	win->content_len = 0;
+	win->output = NULL;
+	win->output_len = 0;
 
 	win->flags = 0;
 
