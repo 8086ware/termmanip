@@ -138,11 +138,11 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type);
 
 void tm_win_memclear(Tm_window* win);
 
-int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, int attrib);
+int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib);
 
-int tm_win_attrib(Tm_window* win, int attrib);
+void tm_win_attrib(Tm_window* win, uint32_t attrib);
 
-int tm_win_background(Tm_window* win, int attrib);
+int tm_win_background(Tm_window* win, uint32_t attrib);
 
 int tm_win_input_ch(Tm_window* win);
 int tm_win_input_str(Tm_window* win, char* str, int max_size);
