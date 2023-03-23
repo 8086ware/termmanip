@@ -2,8 +2,6 @@
 #include <string.h>
 
 int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib) {
-	int ret = 0;
-
 	int i = y * win->columns + x;
 
 	if(i > win->columns * win->rows || i < 0) {
