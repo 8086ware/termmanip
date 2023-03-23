@@ -17,14 +17,8 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 }
 
 int tm_win_cursor_visible(Tm_window* win, int state) {
-	if(state <= 0) {
-		return append_win(win, TM_ESC_DISABLE_CURSOR);
-	}
+	win->cursor_visible = state;
 	
-	else if(state > 0) {
-		return append_win(win, TM_ESC_ENABLE_CURSOR);
-	}
-
 	return 0;
 }
 
