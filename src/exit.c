@@ -1,5 +1,4 @@
 #include "termmanip.h"
-#include "append_win.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -10,10 +9,10 @@
 #endif
 
 void tm_exit() {
-	tm_win_memclear(default_win);
-	append_win(default_win, TM_ESC_ENABLE_CURSOR);
-	append_win(default_win, TM_ESC_LEAVE_ALT_SCREEN);
-	tm_update();
+	char exit[] = "\x1b[0m\x1b[?25h\x1b[?1049l";
+
+	write(fileno(stdout), exit, strlen(exit));
+
 	tm_win_free(default_win);
 #ifdef _WIN32
 	DWORD mode = 0;
