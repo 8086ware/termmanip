@@ -73,9 +73,15 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 		for(int i = 0; i < button_children_amount; i++) {
 			if(i == option) {
-				tm_win_cursor(button_children[i], 0, 0);
+				tm_win_background(button_children[i], TM_ATTRIB_HIGHLIGHT);
+			}
+
+			else {
+				tm_win_background(button_children[i], TM_ATTRIB_RESET);
 			}
 		}
+
+		c = tm_win_input_ch(win);
 	}
 
 	tm_inputblock(prev_state);
