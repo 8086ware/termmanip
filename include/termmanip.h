@@ -91,8 +91,11 @@ typedef struct Tm_window {
 
 	int children_amount;
 
-	char* contents;
-	int content_len;
+	Tm_char* buffer;
+	Tm_char* physical_buffer;
+	
+	char* output;
+	int output_len;
 
 	unsigned char flags;
 } Tm_window;
