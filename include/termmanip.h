@@ -98,6 +98,10 @@ typedef struct Tm_window {
 	int output_len;
 
 	unsigned char flags;
+
+	uint32_t attrib;
+
+	_Bool cursor_visible;
 } Tm_window;
 
 extern Tm_window* default_win;
