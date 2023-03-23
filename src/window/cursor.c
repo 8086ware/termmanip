@@ -1,22 +1,18 @@
 #include "termmanip.h"
-#include "append_win.h"
 #include <stdio.h>
 #include <string.h>
 
-int tm_win_cursor_internal(Tm_window* win, int x, int y) {
-	int i =	y * win->columns + x;
+int tm_win_cursor(Tm_window* win, int x, int y) {
+	int i = y * win->columns + x;
 
-	if(y >= win->rows || y < 0) {
+	if(i > win->columns * win->rows || i < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
 
-	x = i % win->columns;
-	y = i / win->columns;
+	win->cursor_x = i % win->columns;
+	win->cursor_y = i / win->columns;	
 
-	win->cursor_x = x;
-	win->cursor_y = y;
-	
 	return 0;
 }
 
