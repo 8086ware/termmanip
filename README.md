@@ -16,9 +16,9 @@ If you want to use your own compiler set it in the Makefile.
 </code>
 <code>$ cd termmanip
 </code>
-<code>$ make BUILD_TYPE=release
+<code>$ make release
 </code>
-<code>$ sudo make install BUILD_TYPE=release
+<code>$ sudo make install
 </code>
 
 
