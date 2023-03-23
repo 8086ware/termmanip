@@ -120,6 +120,8 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
 
 void tm_win_update(Tm_window* win);
 
+int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib);
+int tm_win_puts(Tm_window * win, int x, int y, char* str, uint32_t attrib);
 int tm_win_print(Tm_window* win, char* fmt, ...);
 
 int tm_win_cursor(Tm_window* win, int x, int y);
