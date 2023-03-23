@@ -14,7 +14,9 @@ int tm_win_background(Tm_window* win, uint32_t attrib) {
 		}
 	}
 
-	tm_win_cursor(win, temp_cursor_x, temp_cursor_y);
+	if((ret = tm_win_cursor(win, temp_cursor_x, temp_cursor_y)) == TM_ERROR) {
+		return ret;	
+	}
 
 	tm_win_attrib(win, attrib);
 
