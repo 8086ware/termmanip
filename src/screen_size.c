@@ -9,7 +9,7 @@ void tm_get_scrsize(int* x, int* y) {
 #ifndef _WIN32
 	struct winsize ws;
 
-	ioctl(1, TIOCGWINSZ, &ws);
+	ioctl(0, TIOCGWINSZ, &ws);
 
 	*x = ws.ws_col;
 	*y = ws.ws_row;
