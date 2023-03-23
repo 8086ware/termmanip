@@ -3,8 +3,6 @@
 #include <stdlib.h>
 
 int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
-	tm_win_memclear(child);
-
 	child->parent = parent;
 	child->child_type = type;
 	
