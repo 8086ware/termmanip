@@ -1,7 +1,6 @@
 #include "termmanip.h"
 #include <unistd.h>
 #include <stdio.h>
-#include "append_win.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -79,7 +78,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 				return ret;
 			}
 
-			if((ret = append_win(win, " ")) == TM_ERROR) {
+			if((ret = tm_win_print(win, " ")) == TM_ERROR) {
 				return ret;
 			}
 
