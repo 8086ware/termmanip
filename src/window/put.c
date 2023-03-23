@@ -4,17 +4,16 @@
 int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib) {
 	int ret = 0;
 
-	if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
-		return ret;
+	int i = y * win->columns + x;
+
+	if(i > win->columns * win->rows || i < 0) {
+		tm_error_number = TM_INVALID_CURSOR;
+		return TM_ERROR;
 	}
 
 	win->buffer[y * win->columns + x].attrib = attrib;
 	win->buffer[y * win->columns + x].disp = ch;
 	
-	if((ret = tm_win_cursor(win, x + 1, y)) == TM_ERROR) {
-		return ret;
-	}
-
 	return 0;
 }
 
