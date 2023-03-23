@@ -1,23 +1,20 @@
 #include "termmanip.h"
-#include "append_win.h"
 #include <stdlib.h>
 #include <string.h>
 #include "exit_log.h"
 
-int tm_win_background(Tm_window* win, int attrib) {
+int tm_win_background(Tm_window* win, uint32_t attrib) {
 	int ret = 0;
 
-	if((ret = tm_win_attrib(win, attrib)) == TM_ERROR) {
-		return ret;
+	int cursor_x = win->cursor_x, cursor_y = win->cursor_y;
+
+	for(int y = 0; y < win->rows; y++) {
+		for(int x = 0; x < win->columns; x++) {
+			tm_win_putch(win, x, y, win->buffer[y * win->columns + x].disp, attrib);
+		}
 	}
 
-	if((ret = tm_win_clear(win)) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
-		return ret;
-	}
+	tm_win_cursor(win, win->cursor_x, win->cursor_y);
 
 	return 0;
 }
