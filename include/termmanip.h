@@ -73,6 +73,13 @@
 #define TM_FLAG_RAW  0b00000010
 #define TM_FLAG_ECHO 0b00000001
 
+#include <stdint.h>
+
+typedef struct {
+	uint32_t attrib;
+	char disp;
+} Tm_char;
+
 	int position_x, position_y, columns, rows;
 	int cursor_x, cursor_y;
 
