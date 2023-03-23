@@ -1,5 +1,5 @@
 #include "termmanip.h"
-
+#include <stdlib.h>
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	int scr_x, scr_y;
 
@@ -43,6 +43,13 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->columns = columns;
 	win->rows = rows;
 
+	win->buffer = realloc(win->buffer, sizeof(char) * win->columns * win->rows);
+	win->physical_buffer = realloc(win->buffer, sizeof(char) * win->columns * win->rows);
+
+	if(win->buffer == NULL || win->physical_buffer == NULL) {
+		exit_log("tm_win_modify", "realloc", 1);
+	}
+	
 	return 0;
 }
 

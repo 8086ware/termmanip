@@ -102,6 +102,7 @@ typedef struct Tm_window {
 	uint32_t attrib;
 
 	_Bool cursor_visible;
+	_Bool cursor_moved;
 } Tm_window;
 
 extern Tm_window* default_win;

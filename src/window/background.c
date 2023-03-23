@@ -6,7 +6,7 @@
 int tm_win_background(Tm_window* win, uint32_t attrib) {
 	int ret = 0;
 
-	int cursor_x = win->cursor_x, cursor_y = win->cursor_y;
+	int temp_cursor_x = win->cursor_x, temp_cursor_y = win->cursor_y;
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
@@ -14,7 +14,9 @@ int tm_win_background(Tm_window* win, uint32_t attrib) {
 		}
 	}
 
-	tm_win_cursor(win, win->cursor_x, win->cursor_y);
+	tm_win_cursor(win, temp_cursor_x, temp_cursor_y);
+
+	tm_win_attrib(win, attrib);
 
 	return 0;
 }
