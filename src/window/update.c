@@ -116,7 +116,16 @@ void tm_win_update(Tm_window* win) {
 #else
 		write(fileno(stdout), win->output, win->output_len);
 #endif
-	tm_win_memclear(win);
+	}
+
+	free(win->output);
+	win->output = NULL;
+	win->output_len = 0;
+
+	for(int i = 0; i < win->columns * win->rows; i++) {
+		win->physical_buffer[i].disp = win->buffer[i].disp;
+		win->physical_buffer[i].attrib = win->buffer[i].attrib;
+	}
 
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_update(win->children[i]);
