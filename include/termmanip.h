@@ -80,11 +80,12 @@ typedef struct {
 	char disp;
 } Tm_char;
 
+typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
 	int cursor_x, cursor_y;
 
-	struct _Tm_window* parent;
-	struct _Tm_window** children;
+	struct Tm_window* parent;
+	struct Tm_window** children;
 
 	int child_type;
 
