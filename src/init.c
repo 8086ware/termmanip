@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "exit_log.h"
-#include "append_win.h"
+#include "append_output.h"
 #include "signal_handler.h"
 #include "exit_log.h"
 #include <signal.h>
@@ -58,37 +58,14 @@ void tm_init() {
 #else
 	signal(SIGWINCH, signal_handle);	
 #endif	
-	int scr_columns, scr_rows;
+	int scr_columns = 0, scr_rows = 0;
 
 	tm_get_scrsize(&scr_columns, &scr_rows);
 
-	default_win = malloc(sizeof(Tm_window));
+	default_win = tm_window(0, 0, scr_columns, scr_rows);
 
-	if(default_win == NULL) {
-		exit_log("tm_init", "malloc", 1);
-	}
+	char init[] = "\x1b[?1049h\x1b[2J";
 
-	tm_win_modify(default_win, 0, 0, scr_columns, scr_rows);
-
-	default_win->parent = NULL;
-	default_win->children = NULL;
-
-	default_win->children_amount = 0;
-
-	default_win->contents = NULL;
-	default_win->content_len = 0;
-
-	default_win->flags = 0;
-
-	append_win(default_win, TM_ESC_ENTER_ALT_SCREEN);
-	append_win(default_win, "\x1b[2J");
-
-	tm_win_echo(default_win, 1);
-	tm_win_raw(default_win, 1);
-
-	tm_win_cursor(default_win, 0, 0);
-	tm_win_attrib(default_win, TM_ATTRIB_RESET);
-
-	tm_update();
+	write(fileno(stdout), init, strlen(init));
 }
 
