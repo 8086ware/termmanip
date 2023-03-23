@@ -21,7 +21,14 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 	if((ret = tm_win_puts(win, win->cursor_x, win->cursor_y, buffer, win->attrib) == TM_ERROR)) {
 		return ret;
 	}
-	
+
+	win->cursor_x += strlen(buffer);
+
+	int i = win->cursor_y * win->columns + win->cursor_x;
+
+	win->cursor_x = i % win->columns;
+	win->cursor_y = i / win->columns;
+
 	return 0;
 }
 
