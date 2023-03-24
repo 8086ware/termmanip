@@ -8,6 +8,14 @@
 #include <windows.h>
 #endif
 
+typedef struct Pending_Change {
+	int x;
+	int y;
+
+	Tm_char* changed_xy;
+	_Bool move;
+} Pending_Change;
+
 void tm_win_update(Tm_window* win) {
 	int parent_x = 0;
 	int parent_y = 0;
