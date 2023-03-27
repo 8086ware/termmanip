@@ -13,6 +13,8 @@
 #include <unistd.h>
 #endif
 
+Tm_screen* screen = NULL;
+
 void tm_init() {
 #ifdef _WIN32
 	DWORD mode = 0;
@@ -58,9 +60,30 @@ void tm_init() {
 
 	tm_get_scrsize(&scr_columns, &scr_rows);
 
+	screen = malloc(sizeof(Tm_screen));
+
+	if(screen == NULL) {
+		exit_log("tm_init", "malloc", 1);
+	}
+
+	screen->columns = scr_columns;
+	screen->rows = scr_rows;
+
+	screen->cursor_x = 0;
+	screen->cursor_y = 0;
+
+	screen->pending_change_amount = 0;
+	
+	screen->output = NULL;
+	screen->output_len = 0;
+
+	screen->attrib = TM_ATTRIB_RESET;
+
+	screen->pending_changes = NULL;
+	
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
 
-	char init[] = "\x1b[?1049h\x1b[2J";
+	char init[] = "\x1b[?1049h\x1b[2J\x1b[H";
 
 	write(fileno(stdout), init, strlen(init));
 }
