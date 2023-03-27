@@ -41,9 +41,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	}
 	
 	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->buffer[i].disp = '\0';
+		win->buffer[i].disp = ' ';
 		win->buffer[i].attrib = TM_ATTRIB_RESET;
-		win->physical_buffer[i].disp = '\0';
+		win->physical_buffer[i].disp = ' ';
 		win->physical_buffer[i].attrib = TM_ATTRIB_RESET;
 	}
 
