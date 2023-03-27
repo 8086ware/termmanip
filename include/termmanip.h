@@ -85,6 +85,20 @@ typedef struct {
 	Tm_char tm_char;
 } Pending_Change;
 
+typedef struct {
+	int columns, rows;
+
+	Pending_Change* pending_changes;
+
+	int cursor_x, cursor_y;
+	int pending_change_amount;
+
+	uint32_t attrib;
+
+	char* output;
+	int output_len;
+} Tm_screen;
+
 typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
 	int cursor_x, cursor_y;
@@ -111,6 +125,8 @@ typedef struct Tm_window {
 } Tm_window;
 
 extern Tm_window* default_win;
+extern Tm_screen* screen;
+
 extern int tm_error_number;
 
 Tm_window* tm_window(int x, int y, int columns, int rows);
