@@ -113,9 +113,6 @@ typedef struct Tm_window {
 	Tm_char* buffer;
 	Tm_char* physical_buffer;
 	
-	char* output;
-	int output_len;
-
 	unsigned char flags;
 
 	uint32_t attrib;
