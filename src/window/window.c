@@ -26,9 +26,6 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	win->children_amount = 0;
 
-	win->output = NULL;
-	win->output_len = 0;
-
 	win->flags = 0;
 
 	win->cursor_visible = 1;
@@ -67,8 +64,6 @@ void tm_win_free(Tm_window* win) {
 
 	free(win->children);
 	win->children = NULL;
-	free(win->output);
-	win->output = NULL;
 	free(win->buffer);
 	win->buffer = NULL;
 	free(win->physical_buffer);
