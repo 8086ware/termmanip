@@ -80,6 +80,11 @@ typedef struct {
 	char disp;
 } Tm_char;
 
+typedef struct {
+	int x, y;
+	Tm_char tm_char;
+} Pending_Change;
+
 typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
 	int cursor_x, cursor_y;
