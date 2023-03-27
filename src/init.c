@@ -30,17 +30,15 @@ void tm_init() {
 	}
 
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
-		exit_log("tm_init", "GetConsoleMode", 1);
+		exit_log("tm_init", "GetConsoleMode", 2);
 	}
 
 	mode &= ~ENABLE_ECHO_INPUT;
 	mode &= ~ENABLE_LINE_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		exit_log("tm_init", "SetConsoleMode", 1);
+		exit_log("tm_init", "SetConsoleMode", 2);
 	}
-
-
 #else 
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
