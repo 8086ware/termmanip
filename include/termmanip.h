@@ -82,8 +82,6 @@ typedef struct {
 } Pending_Change;
 
 typedef struct {
-	int columns, rows;
-
 	Pending_Change* pending_changes;
 
 	int cursor_x, cursor_y;
