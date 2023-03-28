@@ -71,14 +71,6 @@ void tm_screen_update() {
 				append_output("\x1b[9m");
 			}
 
-			if(attrib & TM_ATTRIB_ALTERNATE) {
-				append_output("\x1b(0");
-			}
-
-			if(attrib & TM_ATTRIB_MAIN) {
-				append_output("\x1b(B");
-			}
-
 			if((attrib & TM_ATTRIB_FG_MASK) != 0) {
 				append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
 			}
