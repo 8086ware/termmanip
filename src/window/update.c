@@ -138,8 +138,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 	}
 
 	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->physical_buffer[i].disp = win->buffer[i].disp;
-		win->physical_buffer[i].attrib = win->buffer[i].attrib;
+		win->physical_buffer[i] = win->buffer[i];
 	}
 
 	for(int i = 0; i < win->children_amount; i++) {
