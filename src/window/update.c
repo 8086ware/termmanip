@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "append_output.h"
 #include <stdlib.h>
+#include "pending_change.h"
 
 #ifdef _WIN32
 #include <windows.h>
