@@ -135,7 +135,10 @@ void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
 
+void tm_win_write_to_screen(Tm_window* win);
+void tm_screen_update();
 void tm_win_update(Tm_window* win);
+
 
 int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib);
 int tm_win_puts(Tm_window * win, int x, int y, char* str, uint32_t attrib);
