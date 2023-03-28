@@ -144,5 +144,9 @@ void tm_win_write_to_screen(Tm_window* win) {
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_write_to_screen(win->children[i]);
 	}
+}
 
+void tm_win_update(Tm_window* win) {
+	tm_win_write_to_screen(win);
+	tm_screen_update();
 }
