@@ -142,7 +142,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 	}
 
 	for(int i = 0; i < win->children_amount; i++) {
-		tm_win_update(win->children[i]);
+		tm_win_write_to_screen(win->children[i]);
 	}
 
 }
