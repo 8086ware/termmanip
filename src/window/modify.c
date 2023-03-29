@@ -45,8 +45,8 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->columns = columns;
 	win->rows = rows;
 
-	win->buffer = realloc(win->buffer, sizeof(char) * win->columns * win->rows);
-	win->physical_buffer = realloc(win->physical_buffer, sizeof(char) * win->columns * win->rows);
+	win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
+	win->physical_buffer = realloc(win->physical_buffer, sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL || win->physical_buffer == NULL) {
 		exit_log("tm_win_modify", "realloc", 1);
