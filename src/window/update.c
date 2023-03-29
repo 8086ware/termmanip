@@ -25,6 +25,10 @@ void terminal_move_cursor(int x, int y) {
 		}
 	}
 
+	else if(x == screen->cursor_x) {
+			append_output("\b");
+	}
+
 	else {
 		append_output("\x1b[%d;%dH", y + 1, x + 1);
 	}
