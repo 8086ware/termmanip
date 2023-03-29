@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -14,6 +15,10 @@ void tm_exit() {
 	write(fileno(stdout), exit, strlen(exit));
 
 	tm_win_free(default_win);
+
+	free(screen->output);
+	free(screen);
+
 #ifdef _WIN32
 	DWORD mode = 0;
 
