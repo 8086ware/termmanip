@@ -1,5 +1,6 @@
 #include "termmanip.h"
 #include <stdlib.h>
+#include "exit_log.h"
 
 void tm_add_pending_change(Tm_char tm_char, int x, int y) {
 	screen->pending_changes = realloc(screen->pending_changes, sizeof(Pending_Change) * (screen->pending_change_amount + 1));
