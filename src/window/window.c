@@ -69,5 +69,4 @@ void tm_win_free(Tm_window* win) {
 	free(win->physical_buffer);
 	win->physical_buffer = NULL;
 	free(win);
-	win = NULL;
 }
