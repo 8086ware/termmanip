@@ -19,6 +19,7 @@ void tm_exit() {
 	free(screen->output);
 	free(screen);
 
+	screen = NULL;
 #ifdef _WIN32
 	DWORD mode = 0;
 
