@@ -4,7 +4,7 @@
 int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib) {
 	int i = y * win->columns + x;
 
-	if(i > win->columns * win->rows || i < 0) {
+	if(i > (win->columns * win->rows) - 1 || i < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
