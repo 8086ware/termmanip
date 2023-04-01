@@ -100,7 +100,6 @@ void tm_screen_update() {
 	}
 
 #ifdef _WIN32
-	DWORD bytes_written = 0;
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), screen->output, screen->output_len, &bytes_written, NULL);
 #else
 	write(fileno(stdout), screen->output, screen->output_len);
@@ -120,6 +119,18 @@ void tm_win_write_to_screen(Tm_window* win) {
 	if(win->parent != NULL) {
 		parent_x = win->parent->position_x;
 		parent_y = win->parent->position_y;
+	}
+
+	if(win->flags != screen->flags) {
+		if(win->flags & TM_FLAG_CURSOR_VISIBLE) {
+			append_output("\x1b[?25h");
+		}
+
+		else if(win->flags & ~TM_FLAG_CURSOR_VISIBLE) {
+			append_output("\x1b[?25l");
+		}
+
+		screen->flags = win->flags;
 	}
 
 	for(int i = 0; i < win->columns * win->rows; i++) {
