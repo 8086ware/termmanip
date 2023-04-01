@@ -13,13 +13,18 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	win->cursor_x = i % win->columns;
 	win->cursor_y = i / win->columns;	
 
-	win->cursor_moved = 1;
-
 	return 0;
 }
 
 int tm_win_cursor_visible(Tm_window* win, int state) {
-	win->cursor_visible = state;
+	if(state <= 0) {
+		win->flags &= ~TM_FLAG_CURSOR_VISIBLE;
+	}
+
+	else if(state > 0) {	
+		win->flags |= TM_FLAG_CURSOR_VISIBLE;
+	}
+
 	
 	return 0;
 }
