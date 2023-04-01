@@ -75,6 +75,8 @@ void tm_init() {
 	screen->attrib = TM_ATTRIB_RESET;
 
 	screen->pending_changes = NULL;
+
+	screen->flags = 0;
 	
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
 
