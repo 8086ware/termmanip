@@ -66,8 +66,9 @@
 #define TM_ATTRIB_STRIKE               0b00000000000000000000000010000000
 #define TM_ATTRIB_RESET                0b00000000000000000000010000000000
 
-#define TM_FLAG_RAW  0b00000010
-#define TM_FLAG_ECHO 0b00000001
+#define TM_FLAG_RAW  0b0000000000000001
+#define TM_FLAG_ECHO 0b0000000000000010
+#define TM_FLAG_CURSOR_VISIBLE 0b0000000000000100
 
 #include <stdint.h>
 
@@ -91,6 +92,8 @@ typedef struct {
 
 	char* output;
 	int output_len;
+
+	uint16_t flags;
 } Tm_screen;
 
 typedef struct Tm_window {
@@ -107,12 +110,9 @@ typedef struct Tm_window {
 	Tm_char* buffer;
 	Tm_char* physical_buffer;
 	
-	unsigned char flags;
+	uint16_t flags;
 
 	uint32_t attrib;
-
-	_Bool cursor_visible;
-	_Bool cursor_moved;
 } Tm_window;
 
 extern Tm_window* default_win;
