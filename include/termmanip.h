@@ -3,11 +3,13 @@
 
 #define TM_ERROR -1
 
+// Error types
 #define TM_INVALID_CURSOR 1
 #define TM_INVALID_DIMENSIONS 2
 #define TM_DIALOG_NO_OPTIONS 3
 #define TM_WIN_NULL 4
 
+// Child window types
 #define TM_CHILD_NONE 0
 #define TM_CHILD_NORMAL 1
 #define TM_CHILD_BUTTON 2
@@ -61,6 +63,8 @@
 #define TM_ATTRIB_STRIKE               0b00000000000000000000000010000000
 #define TM_ATTRIB_RESET                0b00000000000000000000010000000000
 
+// Window flags
+
 #define TM_FLAG_RAW            0b0000000000000001
 #define TM_FLAG_ECHO           0b0000000000000010
 #define TM_FLAG_CURSOR_VISIBLE 0b0000000000000100
@@ -72,10 +76,16 @@ typedef struct {
 	char disp;
 } Tm_char;
 
+// Pending change structure has a Tm_char that will be written on the screen at x, y
+
 typedef struct {
 	int x, y;
 	Tm_char tm_char;
 } Pending_Change;
+
+// Tm_screen structure contains the physical entire screen which is the columns and rows of the terminal. It has the pending changes which is an array with all
+// the characters and attributes to be written at an x,y, it has an attrib variable which identifies the last attribute used, an output char array which is
+// the output to be put on screen (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
 typedef struct {
 	Pending_Change* pending_changes;
@@ -90,6 +100,9 @@ typedef struct {
 
 	uint16_t flags;
 } Tm_screen;
+
+// Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
+// the buffer containing its contents, a physical buffer to represent what has been copied onto the screen, its flags and its current attrib.
 
 typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
@@ -115,59 +128,58 @@ extern Tm_screen* screen;
 
 extern int tm_error_number;
 
-Tm_window* tm_window(int x, int y, int columns, int rows);
-void tm_win_free(Tm_window* win);
+Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
+void tm_win_free(Tm_window* win); // Frees and deletes a window
 
-void tm_get_scrsize(int* x, int* y);
-void tm_set_scrsize(int x, int y);
+void tm_get_scrsize(int* x, int* y); // Gets the screensize
+void tm_set_scrsize(int x, int y); // Sets the screensize
 
-void tm_get_winsize(Tm_window* win, int* columns, int* rows);
-void tm_get_winpos(Tm_window* win, int* position_x, int* position_y);
+void tm_get_winsize(Tm_window* win, int* columns, int* rows); // Gets a windows size
+void tm_get_winpos(Tm_window* win, int* position_x, int* position_y); // Gets a windows position
 
-int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows);
+int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
-void tm_win_write_to_screen(Tm_window* win);
-void tm_screen_update();
-void tm_win_update(Tm_window* win);
+void tm_win_write_to_screen(Tm_window* win); // Writes the window to the screen structure but doesn't display to the actual terminal
+void tm_screen_update(); // Puts the internal screen onto the terminal
+void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_screen and tm_screen_update
 
-int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib);
-int tm_win_puts(Tm_window * win, int x, int y, char* str, uint32_t attrib);
-int tm_win_print(Tm_window* win, char* fmt, ...);
+int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib); // Put a char at x, y and an attribute
+int tm_win_puts(Tm_window * win, int x, int y, char* str, uint32_t attrib); // Put a string at x, y and an attribute
+int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cursor position
 
-int tm_win_cursor(Tm_window* win, int x, int y);
-int tm_win_cursor_visible(Tm_window* win, int state);
+int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
+int tm_win_cursor_visible(Tm_window* win, int state); // Depending on state is false or true will turn on or off the cursor visibility
 
-void tm_win_echo(Tm_window* win, int state);
-void tm_win_raw(Tm_window* win, int state);
+void tm_win_echo(Tm_window* win, int state); // Depending on state is false or true will turn on or off input echo
+void tm_win_raw(Tm_window* win, int state); // Depending on state is false or true will turn on or off input raw mode (won't return as soon as it gets a character)
 
-void tm_init();
-void tm_exit();
+void tm_init(); // Initalize termmanip
+void tm_exit(); // Exit termmanip
 
-int tm_win_border(Tm_window* win);
-int tm_win_parent(Tm_window* parent, Tm_window* child, int type);
+int tm_win_border(Tm_window* win); // Border a window
+int tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
 
-void tm_win_memclear(Tm_window* win);
+int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 
-int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib);
+void tm_win_attrib(Tm_window* win, uint32_t attrib); // Set the window attribute
 
-void tm_win_attrib(Tm_window* win, uint32_t attrib);
+int tm_win_background(Tm_window* win, uint32_t attrib); // Set the window background
 
-int tm_win_background(Tm_window* win, uint32_t attrib);
+int tm_win_input_ch(Tm_window* win); // Get a single char and return it
+int tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
 
-int tm_win_input_ch(Tm_window* win);
-int tm_win_input_str(Tm_window* win, char* str, int max_size);
+Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text); // Put a button in the window
+Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
 
-Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text);
-Tm_window* tm_win_button_select(Tm_window* win);
+int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...); // Make a new dialog in win
 
-int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...);
+int tm_win_clear(Tm_window* win); // Clear win
 
-int tm_win_clear(Tm_window* win);
+int tm_error(); // Return the most recent error
 
-int tm_error();
+int tm_inputblock(int state); // Depending on state is false or true will turn on or off input blocking which makes tm_win_input_ch return without pressing a single key
 
-int tm_inputblock(int state);
-
+//Bunch of macros that serve the same functionality as other functions except they act upon the default window
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
 #define tm_update() tm_win_update(default_win)
