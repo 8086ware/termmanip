@@ -28,9 +28,6 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	win->flags = 0;
 
-	win->cursor_visible = 1;
-	win->cursor_moved = 0;
-
 	win->attrib = TM_ATTRIB_RESET;
 
 	win->buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
@@ -49,7 +46,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	tm_win_echo(win, 1);
 	tm_win_raw(win, 1);
-
+	tm_win_cursor_visible(win, 1);
 	return win;
 }
 
