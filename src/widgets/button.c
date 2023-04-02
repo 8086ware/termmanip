@@ -18,7 +18,7 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 }
 
 Tm_window* tm_win_button_select(Tm_window* win) {
-	unsigned char flags = win->flags;
+	uint16_t flags = win->flags;
 
 	tm_win_echo(win, 0);
 	tm_win_raw(win, 1);
