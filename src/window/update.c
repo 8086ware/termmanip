@@ -9,22 +9,27 @@
 #include <windows.h>
 #endif
 
+// Move the actual terminal cursor to x, y from screen->cursor_x, screen->cursor_y in the best way possible
 void terminal_move_cursor(int x, int y) {
 	if(y != screen->cursor_y) {
 		append_output("\x1b[%d;%dH", y + 1, x + 1);
 		return;
 	}
 
+	// If the if new x is in front of screen->cursor_x, we don't need to move it.
+	
 	if(x - screen->cursor_x == 1) {
 		return;
 	}
 
+	// If the new x is under 8 characters from the screen->cursor_x, use spaces to get there instead of escape codes
 	if(x - screen->cursor_x < 8 && x - screen->cursor_x > 1) {
 		for(int i = 1; i < x - screen->cursor_x; i++) {
 			append_output(" ");
 		}
 	}
 
+	// If the new x is the same as screen->cursor_x, just backspace to get there
 	else if(x == screen->cursor_x) {
 			append_output("\b");
 	}
@@ -40,6 +45,8 @@ void tm_screen_update() {
 
 		char disp = screen->pending_changes[i].tm_char.disp;
 		uint32_t attrib = screen->pending_changes[i].tm_char.attrib;
+
+		// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
 		if(screen->attrib != attrib) {
 			screen->attrib = attrib;
@@ -94,8 +101,9 @@ void tm_screen_update() {
 		}
 
 		append_output("%c", disp);
-
-		screen->cursor_x = screen->pending_changes[i].x;
+	
+		// Make the screen cursor x and y match the last pending change x, y
+		screen->cursor_x = screen->pending_changes[i].x; 
 		screen->cursor_y = screen->pending_changes[i].y;
 	}
 
@@ -121,6 +129,8 @@ void tm_win_write_to_screen(Tm_window* win) {
 		parent_y = win->parent->position_y;
 	}
 
+	// Update screen flags
+
 	if(win->flags != screen->flags) {
 		if(win->flags & TM_FLAG_CURSOR_VISIBLE) {
 			append_output("\x1b[?25h");
@@ -133,6 +143,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 		screen->flags = win->flags;
 	}
 
+	// Loop through window and if there is a cell in the memory buffer that isn't the same in the physical buffer, insert it in the screens pending changes
 	for(int i = 0; i < win->columns * win->rows; i++) {
 		char disp = win->buffer[i].disp;
 		uint32_t attrib = win->buffer[i].attrib;
