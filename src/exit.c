@@ -44,13 +44,8 @@ void tm_exit() {
 		exit_log("tm_exit", "SetConsoleMode", 1);
 	}
 #else
-	struct termios term;
-	tcgetattr(fileno(stdin), &term);
-
-	term.c_lflag |= ECHO;
-	term.c_lflag |= ICANON;
-
-	tcsetattr(fileno(stdin), TCSANOW, &term);
+	tcsetattr(fileno(stdin), TCSANOW, &og_term);
+	tcsetattr(fileno(stdout), TCSANOW, &og_term);
 #endif
 	tm_inputblock(1);
 }
