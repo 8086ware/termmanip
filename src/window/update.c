@@ -31,7 +31,7 @@ void terminal_move_cursor(int x, int y) {
 
 	// If the new x is the same as screen->cursor_x, just backspace to get there
 	else if(x == screen->cursor_x) {
-			append_output("\b");
+		append_output("\b");
 	}
 
 	else {
