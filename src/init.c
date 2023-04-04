@@ -77,6 +77,18 @@ void tm_init() {
 
 	screen->flags = 0;
 	
+	screen->buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
+	screen->physical_buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
+
+	if(screen->buffer == NULL || screen->physical_buffer == NULL) {
+		exit_log("tm_init", "malloc", 2);
+	}	
+
+	for(int i = 0; i < screen->columns * screen->rows; i++) {
+		screen->buffer[i].disp = ' ';
+		screen->buffer[i].attrib = TM_ATTRIB_RESET;
+	}
+
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H";
