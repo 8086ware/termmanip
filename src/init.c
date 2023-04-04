@@ -70,14 +70,10 @@ void tm_init() {
 	screen->cursor_x = 0;
 	screen->cursor_y = 0;
 
-	screen->pending_change_amount = 0;
-	
 	screen->output = NULL;
 	screen->output_len = 0;
 
 	screen->attrib = TM_ATTRIB_RESET;
-
-	screen->pending_changes = NULL;
 
 	screen->flags = 0;
 	
