@@ -40,71 +40,78 @@ void terminal_move_cursor(int x, int y) {
 }
 
 void tm_screen_update() {
-	for(int i = 0; i < screen->pending_change_amount; i++) {	
-		terminal_move_cursor(screen->pending_changes[i].x, screen->pending_changes[i].y);
+	for(int y = 0; y < screen->rows; y++) {
+		for(int x = 0; x < screen->columns; x++) {
+			char disp = screen->buffer[y * screen->columns + x].disp;
+			uint32_t attrib = screen->buffer[y * screen->columns + x].attrib;
 
-		char disp = screen->pending_changes[i].tm_char.disp;
-		uint32_t attrib = screen->pending_changes[i].tm_char.attrib;
+			char physical_disp = screen->physical_buffer[y * screen->columns + x].disp;
+			uint32_t physical_attrib = screen->physical_buffer[y * screen->columns + x].attrib;
 
-		// If the screen attribute doesn't match the attribute we want to display then output the new attribute
+			if(disp != physical_disp || attrib != physical_attrib) {
 
-		if(screen->attrib != attrib) {
-			screen->attrib = attrib;
+				// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
-			if(attrib & TM_ATTRIB_BOLD) {
-				append_output("\x1b[1m");
-			}
+				terminal_move_cursor(x, y);
+				if(screen->attrib != attrib) {
+					screen->attrib = attrib;
 
-			if(attrib & TM_ATTRIB_DIM) {
-				append_output("\x1b[2m");
-			}
+					if(attrib & TM_ATTRIB_BOLD) {
+						append_output("\x1b[1m");
+					}
 
-			if(attrib & TM_ATTRIB_ITALIC) {
-				append_output("\x1b[3m");
-			}
+					if(attrib & TM_ATTRIB_DIM) {
+						append_output("\x1b[2m");
+					}
 
-			if(attrib & TM_ATTRIB_UNDERLINE) {
-				append_output("\x1b[4m");
-			}
+					if(attrib & TM_ATTRIB_ITALIC) {
+						append_output("\x1b[3m");
+					}
 
-			if(attrib & TM_ATTRIB_BLINKING) {
-				append_output("\x1b[5m");
-			}
+					if(attrib & TM_ATTRIB_UNDERLINE) {
+						append_output("\x1b[4m");
+					}
 
-			if(attrib & TM_ATTRIB_HIGHLIGHT) {
-				append_output("\x1b[7m");
-			}
+					if(attrib & TM_ATTRIB_BLINKING) {
+						append_output("\x1b[5m");
+					}
 
-			if(attrib & TM_ATTRIB_HIDDEN) {
-				append_output("\x1b[8m");
-			}
+					if(attrib & TM_ATTRIB_HIGHLIGHT) {
+						append_output("\x1b[7m");
+					}
 
-			if(attrib & TM_ATTRIB_STRIKE) {
-				append_output("\x1b[9m");
-			}
+					if(attrib & TM_ATTRIB_HIDDEN) {
+						append_output("\x1b[8m");
+					}
 
-			if((attrib & TM_ATTRIB_FG_MASK) != 0) {
-				append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
-			}
+					if(attrib & TM_ATTRIB_STRIKE) {
+						append_output("\x1b[9m");
+					}
 
-			if((attrib & TM_ATTRIB_BG_MASK) != 0) {
-				append_output("\x1b[%dm", (attrib & TM_ATTRIB_BG_MASK) >> 24);
-			}
+					if((attrib & TM_ATTRIB_FG_MASK) != 0) {
+						append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
+					}
 
-			if(attrib & TM_ATTRIB_RESET) {
-				append_output("\x1b[0m");
+					if((attrib & TM_ATTRIB_BG_MASK) != 0) {
+						append_output("\x1b[%dm", (attrib & TM_ATTRIB_BG_MASK) >> 24);
+					}
+
+					if(attrib & TM_ATTRIB_RESET) {
+						append_output("\x1b[0m");
+					}
+				}
+
+				if(disp == '\0') {
+					disp = ' ';
+				}
+
+				append_output("%c", disp);
+
+				// Make the screen cursor x and y match the last pending change x, y
+				screen->cursor_x = x; 
+				screen->cursor_y = y;
 			}
 		}
-
-		if(disp == '\0') {
-			disp = ' ';
-		}
-
-		append_output("%c", disp);
-	
-		// Make the screen cursor x and y match the last pending change x, y
-		screen->cursor_x = screen->pending_changes[i].x; 
-		screen->cursor_y = screen->pending_changes[i].y;
 	}
 
 #ifdef _WIN32
