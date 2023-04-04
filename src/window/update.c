@@ -40,19 +40,18 @@ void terminal_move_cursor(int x, int y) {
 }
 
 void tm_screen_update() {
-	for(int y = 0; y < screen->rows; y++) {
-		for(int x = 0; x < screen->columns; x++) {
-			char disp = screen->buffer[y * screen->columns + x].disp;
-			uint32_t attrib = screen->buffer[y * screen->columns + x].attrib;
+	for(int i = 0; i != screen->columns * screen->rows; i++) {
+			char disp = screen->buffer[i].disp;
+			uint32_t attrib = screen->buffer[i].attrib;
 
-			char physical_disp = screen->physical_buffer[y * screen->columns + x].disp;
-			uint32_t physical_attrib = screen->physical_buffer[y * screen->columns + x].attrib;
+			char physical_disp = screen->physical_buffer[i].disp;
+			uint32_t physical_attrib = screen->physical_buffer[i].attrib;
 
 			if(disp != physical_disp || attrib != physical_attrib) {
 
 				// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
-				terminal_move_cursor(x, y);
+				terminal_move_cursor(i % screen->columns, i / screen->columns);
 				if(screen->attrib != attrib) {
 					screen->attrib = attrib;
 
@@ -108,9 +107,8 @@ void tm_screen_update() {
 				append_output("%c", disp);
 
 				// Make the screen cursor x and y match the last pending change x, y
-				screen->cursor_x = x; 
-				screen->cursor_y = y;
-			}
+				screen->cursor_x = i % screen->columns; 
+				screen->cursor_y = i / screen->columns;
 		}
 	}
 
