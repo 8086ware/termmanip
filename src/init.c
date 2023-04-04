@@ -64,6 +64,9 @@ void tm_init() {
 		exit_log("tm_init", "malloc", 1);
 	}
 
+	screen->columns = scr_columns;
+	screen->rows = scr_rows;
+
 	screen->cursor_x = 0;
 	screen->cursor_y = 0;
 
