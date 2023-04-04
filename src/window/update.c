@@ -17,7 +17,7 @@ void terminal_move_cursor(int x, int y) {
 	}
 
 	// If the if new x is in front of screen->cursor_x, we don't need to move it.
-	
+
 	if(x - screen->cursor_x == 1) {
 		return;
 	}
@@ -41,75 +41,78 @@ void terminal_move_cursor(int x, int y) {
 
 void tm_screen_update() {
 	for(int i = 0; i != screen->columns * screen->rows; i++) {
-			char disp = screen->buffer[i].disp;
-			uint32_t attrib = screen->buffer[i].attrib;
+		char disp = screen->buffer[i].disp;
+		uint32_t attrib = screen->buffer[i].attrib;
 
-			char physical_disp = screen->physical_buffer[i].disp;
-			uint32_t physical_attrib = screen->physical_buffer[i].attrib;
+		char physical_disp = screen->physical_buffer[i].disp;
+		uint32_t physical_attrib = screen->physical_buffer[i].attrib;
 
-			if(disp != physical_disp || attrib != physical_attrib) {
+		if(disp != physical_disp || attrib != physical_attrib) {
 
-				// If the screen attribute doesn't match the attribute we want to display then output the new attribute
+			// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
-				terminal_move_cursor(i % screen->columns, i / screen->columns);
-				if(screen->attrib != attrib) {
-					screen->attrib = attrib;
+			terminal_move_cursor(i % screen->columns, i / screen->columns);
+			if(screen->attrib != attrib) {
+				screen->attrib = attrib;
 
-					if(attrib & TM_ATTRIB_BOLD) {
-						append_output("\x1b[1m");
-					}
-
-					if(attrib & TM_ATTRIB_DIM) {
-						append_output("\x1b[2m");
-					}
-
-					if(attrib & TM_ATTRIB_ITALIC) {
-						append_output("\x1b[3m");
-					}
-
-					if(attrib & TM_ATTRIB_UNDERLINE) {
-						append_output("\x1b[4m");
-					}
-
-					if(attrib & TM_ATTRIB_BLINKING) {
-						append_output("\x1b[5m");
-					}
-
-					if(attrib & TM_ATTRIB_HIGHLIGHT) {
-						append_output("\x1b[7m");
-					}
-
-					if(attrib & TM_ATTRIB_HIDDEN) {
-						append_output("\x1b[8m");
-					}
-
-					if(attrib & TM_ATTRIB_STRIKE) {
-						append_output("\x1b[9m");
-					}
-
-					if((attrib & TM_ATTRIB_FG_MASK) != 0) {
-						append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
-					}
-
-					if((attrib & TM_ATTRIB_BG_MASK) != 0) {
-						append_output("\x1b[%dm", (attrib & TM_ATTRIB_BG_MASK) >> 24);
-					}
-
-					if(attrib & TM_ATTRIB_RESET) {
-						append_output("\x1b[0m");
-					}
+				if(attrib & TM_ATTRIB_BOLD) {
+					append_output("\x1b[1m");
 				}
 
-				if(disp == '\0') {
-					disp = ' ';
+				if(attrib & TM_ATTRIB_DIM) {
+					append_output("\x1b[2m");
 				}
 
-				append_output("%c", disp);
+				if(attrib & TM_ATTRIB_ITALIC) {
+					append_output("\x1b[3m");
+				}
 
-				// Make the screen cursor x and y match the last pending change x, y
-				screen->cursor_x = i % screen->columns; 
-				screen->cursor_y = i / screen->columns;
+				if(attrib & TM_ATTRIB_UNDERLINE) {
+					append_output("\x1b[4m");
+				}
+
+				if(attrib & TM_ATTRIB_BLINKING) {
+					append_output("\x1b[5m");
+				}
+
+				if(attrib & TM_ATTRIB_HIGHLIGHT) {
+					append_output("\x1b[7m");
+				}
+
+				if(attrib & TM_ATTRIB_HIDDEN) {
+					append_output("\x1b[8m");
+				}
+
+				if(attrib & TM_ATTRIB_STRIKE) {
+					append_output("\x1b[9m");
+				}
+
+				if((attrib & TM_ATTRIB_FG_MASK) != 0) {
+					append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
+				}
+
+				if((attrib & TM_ATTRIB_BG_MASK) != 0) {
+					append_output("\x1b[%dm", (attrib & TM_ATTRIB_BG_MASK) >> 24);
+				}
+
+				if(attrib & TM_ATTRIB_RESET) {
+					append_output("\x1b[0m");
+				}
+			}
+
+			if(disp == '\0') {
+				disp = ' ';
+			}
+
+			append_output("%c", disp);
+
+			// Make the screen cursor x and y match the last pending change x, y
+			screen->cursor_x = i % screen->columns; 
+			screen->cursor_y = i / screen->columns;
+
 		}
+
+		screen->physical_buffer[i] = screen->buffer[i];
 	}
 
 #ifdef _WIN32
@@ -121,10 +124,6 @@ void tm_screen_update() {
 	free(screen->output);
 	screen->output = NULL;
 	screen->output_len = 0;
-
-	for(int i = 0; i < screen->columns * screen->rows; i++) {
-		screen->physical_buffer[i] = screen->buffer[i];
-	}
 }
 
 void tm_win_write_to_screen(Tm_window* win) {
