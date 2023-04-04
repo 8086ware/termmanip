@@ -76,13 +76,6 @@ typedef struct {
 	char disp;
 } Tm_char;
 
-// Pending change structure has a Tm_char that will be written on the screen at x, y
-
-typedef struct {
-	int x, y;
-	Tm_char tm_char;
-} Pending_Change;
-
 // Tm_screen structure contains the physical entire screen which is the columns and rows of the terminal. It has the pending changes which is an array with all
 // the characters and attributes to be written at an x,y, it has an attrib variable which identifies the last attribute used, an output char array which is
 // the output to be put on screen (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
