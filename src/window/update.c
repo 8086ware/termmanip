@@ -153,20 +153,10 @@ void tm_win_write_to_screen(Tm_window* win) {
 	}
 
 	// Loop through window and if there is a cell in the memory buffer that isn't the same in the physical buffer, insert it in the screens pending changes
-	for(int i = 0; i < win->columns * win->rows; i++) {
-		char disp = win->buffer[i].disp;
-		uint32_t attrib = win->buffer[i].attrib;
-
-		char physical_disp = win->physical_buffer[i].disp;
-		uint32_t physical_attrib = win->physical_buffer[i].attrib;
-
-		if(physical_disp != disp || physical_attrib != attrib) {
-			tm_add_pending_change(win->buffer[i], win->position_x + parent_x + i % win->columns, parent_y + win->position_y + i / win->columns);
-		}
-	}
-
-	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->physical_buffer[i] = win->buffer[i];
+	for(int y = 0; y < win->rows; y++) {
+		for(int x = 0; x < win->columns; x++) {
+			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[y * win->columns + x];
+		}	
 	}
 
 	for(int i = 0; i < win->children_amount; i++) {
