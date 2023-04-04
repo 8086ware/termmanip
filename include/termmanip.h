@@ -70,6 +70,7 @@
 #define TM_FLAG_CURSOR_VISIBLE 0b0000000000000100
 
 #include <stdint.h>
+#include <termios.h>
 
 typedef struct {
 	uint32_t attrib;
@@ -121,6 +122,7 @@ extern Tm_window* default_win;
 extern Tm_screen* screen;
 
 extern int tm_error_number;
+extern struct termios og_term;
 
 Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
 void tm_win_free(Tm_window* win); // Frees and deletes a window

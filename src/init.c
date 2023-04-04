@@ -14,6 +14,7 @@
 #endif
 
 Tm_screen* screen = NULL;
+struct termios og_term;
 
 void tm_init() {
 #ifdef _WIN32
