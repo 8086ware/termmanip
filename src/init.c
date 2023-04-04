@@ -43,11 +43,12 @@ void tm_init() {
 #else 
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
-
-	term.c_lflag &= ~ECHO;
-	term.c_lflag &= ~ICANON;
+	og_term = term;
+	
+	cfmakeraw(&term);
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
+	tcsetattr(fileno(stdout), TCSANOW, &term);
 #endif
 	signal(SIGINT, signal_handle);
 	signal(SIGTERM, signal_handle);
