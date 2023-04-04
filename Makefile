@@ -43,7 +43,6 @@ OBJECTS=$(OBJ_DIR)/append_output.o \
 		$(OBJ_DIR)/error.o \
 		$(OBJ_DIR)/inputblock.o \
 		$(OBJ_DIR)/put.o \
-		$(OBJ_DIR)/pending_change.o \
 	
 debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
@@ -83,7 +82,6 @@ $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/error.o: $(SRC_DIR)/error.c
 $(OBJ_DIR)/inputblock.o: $(SRC_DIR)/inputblock.c
 $(OBJ_DIR)/put.o: $(SRC_DIR)/window/put.c
-$(OBJ_DIR)/pending_change.o: $(SRC_DIR)/pending_change.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
