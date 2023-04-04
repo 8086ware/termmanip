@@ -124,7 +124,9 @@ void tm_screen_update() {
 	screen->output = NULL;
 	screen->output_len = 0;
 
-	tm_free_pending_changes();
+	for(int i = 0; i < screen->columns * screen->rows; i++) {
+		screen->physical_buffer[i] = screen->buffer[i];
+	}
 }
 
 void tm_win_write_to_screen(Tm_window* win) {
