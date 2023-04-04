@@ -89,6 +89,8 @@ void tm_init() {
 	for(int i = 0; i < screen->columns * screen->rows; i++) {
 		screen->buffer[i].disp = ' ';
 		screen->buffer[i].attrib = TM_ATTRIB_RESET;
+		screen->physical_buffer[i].disp = ' ';
+		screen->physical_buffer[i].attrib = TM_ATTRIB_RESET;
 	}
 
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
