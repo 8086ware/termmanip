@@ -31,17 +31,14 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->attrib = TM_ATTRIB_RESET;
 
 	win->buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
-	win->physical_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
-	if(win->buffer == NULL || win->physical_buffer == NULL) {
+	if(win->buffer == NULL) {
 		exit_log("tm_window", "malloc", 2);
 	}
 	
 	for(int i = 0; i < win->columns * win->rows; i++) {
 		win->buffer[i].disp = ' ';
 		win->buffer[i].attrib = TM_ATTRIB_RESET;
-		win->physical_buffer[i].disp = ' ';
-		win->physical_buffer[i].attrib = TM_ATTRIB_RESET;
 	}
 
 	tm_win_echo(win, 1);
@@ -63,7 +60,5 @@ void tm_win_free(Tm_window* win) {
 	win->children = NULL;
 	free(win->buffer);
 	win->buffer = NULL;
-	free(win->physical_buffer);
-	win->physical_buffer = NULL;
 	free(win);
 }
