@@ -81,10 +81,12 @@ typedef struct {
 // the output to be put on screen (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
 typedef struct {
-	Pending_Change* pending_changes;
+	int columns, rows;
+
+	Tm_char* buffer;
+	Tm_char* physical_buffer;
 
 	int cursor_x, cursor_y;
-	int pending_change_amount;
 
 	uint32_t attrib;
 
@@ -109,7 +111,6 @@ typedef struct Tm_window {
 	int children_amount;
 
 	Tm_char* buffer;
-	Tm_char* physical_buffer;
 	
 	uint16_t flags;
 
