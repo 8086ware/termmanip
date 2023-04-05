@@ -1,7 +1,6 @@
 #include <signal.h>
 #include "termmanip.h"
 #include <stdlib.h>
-#include "pending_change.h"
 
 void signal_handle(int sig) {
 #ifdef _WIN32
