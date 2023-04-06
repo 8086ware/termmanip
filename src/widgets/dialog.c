@@ -9,8 +9,8 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	int columns = strlen(message) + 2;
 	int rows = 8;
 
-	int x = scr_x / 2 - columns / 2;
-	int y = scr_y / 2 - rows / 2;
+	int x = win->columns / 2 - columns / 2;
+	int y = win->rows / 2 - rows / 2;
 
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
