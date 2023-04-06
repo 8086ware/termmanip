@@ -128,10 +128,13 @@ void tm_screen_update() {
 void tm_win_write_to_screen(Tm_window* win) {
 	int parent_x = 0;
 	int parent_y = 0;
-
-	if(win->parent != NULL) {
-		parent_x = win->parent->position_x;
-		parent_y = win->parent->position_y;
+	
+	Tm_window* parent = win->parent;
+	while(parent != NULL) {	
+		parent_x += parent->position_x;
+		parent_y += parent->position_y;
+	
+		parent = parent->parent;
 	}
 
 	// Update screen flags
