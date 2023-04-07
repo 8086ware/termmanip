@@ -26,6 +26,8 @@ void tm_init() {
 		exit_log("tm_init", "GetConsoleMode", 1);
 	}
 
+	og_output_mode = mode;
+
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
@@ -35,6 +37,8 @@ void tm_init() {
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
 		exit_log("tm_init", "GetConsoleMode", 2);
 	}
+
+	og_input_mode = mode;
 
 	mode &= ~ENABLE_ECHO_INPUT;
 	mode &= ~ENABLE_LINE_INPUT;
