@@ -21,27 +21,12 @@ void tm_exit() {
 
 	screen = NULL;
 #ifdef _WIN32
-	DWORD mode = 0;
-
-	if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &mode) == 0) {
-		exit_log("tm_init", "SetConsoleMode", 1);
-	}
-
-	mode &= ~ENABLE_VIRTUAL_TERMINAL_PROCESSING;
-
-	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
+	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
 		exit_log("tm_exit", "SetConsoleMode", 1);
 	}
 
-	if (GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
-		exit_log("tm_exit", "SetConsoleMode", 1);
-	}
-
-	mode |= ENABLE_LINE_INPUT;
-	mode |= ENABLE_ECHO_INPUT;
-
-	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		exit_log("tm_exit", "SetConsoleMode", 1);
+	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), og_input_mode) == 0) {
+		exit_log("tm_exit", "SetConsoleMode", 2);
 	}
 #else
 	tcsetattr(fileno(stdin), TCSANOW, &og_term);
