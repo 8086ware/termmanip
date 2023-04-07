@@ -115,6 +115,7 @@ void tm_screen_update() {
 	}
 
 #ifdef _WIN32
+	DWORD bytes_written = 0;
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), screen->output, screen->output_len, &bytes_written, NULL);
 #else
 	write(fileno(stdout), screen->output, screen->output_len);
