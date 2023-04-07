@@ -8,13 +8,15 @@
 #include <signal.h>
 #ifdef _WIN32
 #include <windows.h>
+DWORD og_input_mode;
+DWORD og_output_mode;
 #else
 #include <termios.h>
 #include <unistd.h>
+struct termios og_term;
 #endif
 
 Tm_screen* screen = NULL;
-struct termios og_term;
 
 void tm_init() {
 #ifdef _WIN32
