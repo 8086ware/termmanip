@@ -18,7 +18,8 @@ int tm_win_background(Tm_window* win, uint32_t attrib) {
 		return ret;	
 	}
 
-	tm_win_attrib(win, attrib);
+	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
+	tm_win_attrib(win, attrib, 1);
 
 	return 0;
 }
