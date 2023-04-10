@@ -167,7 +167,7 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child 
 
 int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 
-void tm_win_attrib(Tm_window* win, uint32_t attrib); // Set the window attribute
+void tm_win_attrib(Tm_window* win, uint32_t attrib, int state); // Set the window attribute
 
 int tm_win_background(Tm_window* win, uint32_t attrib); // Set the window background
 
@@ -190,7 +190,7 @@ int tm_inputblock(int state); // Depending on state is false or true will turn o
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
 #define tm_update() tm_win_update(default_win)
 #define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
-#define tm_attrib(attrib) tm_win_attrib(default_win, attrib)
+#define tm_attrib(attrib, state) tm_win_attrib(default_win, attrib, state)
 #define tm_background(attrib) tm_win_background(default_win, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input_ch() tm_win_input_ch(default_win)
