@@ -77,7 +77,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			}
 
 			else {
-				tm_win_background(button_children[i], TM_ATTRIB_RESET);
+				tm_win_background(button_children[i], 0);
 			}
 		}
 
