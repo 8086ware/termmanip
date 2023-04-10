@@ -28,7 +28,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	win->flags = 0;
 
-	win->attrib = TM_ATTRIB_RESET;
+	win->attrib = 0;
 
 	win->buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
@@ -38,7 +38,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	
 	for(int i = 0; i < win->columns * win->rows; i++) {
 		win->buffer[i].disp = ' ';
-		win->buffer[i].attrib = TM_ATTRIB_RESET;
+		win->buffer[i].attrib = 0;
 	}
 
 	tm_win_echo(win, 1);
