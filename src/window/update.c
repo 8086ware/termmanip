@@ -51,52 +51,94 @@ void tm_screen_update() {
 			// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
 			terminal_move_cursor(i % screen->columns, i / screen->columns);
-			if(screen->attrib != attrib) {
-				screen->attrib = attrib;
 
-				if(attrib & TM_ATTRIB_BOLD) {
+			if(screen->attrib != attrib) {
+				if(attrib == 0) {
+					append_output("\x1b[0m");
+					screen->attrib = attrib;
+				}
+
+				if(attrib & TM_ATTRIB_BOLD && (screen->attrib & TM_ATTRIB_BOLD) == 0) {
 					append_output("\x1b[1m");
 				}
 
-				if(attrib & TM_ATTRIB_DIM) {
+				else if((attrib & TM_ATTRIB_BOLD) == 0 && screen->attrib & TM_ATTRIB_BOLD) {
+					append_output("\x1b[22m");
+				}
+
+				if(attrib & TM_ATTRIB_DIM && (screen->attrib & TM_ATTRIB_DIM) == 0) {
 					append_output("\x1b[2m");
 				}
 
-				if(attrib & TM_ATTRIB_ITALIC) {
+				else if((attrib & TM_ATTRIB_DIM) == 0 && screen->attrib & TM_ATTRIB_DIM) {
+					append_output("\x1b[22m");
+				}
+
+				if(attrib & TM_ATTRIB_ITALIC && (screen->attrib & TM_ATTRIB_ITALIC) == 0) {
 					append_output("\x1b[3m");
 				}
 
-				if(attrib & TM_ATTRIB_UNDERLINE) {
+				else if((attrib & TM_ATTRIB_ITALIC) == 0 && screen->attrib & TM_ATTRIB_ITALIC) {
+					append_output("\x1b[23m");
+				}
+
+				if(attrib & TM_ATTRIB_UNDERLINE && (screen->attrib & TM_ATTRIB_UNDERLINE) == 0) {
 					append_output("\x1b[4m");
 				}
 
-				if(attrib & TM_ATTRIB_BLINKING) {
+				else if((attrib & ~TM_ATTRIB_UNDERLINE) == 0 && screen->attrib & TM_ATTRIB_UNDERLINE) {
+					append_output("\x1b[24m");
+				}
+
+				if(attrib & TM_ATTRIB_BLINKING && (screen->attrib & TM_ATTRIB_BLINKING) == 0) {
 					append_output("\x1b[5m");
 				}
 
-				if(attrib & TM_ATTRIB_HIGHLIGHT) {
+				else if((attrib & TM_ATTRIB_BLINKING) == 0 && screen->attrib & TM_ATTRIB_BLINKING) {
+					append_output("\x1b[25m");
+				}
+
+				if(attrib & TM_ATTRIB_HIGHLIGHT && (screen->attrib & TM_ATTRIB_HIGHLIGHT) == 0) {
 					append_output("\x1b[7m");
 				}
 
-				if(attrib & TM_ATTRIB_HIDDEN) {
+				else if((attrib & TM_ATTRIB_HIGHLIGHT) == 0 && screen->attrib & TM_ATTRIB_HIGHLIGHT) {
+					append_output("\x1b[27m");
+				}
+
+				if(attrib & TM_ATTRIB_HIDDEN && (screen->attrib & TM_ATTRIB_HIDDEN) == 0) {
 					append_output("\x1b[8m");
 				}
 
-				if(attrib & TM_ATTRIB_STRIKE) {
+ 				else if((attrib & TM_ATTRIB_HIDDEN) == 0 && screen->attrib & TM_ATTRIB_HIDDEN) {
+					append_output("\x1b[28m");
+				}
+ 
+				if(attrib & TM_ATTRIB_STRIKE && (screen->attrib & TM_ATTRIB_STRIKE) == 0) {
 					append_output("\x1b[9m");
 				}
 
-				if((attrib & TM_ATTRIB_FG_MASK) != 0) {
+ 				else if((attrib & TM_ATTRIB_STRIKE) == 0 && screen->attrib & TM_ATTRIB_STRIKE) {
+					append_output("\x1b[29m");
+				}
+ 
+				if(attrib & TM_ATTRIB_FG_MASK && (screen->attrib & TM_ATTRIB_FG_MASK) != (attrib & TM_ATTRIB_FG_MASK)) {
 					append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
 				}
+				
+				else if((attrib & TM_ATTRIB_FG_MASK) == 0 && (screen->attrib & TM_ATTRIB_FG_MASK) != 0) {
+					append_output("\x1b[39m");
+				}
 
-				if((attrib & TM_ATTRIB_BG_MASK) != 0) {
+				if(attrib & TM_ATTRIB_BG_MASK && (screen->attrib & TM_ATTRIB_BG_MASK) != (attrib & TM_ATTRIB_BG_MASK)) {
 					append_output("\x1b[%dm", (attrib & TM_ATTRIB_BG_MASK) >> 24);
 				}
 
-				if(attrib & TM_ATTRIB_RESET) {
-					append_output("\x1b[0m");
+				else if((attrib & TM_ATTRIB_BG_MASK) == 0 && (screen->attrib & TM_ATTRIB_BG_MASK) != 0) {
+					append_output("\x1b[49m");
 				}
+
+				screen->attrib = attrib;
 			}
 
 			if(disp == '\0') {
