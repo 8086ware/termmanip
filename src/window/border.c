@@ -12,62 +12,19 @@ int tm_win_border(Tm_window* win) {
 	for(int y = 0; y < rows; y++) {
 		for(int x = 0; x < columns; x++) {
 			if(x == 0 || x == columns - 1) {
-				if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
-					return ret;
-				}
-
-				if((ret = tm_win_print(win, "|")) == TM_ERROR) {
-					return ret;
-				}
+				tm_win_putch(win, x, y, '\x78', TM_ATTRIB_ALTERNATE | win->attrib);
 			}
 
 			if(y == 0 || y == rows - 1) {
-				if((ret = tm_win_cursor(win, x, y)) == TM_ERROR) {
-					return ret;
-				}
-
-				if((ret = tm_win_print(win, "-")) == TM_ERROR) {
-					return ret;
-				}
+				tm_win_putch(win, x, y, '\x71', TM_ATTRIB_ALTERNATE | win->attrib);
 			}
 		}
 	}
-
-	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_cursor(win, columns - 1, 0)) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
-		return ret;
-	}
 	
-	if((ret = tm_win_cursor(win, 0, rows - 1)) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
-		return ret;
-	}
-	
-	if((ret = tm_win_cursor(win, columns - 1, rows - 1)) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_print(win, "+")) == TM_ERROR) {
-		return ret;
-	}
-
-	if((ret = tm_win_cursor(win, cur_x, cur_y)) == TM_ERROR) {
-		return ret;
-	}
+	tm_win_putch(win, 0, 0, '\x6c', TM_ATTRIB_ALTERNATE | win->attrib);
+	tm_win_putch(win, columns - 1, 0, '\x6b', TM_ATTRIB_ALTERNATE | win->attrib);
+	tm_win_putch(win, 0, rows - 1, '\x6d', TM_ATTRIB_ALTERNATE | win->attrib);
+	tm_win_putch(win, columns - 1, rows - 1, '\x6a', TM_ATTRIB_ALTERNATE | win->attrib);
 
 	return 0;
 }
