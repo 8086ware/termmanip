@@ -53,9 +53,12 @@ void tm_screen_update() {
 			terminal_move_cursor(i % screen->columns, i / screen->columns);
 
 			if(screen->attrib != attrib) {
-				if(attrib == 0) {
-					append_output("\x1b[0m");
-					screen->attrib = attrib;
+				if(attrib & TM_ATTRIB_ALTERNATE && (screen->attrib & TM_ATTRIB_ALTERNATE) == 0) {
+					append_output("\x1b(0");
+				}
+
+				else if((attrib & TM_ATTRIB_ALTERNATE) == 0 && screen->attrib & TM_ATTRIB_ALTERNATE) {
+					append_output("\x1b(B");
 				}
 
 				if(attrib & TM_ATTRIB_BOLD && (screen->attrib & TM_ATTRIB_BOLD) == 0) {
@@ -121,7 +124,7 @@ void tm_screen_update() {
  				else if((attrib & TM_ATTRIB_STRIKE) == 0 && screen->attrib & TM_ATTRIB_STRIKE) {
 					append_output("\x1b[29m");
 				}
- 
+
 				if(attrib & TM_ATTRIB_FG_MASK && (screen->attrib & TM_ATTRIB_FG_MASK) != (attrib & TM_ATTRIB_FG_MASK)) {
 					append_output("\x1b[%dm", (attrib & TM_ATTRIB_FG_MASK) >> 16);
 				}
