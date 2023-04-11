@@ -10,7 +10,7 @@ int tm_win_background(Tm_window* win, uint32_t attrib) {
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			tm_win_putch(win, x, y, win->buffer[y * win->columns + x].disp, attrib);
+			tm_win_putch(win, x, y, win->buffer[y * win->columns + x].disp, attrib | win->buffer[y * win->columns + x].attrib);
 		}
 	}
 
