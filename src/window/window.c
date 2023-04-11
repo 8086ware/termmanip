@@ -52,6 +52,25 @@ void tm_win_free(Tm_window* win) {
 		return;
 	}
 
+	if(win->child_type != TM_CHILD_NONE) {
+		for(int i = 0; i < win->parent->children_amount; i++) {
+			if(win->parent->children[i] == win) {
+				Tm_window* temp = win->parent->children[win->parent->children_amount - 1];
+
+				win->parent->children[win->parent->children_amount - 1] = win;
+				win->parent->children[i] = temp;
+
+				win->parent->children = realloc(win->parent->children, sizeof(Tm_window) * (win->parent->children_amount - 1));
+
+				win->parent->children_amount--;
+
+				if(win->parent->children == NULL && win->parent->children_amount != 0) {
+					exit_log("tm_win_free", "realloc", 1);
+				}		
+			}
+		}
+	}
+
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_free(win->children[i]);
 	}
