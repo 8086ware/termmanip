@@ -25,6 +25,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->children = NULL;
 
 	win->children_amount = 0;
+	win->child_type = TM_CHILD_NONE;
 
 	win->flags = 0;
 
