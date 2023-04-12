@@ -197,7 +197,8 @@ void tm_win_write_to_screen(Tm_window* win) {
 		screen->flags = win->flags;
 	}
 
-	// Loop through window and if there is a cell in the memory buffer that isn't the same in the physical buffer, insert it in the screens pending changes
+	// Loop through window and put its buffer on the screen buffer
+	
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
 			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[y * win->columns + x];
