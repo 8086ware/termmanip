@@ -101,7 +101,7 @@ void tm_init() {
 
 	default_win = tm_window(0, 0, scr_columns, scr_rows);
 
-	char init[] = "\x1b[?1049h\x1b[2J\x1b[H";
+	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
 
 	write(fileno(stdout), init, strlen(init));
 }
