@@ -5,8 +5,6 @@ int tm_win_border(Tm_window* win) {
 
 	int columns, rows;
 
-	int cur_x = win->cursor_x, cur_y = win->cursor_y;
-
 	tm_get_winsize(win, &columns, &rows);
 
 	for(int y = 0; y < rows; y++) {
