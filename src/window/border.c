@@ -1,8 +1,6 @@
 #include "termmanip.h"
 
 int tm_win_border(Tm_window* win) {
-	int ret = 0;
-
 	int columns, rows;
 
 	tm_get_winsize(win, &columns, &rows);
