@@ -1,11 +1,12 @@
 #include "termmanip.h"
-#include <unistd.h>
 #include <stdio.h>
 #include "append_output.h"
 #include <stdlib.h>
 
 #ifdef _WIN32
 #include <windows.h>
+#else
+#include <unistd.h>
 #endif
 
 // Move the actual terminal cursor to x, y from screen->cursor_x, screen->cursor_y in the best way possible
@@ -159,12 +160,7 @@ void tm_screen_update() {
 		screen->physical_buffer[i] = screen->buffer[i];
 	}
 
-#ifdef _WIN32
-	DWORD bytes_written = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), screen->output, screen->output_len, &bytes_written, NULL);
-#else
 	write(fileno(stdout), screen->output, screen->output_len);
-#endif
 
 	free(screen->output);
 	screen->output = NULL;
