@@ -11,7 +11,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	if(win == NULL) {
 		exit_log("tm_window", "malloc", 1);
 	}
-	
+
+	win->buffer = NULL;
+
 	tm_win_modify(win, x, y, columns, rows);
 	
 	win->cursor_x = 0;
