@@ -13,6 +13,8 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	win->cursor_x = i % win->columns;
 	win->cursor_y = i / win->columns;	
 
+	win->flags |= TM_FLAG_CURSOR_MOVED;
+
 	return 0;
 }
 
