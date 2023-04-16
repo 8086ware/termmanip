@@ -39,6 +39,8 @@ void terminal_move_cursor(int from_x, int from_y, int x, int y) {
 }
 
 void tm_screen_update() {
+	static int from_x = 0, from_y = 0;
+
 	for(int i = 0; i != screen->columns * screen->rows; i++) {
 		char disp = screen->buffer[i].disp;
 		uint32_t attrib = screen->buffer[i].attrib;
@@ -50,7 +52,10 @@ void tm_screen_update() {
 
 			// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
-			terminal_move_cursor(i % screen->columns, i / screen->columns);
+			terminal_move_cursor(from_x, from_y, i % screen->columns, i / screen->columns);
+
+			from_x = i % screen->columns;
+			from_y = i / screen->columns;
 
 			if(screen->attrib != attrib) {
 				if(attrib & TM_ATTRIB_ALTERNATE && (screen->attrib & TM_ATTRIB_ALTERNATE) == 0) {
