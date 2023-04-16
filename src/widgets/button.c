@@ -49,7 +49,6 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	char c = 0;
 
 	while(1) {
-
 		if(c == 'd') {
 			option++;
 		}
@@ -60,6 +59,8 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 		else if(c == '\n' || c == '\r') {
 			free(button_children);
+			tm_inputblock(prev_state);
+			win->flags = flags;
 			return win->children[option];
 		}
 
@@ -77,13 +78,11 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			}
 
 			else {
-				tm_win_background(button_children[i], 0);
+				tm_win_background(button_children[i], TM_ATTRIB_BG_BLACK);
 			}
 		}
 
 		c = tm_win_input_ch(win);
 	}
 
-	tm_inputblock(prev_state);
-	win->flags = flags;
 }
