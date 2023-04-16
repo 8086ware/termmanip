@@ -10,12 +10,16 @@ int tm_win_background(Tm_window* win, uint32_t attrib) {
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
+			if(win->buffer[y * win->columns + x].attrib | TM_ATTRIB_HIGHLIGHT) {
+				win->buffer[y * win->columns + x].attrib &= ~TM_ATTRIB_HIGHLIGHT;
+			}
+			
 			tm_win_putch(win, x, y, win->buffer[y * win->columns + x].disp, attrib | win->buffer[y * win->columns + x].attrib);
 		}
 	}
 
 	if((ret = tm_win_cursor(win, temp_cursor_x, temp_cursor_y)) == TM_ERROR) {
-		return ret;	
+		return ret;
 	}
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
