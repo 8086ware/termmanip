@@ -89,10 +89,10 @@ $(OBJECTS):
 .PHONY: clean make_dirs test install uninstall
 
 uninstall:
-	$(RM) /usr/local/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/local/include/termmanip.h
+	$(RM) /usr/lib/$(BUILD_DIR)/$(OUTPUT_NAME) && $(RM) /usr/include/termmanip.h
 
 install:
-	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/local/lib/ && install include/termmanip.h /usr/local/include/
+	install $(BUILD_DIR)/$(OUTPUT_NAME) /usr/lib/ && install include/termmanip.h /usr/include/
 
 test:
 	$(MAKE) debug && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
