@@ -12,6 +12,7 @@ int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib) {
 	win->buffer[y * win->columns + x].attrib = attrib;
 	win->buffer[y * win->columns + x].disp = ch;
 	
+	win->flags &= ~TM_FLAG_CURSOR_MOVED;
 	return 0;
 }
 
