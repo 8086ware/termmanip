@@ -9,28 +9,27 @@
 #include <unistd.h>
 #endif
 
-// Move the actual terminal cursor to x, y from screen->cursor_x, screen->cursor_y in the best way possible
-void terminal_move_cursor(int x, int y) {
-	if(y != screen->cursor_y) {
+void terminal_move_cursor(int from_x, int from_y, int x, int y) {
+	if(y != from_x) {
 		append_output("\x1b[%d;%dH", y + 1, x + 1);
 		return;
 	}
 
 	// If the if new x is in front of screen->cursor_x, we don't need to move it.
 
-	if(x - screen->cursor_x == 1) {
+	if(x - from_x == 1) {
 		return;
 	}
 
 	// If the new x is under 8 characters from the screen->cursor_x, use spaces to get there instead of escape codes
-	if(x - screen->cursor_x < 8 && x - screen->cursor_x > 1) {
-		for(int i = 1; i < x - screen->cursor_x; i++) {
+	if(x - from_x < 8 && x - from_x > 1) {
+		for(int i = 1; i < x - from_x; i++) {
 			append_output(" ");
 		}
 	}
 
 	// If the new x is the same as screen->cursor_x, just backspace to get there
-	else if(x == screen->cursor_x) {
+	else if(x == from_x) {
 		append_output("\b");
 	}
 
