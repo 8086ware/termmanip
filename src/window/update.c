@@ -154,14 +154,13 @@ void tm_screen_update() {
 			}
 
 			append_output("%c", disp);
-
-			// Make the screen cursor x and y match the last pending change x, y
-			screen->cursor_x = i % screen->columns; 
-			screen->cursor_y = i / screen->columns;
-
 		}
 
 		screen->physical_buffer[i] = screen->buffer[i];
+	}
+
+	if(screen->flags & TM_FLAG_CURSOR_MOVED) {
+		terminal_move_cursor(from_x, from_y, screen->cursor_x, screen->cursor_y);
 	}
 
 	write(fileno(stdout), screen->output, screen->output_len);
