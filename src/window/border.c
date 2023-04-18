@@ -8,7 +8,7 @@ int tm_win_border(Tm_window* win) {
 
 	for(int y = 0; y < rows; y++) {
 		for(int x = 0; x < columns; x++) {
-			tm_cursor(x, y);
+			tm_win_cursor(win, x, y);
 			if(x == 0 || x == columns - 1) {
 				tm_win_putch(win, '\x78', TM_ATTRIB_ALTERNATE | win->attrib);
 			}
