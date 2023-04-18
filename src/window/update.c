@@ -10,7 +10,7 @@
 #endif
 
 void terminal_move_cursor(int from_x, int from_y, int x, int y) {
-	if(y != from_x) {
+	if(y != from_y) {
 		append_output("\x1b[%d;%dH", y + 1, x + 1);
 		return;
 	}
