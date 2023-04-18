@@ -26,7 +26,7 @@ int main(void) {
 	tm_win_border(win);
 	tm_win_input_str(win, buffer, 1024);
 
-	tm_attrib(TM_ATTRIB_BG_RED);
+	tm_attrib(TM_ATTRIB_BG_RED, 1);
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
 
@@ -40,7 +40,7 @@ int main(void) {
 		i++;
 	}
 
-	tm_attrib(TM_ATTRIB_BG_YELLOW);
+	tm_attrib(TM_ATTRIB_BG_YELLOW, 1);
 	tm_clear();
 	tm_update();
 
