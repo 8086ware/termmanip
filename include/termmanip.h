@@ -155,8 +155,8 @@ void tm_win_write_to_screen(Tm_window* win); // Writes the window to the screen 
 void tm_screen_update(); // Puts the internal screen onto the terminal
 void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_screen and tm_screen_update
 
-int tm_win_putch(Tm_window* win, int x, int y, char ch, uint32_t attrib); // Put a char at x, y and an attribute
-int tm_win_puts(Tm_window * win, int x, int y, char* str, uint32_t attrib); // Put a string at x, y and an attribute
+int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
+int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute
 int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cursor position
 
 int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
