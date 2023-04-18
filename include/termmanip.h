@@ -65,6 +65,9 @@
 
 #define TM_ATTRIB_ALL                  0b11111111111111111111111111111111
 
+#define TM_SCROLL_UP 0
+#define TM_SCROLL_DOWN 1
+
 // Window flags
 
 #define TM_FLAG_RAW            0b0000000000000001
