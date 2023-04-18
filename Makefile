@@ -1,4 +1,5 @@
 AR=ar
+CC=gcc
 
 INCLUDES=include
 
@@ -43,12 +44,12 @@ OBJECTS=$(OBJ_DIR)/append_output.o \
 		$(OBJ_DIR)/error.o \
 		$(OBJ_DIR)/inputblock.o \
 		$(OBJ_DIR)/put.o \
+		$(OBJ_DIR)/scroll.o \
 	
 debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
 debug: all
 
-release: CFLAGS += -O3
 release: all
 
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
@@ -82,6 +83,7 @@ $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/error.o: $(SRC_DIR)/error.c
 $(OBJ_DIR)/inputblock.o: $(SRC_DIR)/inputblock.c
 $(OBJ_DIR)/put.o: $(SRC_DIR)/window/put.c
+$(OBJ_DIR)/scroll.o: $(SRC_DIR)/window/scroll.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
