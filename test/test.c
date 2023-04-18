@@ -4,7 +4,7 @@
 int main(void) {
 	tm_init();
 
-	for(int i = 0; i < 100000; i++) {
+	for(int i = 0; i < 10000; i++) {
 		tm_cursor(0, 0);
 		tm_print("Loading... %d", i);
 		tm_update();
@@ -36,7 +36,6 @@ int main(void) {
 		tm_cursor(rand() % scr_x, rand() % scr_y);
 		tm_print("ERROR");
 		tm_update();
-		usleep(1000);
 		i++;
 	}
 
