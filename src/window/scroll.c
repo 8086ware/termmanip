@@ -9,8 +9,10 @@ void tm_win_scroll_state(Tm_window* win, int state) {
 		win->flags |= TM_FLAG_SCROLL;
 	}
 }
-
 void tm_win_scroll(Tm_window* win, int amount, int direction) {
+	int tempX = win->cursor_x;
+	int tempY = win->cursor_y;
+
 	if(direction == TM_SCROLL_DOWN) {
 		for(int y = 0; y < win->rows; y++) {
 			for(int x = 0; x < win->columns; x++) {
@@ -21,5 +23,5 @@ void tm_win_scroll(Tm_window* win, int amount, int direction) {
 		}
 	}
 
-	tm_win_cursor(win, win->cursor_x, win->cursor_y - amount);
+	tm_win_cursor(win, win->cursor_x, tempY - amount);
 }

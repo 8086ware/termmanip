@@ -2,7 +2,8 @@
 
 int tm_win_border(Tm_window* win) {
 	int columns, rows;
-
+	int temp_x = win->cursor_x;
+	int temp_y = win->cursor_y;
 	tm_get_winsize(win, &columns, &rows);
 
 	for(int y = 0; y < rows; y++) {
@@ -26,6 +27,7 @@ int tm_win_border(Tm_window* win) {
 	tm_win_putch(win, '\x6d', TM_ATTRIB_ALTERNATE | win->attrib);
 	tm_win_cursor(win, columns - 1, rows - 1);
 	tm_win_putch(win, '\x6a', TM_ATTRIB_ALTERNATE | win->attrib);
-
+	
+	tm_win_cursor(win, temp_x, temp_y);
 	return 0;
 }
