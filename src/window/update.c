@@ -53,10 +53,6 @@ void tm_screen_update() {
 			// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
 			terminal_move_cursor(from_x, from_y, i % screen->columns, i / screen->columns);
-
-			from_x = i % screen->columns;
-			from_y = i / screen->columns;
-
 			if(screen->attrib != attrib) {
 				if(attrib & TM_ATTRIB_ALTERNATE && (screen->attrib & TM_ATTRIB_ALTERNATE) == 0) {
 					append_output("\x1b(0");
@@ -154,6 +150,9 @@ void tm_screen_update() {
 			}
 
 			append_output("%c", disp);
+
+			from_x = i % screen->columns;
+			from_y = i / screen->columns;
 		}
 
 		screen->physical_buffer[i] = screen->buffer[i];
@@ -193,9 +192,10 @@ void tm_win_write_to_screen(Tm_window* win) {
 			append_output("\x1b[?25l");
 		}
 
-		screen->flags = win->flags;
 		win->flags &= ~TM_FLAG_CURSOR_MOVED;
 	}
+
+	screen->flags = win->flags;
 
 	screen->cursor_x = win->cursor_x + win->position_x + parent_x;
 	screen->cursor_y = win->cursor_y + win->position_y + parent_y;
