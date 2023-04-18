@@ -191,6 +191,9 @@ int tm_error(); // Return the most recent error
 
 int tm_inputblock(int state); // Depending on state is false or true will turn on or off input blocking which makes tm_win_input_ch return without pressing a single key
 
+void tm_win_scroll_state(Tm_window* win, int state);
+void tm_win_scroll(Tm_window* win, int amount, int direction);
+
 //Bunch of macros that serve the same functionality as other functions except they act upon the default window
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
@@ -206,6 +209,7 @@ int tm_inputblock(int state); // Depending on state is false or true will turn o
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
+#define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
 
 #endif
 
