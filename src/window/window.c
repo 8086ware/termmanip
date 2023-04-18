@@ -11,15 +11,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	if(win == NULL) {
 		exit_log("tm_window", "malloc", 1);
 	}
-<<<<<<< HEAD
-
-	win->buffer = NULL;
-
-=======
 	
 	win->buffer = NULL;
 	
->>>>>>> 90c3945 (Set win buffer to null so tm_win_modify doesnt malfunction when reallocing)
 	tm_win_modify(win, x, y, columns, rows);
 	
 	win->cursor_x = 0;
