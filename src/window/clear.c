@@ -9,7 +9,7 @@ int tm_win_clear(Tm_window* win) {
 	
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			tm_win_putch(win, x, y, ' ', 0);
+			tm_win_putch(win,' ', 0);
 		}
 	}
 
