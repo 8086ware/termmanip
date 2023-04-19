@@ -50,6 +50,7 @@ debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
 debug: all
 
+release: CFLAGS += -O2
 release: all
 
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
