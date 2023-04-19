@@ -145,10 +145,6 @@ void tm_screen_update() {
 				screen->attrib = attrib;
 			}
 
-			if(disp == '\0') {
-				disp = ' ';
-			}
-
 			append_output("%c", disp);
 
 			from_x = i % screen->columns;
