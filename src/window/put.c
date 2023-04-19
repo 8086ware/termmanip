@@ -15,6 +15,8 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 			tm_error_number = TM_INVALID_CURSOR;		
 			return TM_ERROR;
 		}
+
+		position = win->cursor_y * win->columns + win->cursor_x;
 	}
 
 	if(ch == '\n') {
