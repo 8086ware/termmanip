@@ -13,12 +13,7 @@ int tm_win_input_ch(Tm_window* win) {
 	tm_win_update(win);
 
 	if(win->flags & TM_FLAG_RAW) {	
-#ifdef _WIN32
-		DWORD bytes_read = 0;
-		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), ch, 1, &bytes_read, NULL);
-#else
 		read(fileno(stdin), ch, 1);
-#endif
 
 		if(win->flags & TM_FLAG_ECHO) {
 			if((ret = tm_win_print(win, "%c", *ch)) == TM_ERROR) {
@@ -46,12 +41,8 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	int ret = 0;
 
 	while(1) {
-#ifdef _WIN32
-		DWORD bytes_read = 0;
-		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
-#else
 		read(fileno(stdin), &ch, 1);
-#endif
+
 		if(ch == '\n' || ch == '\r') {
 			break;
 		}
