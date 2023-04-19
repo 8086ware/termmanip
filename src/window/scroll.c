@@ -24,6 +24,7 @@ void tm_win_scroll(Tm_window* win, int amount, int direction) {
 			}
 		}
 	}
-
-	tm_win_cursor(win, win->cursor_x, tempY - amount);
+	
+	win->cursor_x = 0;
+	win->cursor_y -= amount;
 }
