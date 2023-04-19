@@ -23,16 +23,16 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	}
 
 	else {
-		win->buffer[win->cursor_y * win->columns + win->cursor_x].attrib = attrib;
-		win->buffer[win->cursor_y * win->columns + win->cursor_x].disp = ch;
+		win->buffer[position].attrib = attrib;
+		win->buffer[position].disp = ch;
 
 		win->cursor_x++;
-	}	
+	}
 
-	int i = win->cursor_y * win->columns + win->cursor_x;
+	position = win->cursor_y * win->columns + win->cursor_x;
 
-	win->cursor_x = i % win->columns;
-	win->cursor_y = i / win->columns;
+	win->cursor_x = position % win->columns;
+	win->cursor_y = position / win->columns;
 
 	win->flags &= ~TM_FLAG_CURSOR_MOVED;
 
