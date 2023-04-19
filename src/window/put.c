@@ -36,8 +36,6 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	win->cursor_x = position % win->columns;
 	win->cursor_y = position / win->columns;
 
-	win->flags &= ~TM_FLAG_CURSOR_MOVED;
-
 	return 0;
 }
 

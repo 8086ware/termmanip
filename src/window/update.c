@@ -188,16 +188,14 @@ void tm_win_write_to_screen(Tm_window* win) {
 			append_output("\x1b[?25l");
 		}
 
-		win->flags &= ~TM_FLAG_CURSOR_MOVED;
+		screen->flags = win->flags;
 	}
-
-	screen->flags = win->flags;
 
 	screen->cursor_x = win->cursor_x + win->position_x + parent_x;
 	screen->cursor_y = win->cursor_y + win->position_y + parent_y;
 
 	// Loop through window and put its buffer on the screen buffer
-	
+
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
 			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[y * win->columns + x];
