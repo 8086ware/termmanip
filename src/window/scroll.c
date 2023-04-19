@@ -10,8 +10,9 @@ void tm_win_scroll_state(Tm_window* win, int state) {
 	}
 }
 void tm_win_scroll(Tm_window* win, int amount, int direction) {
-	int tempX = win->cursor_x;
-	int tempY = win->cursor_y;
+	if(amount <= 0 || amount > win->rows) {
+		return;		
+	}
 
 	if(direction == TM_SCROLL_DOWN) {
 		for(int y = 0; y < win->rows; y++) {
