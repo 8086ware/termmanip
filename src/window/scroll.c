@@ -15,11 +15,12 @@ void tm_win_scroll(Tm_window* win, int amount, int direction) {
 	}
 
 	if(direction == TM_SCROLL_DOWN) {
-		for(int y = 0; y < win->rows; y++) {
+		for(int y = amount; y < win->rows; y++) {
 			for(int x = 0; x < win->columns; x++) {
-				tm_win_cursor(win, x, y - amount);
-				tm_win_putch(win, win->buffer[y * win->columns + x].disp, win->buffer[y * win->columns + x].attrib);
-				tm_win_fill(win, 0, y, win->columns, y + 1, ' ', 0);
+				win->buffer[(y - amount) * win->columns + x].disp = win->buffer[y * win->columns + x].disp;
+				win->buffer[(y - amount) * win->columns + x].attrib = win->buffer[y * win->columns + x].attrib;
+				win->buffer[y * win->columns + x].disp = ' ';
+				win->buffer[y * win->columns + x].attrib = 0;
 			}
 		}
 	}
