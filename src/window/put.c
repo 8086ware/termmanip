@@ -1,13 +1,13 @@
-#include "termmanip.h"
+#include "termmanip.h" 
 #include <string.h>
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {	
-	if(win->cursor_y < 0 || win->cursor_y >= win->rows) {
+	int position = win->cursor_y * win->columns + win->cursor_x;
+
+	if(position < 0 || position >= win->columns * win->rows) {
 		if(win->flags & TM_FLAG_SCROLL) {
-			if(win->cursor_y >= win->rows) {
-				tm_win_scroll(win, win->cursor_y - win->rows, TM_SCROLL_DOWN);	
-				win->cursor_y -= win->rows; 
-				win->cursor_x = 0;
+			if(position >= win->columns * win->rows) {
+				tm_win_scroll(win, (1 + (position / win->columns) - win->rows), TM_SCROLL_DOWN);	
 			}
 		}
 
