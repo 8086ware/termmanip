@@ -1,10 +1,8 @@
 AR=ar
 CC=gcc
 
-INCLUDES=include
-
 ARFLAGS=rcs
-CFLAGS=-I$(INCLUDES) -Wall
+CFLAGS=-Iinclude -Wall
 
 BUILD_TYPE=debug
 
