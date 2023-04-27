@@ -6,8 +6,8 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	int scr_x = 0, scr_y = 0;
 	tm_get_scrsize(&scr_x, &scr_y);
 
-	int columns = strlen(message) + 2;
-	int rows = 8;
+	int columns = win->columns / 2;
+	int rows = win->rows / 2;
 
 	int x = win->columns / 2 - columns / 2;
 	int y = win->rows / 2 - rows / 2;
@@ -19,10 +19,16 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	tm_win_border(dialog);
 
 	tm_win_cursor(dialog, columns / 2 - ((strlen(title) / 2) + 2), 0);
+	
+	tm_win_attrib(dialog, TM_ATTRIB_ALTERNATE, 1);
+	tm_win_print(dialog, "u");
+	tm_win_attrib(dialog, TM_ATTRIB_ALTERNATE, 0);
+	tm_win_print(dialog, title);
+	tm_win_attrib(dialog, TM_ATTRIB_ALTERNATE, 1);
+	tm_win_print(dialog, "t");
+	tm_win_attrib(dialog, TM_ATTRIB_ALTERNATE, 0);
 
-	tm_win_print(dialog, "|%s|", title);	
-
-	tm_win_cursor(dialog, 1, 1);
+	tm_win_cursor(dialog, columns / 2 - strlen(message) / 2, 1);
 
 	tm_win_print(dialog, message);
 
@@ -36,7 +42,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	}
 
 	int option_x = 2;
-	int option_y = 3;
+	int option_y = dialog->rows / 2;
 
 	int option_columns = (columns - option_amount - 3) / option_amount;
  	int option_rows = 3;
