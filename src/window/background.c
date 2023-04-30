@@ -3,28 +3,13 @@
 #include <string.h>
 #include "exit_log.h"
 
-int tm_win_background(Tm_window* win, uint32_t attrib) {
+int tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	int ret = 0;
 
-	int temp_cursor_x = win->cursor_x, temp_cursor_y = win->cursor_y;
+	win->background_tm_char.attrib = attrib;
+	win->background_tm_char.disp = ch;
 
-	for(int y = 0; y < win->rows; y++) {
-		for(int x = 0; x < win->columns; x++) {
-			tm_win_cursor(win, x, y);
-			if(win->buffer[y * win->columns + x].attrib | TM_ATTRIB_HIGHLIGHT) {
-				win->buffer[y * win->columns + x].attrib &= ~TM_ATTRIB_HIGHLIGHT;
-			}
-			
-			tm_win_putch(win, win->buffer[y * win->columns + x].disp, attrib | win->buffer[y * win->columns + x].attrib);
-		}
-	}
-
-	if((ret = tm_win_cursor(win, temp_cursor_x, temp_cursor_y)) == TM_ERROR) {
-		return ret;
-	}
-
-	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
-	tm_win_attrib(win, attrib, 1);
+	tm_win_clear(win);
 
 	return 0;
 }
