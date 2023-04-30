@@ -26,20 +26,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->child_type = TM_CHILD_NONE;
 
 	win->flags = 0;
+	win->attrib = TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT;
 
-	win->attrib = 0;
-
-	win->buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
-
-	if(win->buffer == NULL) {
-		exit_log("tm_window", "malloc", 2);
-	}
-	
-	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->buffer[i].disp = ' ';
-		win->buffer[i].attrib = 0;
-	}
-
+	tm_win_background(win, ' ', TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT);
 	tm_win_echo(win, 1);
 	tm_win_raw(win, 1);
 	tm_win_cursor_visible(win, 1);
