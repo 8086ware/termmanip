@@ -16,9 +16,7 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	
 	parent->children_amount++;
 
-	tm_win_attrib(child, TM_ATTRIB_ALL, 0);
-
-	tm_win_attrib(child, parent->attrib, 1);
+	tm_win_background(child, parent->background_tm_char.disp, parent->background_tm_char.attrib);
 
 	return 0;
 }
