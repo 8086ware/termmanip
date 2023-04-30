@@ -124,6 +124,8 @@ typedef struct Tm_window {
 	int children_amount;
 
 	Tm_char* buffer;
+
+	Tm_char background_tm_char;
 	
 	uint16_t flags;
 
