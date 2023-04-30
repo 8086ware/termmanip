@@ -50,6 +50,8 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	if(win->buffer == NULL) {
 		exit_log("tm_win_modify", "realloc", 1);
 	}
+
+	tm_win_clear(win);
 	
 	return 0;
 }
