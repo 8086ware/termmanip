@@ -178,7 +178,7 @@ int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char
 
 void tm_win_attrib(Tm_window* win, uint32_t attrib, int state); // Set the window attribute
 
-int tm_win_background(Tm_window* win, uint32_t attrib); // Set the window background
+int tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the window background
 
 int tm_win_input_ch(Tm_window* win); // Get a single char and return it
 int tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
@@ -203,7 +203,7 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_update() tm_win_update(default_win)
 #define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
 #define tm_attrib(attrib, state) tm_win_attrib(default_win, attrib, state)
-#define tm_background(attrib) tm_win_background(default_win, attrib)
+#define tm_background(ch, attrib) tm_win_background(default_win, ch, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input_ch() tm_win_input_ch(default_win)
 #define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
