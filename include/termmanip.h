@@ -211,6 +211,7 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
 #define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
+#define tm_scroll_state(state) tm_win_scroll_state(default_win, state)
 
 #endif
 
