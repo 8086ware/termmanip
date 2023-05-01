@@ -24,13 +24,13 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->child_type = TM_CHILD_NONE;
 
 	win->flags = 0;
-	win->attrib = TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT;
+	win->attrib = 0;
 
-	win->background_tm_char.attrib = TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT;
+	win->background_tm_char.attrib = 0;
 	win->background_tm_char.disp = ' ';
 
 	tm_win_modify(win, x, y, columns, rows);
-	tm_win_background(win, ' ', TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT);
+	tm_win_background(win, ' ', 0);
 	tm_win_echo(win, 1);
 	tm_win_raw(win, 1);
 	tm_win_cursor_visible(win, 1);
