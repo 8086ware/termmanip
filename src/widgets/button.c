@@ -48,6 +48,8 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	int option = 0;
 	char c = 0;
 
+	Tm_char original_background = win->background_tm_char;
+
 	while(1) {
 		if(c == 'd') {
 			option++;
@@ -74,11 +76,11 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 		for(int i = 0; i < button_children_amount; i++) {
 			if(i == option) {
-				tm_win_background(button_children[i], TM_ATTRIB_HIGHLIGHT);
+				tm_win_background(button_children[i], original_background.disp, TM_ATTRIB_HIGHLIGHT);
 			}
 
 			else {
-				tm_win_background(button_children[i], TM_ATTRIB_BG_BLACK);
+				tm_win_background(button_children[i], original_background.disp, original_background.attrib);
 			}
 		}
 
