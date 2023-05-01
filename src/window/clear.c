@@ -15,7 +15,6 @@ int tm_win_clear(Tm_window* win) {
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 
-	tm_win_attrib(win, win->background_tm_char.attrib, 1);
 	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
 		return ret;
 	}
