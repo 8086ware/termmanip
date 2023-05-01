@@ -14,8 +14,6 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	
 	win->buffer = NULL;
 	
-	tm_win_modify(win, x, y, columns, rows);
-	
 	win->cursor_x = 0;
 	win->cursor_y = 0;
 	
@@ -28,6 +26,10 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->flags = 0;
 	win->attrib = TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT;
 
+	win->background_tm_char.attrib = TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT;
+	win->background_tm_char.disp = ' ';
+
+	tm_win_modify(win, x, y, columns, rows);
 	tm_win_background(win, ' ', TM_ATTRIB_FG_DEFAULT | TM_ATTRIB_BG_DEFAULT);
 	tm_win_echo(win, 1);
 	tm_win_raw(win, 1);
