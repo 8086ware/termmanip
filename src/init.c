@@ -51,7 +51,8 @@ void tm_init() {
 	tcgetattr(fileno(stdin), &term);
 	og_term = term;
 	
-	cfmakeraw(&term);
+	term.c_lflag &= ~ECHO;
+	term.c_lflag &= ~ICANON;
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 	tcsetattr(fileno(stdout), TCSANOW, &term);
