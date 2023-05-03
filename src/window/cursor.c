@@ -3,9 +3,11 @@
 #include <string.h>
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
-	int i = y * win->columns + x;
+	int position = y * win->columns + x;
 
-	if(i > win->columns * win->rows || i < 0) {
+	y = position / win->columns;
+	x = position % win->columns;
+
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
