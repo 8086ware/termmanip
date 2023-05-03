@@ -1,4 +1,6 @@
 #include "termmanip.h"
+#include <stdlib.h>
+#include "exit_log.h"
 
 void tm_win_scroll_state(Tm_window* win, int state) {
 	if(state <= 0) {
