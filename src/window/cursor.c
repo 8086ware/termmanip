@@ -12,6 +12,10 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 		if(y > win->rows - 1 + win->buffer_position_y) {
 			tm_win_scroll(win, y - (win->rows - 1 + win->buffer_position_y), TM_SCROLL_DOWN);
 		}
+
+		else if(y < win->buffer_position_y) {		
+			tm_win_scroll(win, win->buffer_position_y - y, TM_SCROLL_UP);
+		}
 	}
 
 	else if(y > win->rows - 1 || y < 0) {
