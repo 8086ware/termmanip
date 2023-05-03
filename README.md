@@ -26,4 +26,5 @@ By default the build type is debug so we need to set it to release.
 
 ### Windows Building
 
-To build on windows, you will need MSYS2, it has only been tested to work on that. Run the same commands in the MSYS2 terminal after installing <strong>make</strong> and <strong>mingw-w64-x86_64-toolchain</strong>.
+To build on windows, you will need MSYS2 or Cygwin, it has only been tested to work on those. Run the same commands in the MSYS2/Cygwin terminal after installing <strong>make</strong> and <strong>mingw-w64-x86_64-toolchain</strong>for MSYS2 or <strong>gcc-core</strong> for Cygwin.
+I recommend Cygwin if you want a POSIX building experience with a POSIX compatibility layer.
