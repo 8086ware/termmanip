@@ -8,6 +8,13 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	y = position / win->columns;
 	x = position % win->columns;
 
+	if(win->flags & TM_FLAG_SCROLL) {
+		if(y > win->rows - 1 + win->buffer_position_y) {
+			tm_win_scroll(win, y - (win->rows - 1 + win->buffer_position_y), TM_SCROLL_DOWN);
+		}
+	}
+
+	else if(y > win->rows - 1 || y < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
