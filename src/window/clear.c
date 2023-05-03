@@ -7,8 +7,8 @@ int tm_win_clear(Tm_window* win) {
 		return ret;
 	}
 	
-	for(int y = 0; y < win->rows; y++) {
-		for(int x = 0; x < win->columns; x++) {
+	for(int y = 0; y < win->buffer_rows; y++) {
+		for(int x = 0; x < win->buffer_columns; x++) {
 			tm_win_putch(win, win->background_tm_char.disp, win->background_tm_char.attrib);
 		}
 	}
