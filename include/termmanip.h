@@ -103,6 +103,7 @@ typedef struct {
 
 	char* output;
 	int output_len;
+	int alloc_len;
 
 	uint16_t flags;
 } Tm_screen;
