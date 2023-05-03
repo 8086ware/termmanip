@@ -33,7 +33,13 @@ void tm_win_scroll(Tm_window* win, int amount, int direction) {
 
 		win->buffer_position_y += amount;
 	}
+
+	if(direction == TM_SCROLL_UP) {
+		if(win->buffer_position_y - amount < 0) {
+			amount = win->buffer_position_y;
+		}
 	
-	win->cursor_x = 0;
-	win->cursor_y -= amount;
+
+		win->buffer_position_y -= amount;
+	}
 }
