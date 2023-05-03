@@ -11,11 +11,8 @@ void tm_win_scroll_state(Tm_window* win, int state) {
 		win->flags |= TM_FLAG_SCROLL;
 	}
 }
-void tm_win_scroll(Tm_window* win, int amount, int direction) {
-	if(amount <= 0 || amount > win->rows) {
-		return;		
-	}
 
+void tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
 		for(int y = amount; y < win->rows; y++) {
 			for(int x = 0; x < win->columns; x++) {
