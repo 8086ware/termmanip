@@ -14,14 +14,24 @@ void tm_win_scroll_state(Tm_window* win, int state) {
 
 void tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
-		for(int y = amount; y < win->rows; y++) {
-			for(int x = 0; x < win->columns; x++) {
-				win->buffer[(y - amount) * win->columns + x].disp = win->buffer[y * win->columns + x].disp;
-				win->buffer[(y - amount) * win->columns + x].attrib = win->buffer[y * win->columns + x].attrib;
-				win->buffer[y * win->columns + x].disp = ' ';
-				win->buffer[y * win->columns + x].attrib = 0;
+		if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
+			win->buffer_rows = win->rows + win->buffer_position_y + amount;
+			win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
+
+			if(win->buffer == NULL) {
+				exit_log("tm_win_scroll", "realloc", 1);
 			}
+
+			for(int y = win->buffer_rows - amount; y < win->buffer_rows; y++) {
+				for(int x = 0; x < win->buffer_columns; x++) {
+					win->buffer[y * win->columns + x].disp = win->background_tm_char.disp;
+					win->buffer[y * win->columns + x].attrib = win->background_tm_char.attrib;
+				}
+			}
+
 		}
+
+		win->buffer_position_y += amount;
 	}
 	
 	win->cursor_x = 0;
