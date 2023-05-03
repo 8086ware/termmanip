@@ -45,6 +45,12 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->columns = columns;
 	win->rows = rows;
 
+	win->buffer_position_x = 0;
+	win->buffer_position_y = 0;
+
+	win->buffer_columns = win->columns;
+	win->buffer_rows = win->rows;
+
 	win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL) {
