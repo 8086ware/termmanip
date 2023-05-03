@@ -112,6 +112,7 @@ typedef struct {
 
 typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
+	int buffer_position_x, buffer_position_y, buffer_columns, buffer_rows;
 	int cursor_x, cursor_y;
 
 	struct Tm_window* parent;
