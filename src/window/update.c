@@ -168,8 +168,8 @@ void tm_win_write_to_screen(Tm_window* win) {
 		screen->flags = win->flags;
 	}
 
-	screen->cursor_x = win->cursor_x + win->position_x + parent_x;
-	screen->cursor_y = win->cursor_y + win->position_y + parent_y;
+	screen->cursor_x = (win->cursor_x - win->buffer_position_x) + win->position_x + parent_x;
+	screen->cursor_y = (win->cursor_y - win->buffer_position_y) + win->position_y + parent_y;
 
 	// Loop through window and put its buffer on the screen buffer
 
