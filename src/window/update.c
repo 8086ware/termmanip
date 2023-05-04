@@ -173,7 +173,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[(win->buffer_position_y + y) * win->columns + (win->buffer_position_x + x)];
+			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[(win->buffer_position_y + y) * win->buffer_columns + (win->buffer_position_x + x)];
 		}	
 	}
 
