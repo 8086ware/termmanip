@@ -18,7 +18,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 		}
 	}
 
-	else if(y > win->rows - 1 || y < 0) {
+	else if(y > win->rows || y < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
