@@ -30,6 +30,7 @@ void tm_exit() {
 #else
 	tcsetattr(fileno(stdin), TCSANOW, &og_term);
 	tcsetattr(fileno(stdout), TCSANOW, &og_term);
+
+	terminal_inputblock(1);
 #endif
-	tm_inputblock(1);
 }
