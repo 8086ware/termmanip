@@ -1,29 +1,11 @@
+#ifndef _WIN32
 #include "termmanip.h"
-#ifdef _WIN32
-#include <windows.h>
-#else
 #include <termios.h>
-#endif
 #include <stdio.h>
 
-int tm_inputblock(int state) {
-#ifdef _WIN32
-
-#else
+void terminal_inputblock(int state) {
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
-
-	static int prev_state = 0;
-
-	if(term.c_cc[VMIN] == 0) {
-		prev_state = 0;
-	}
-
-	else {
-		prev_state = 1;
-	}
-	
-	term.c_cc[VTIME] = 0;
 
 	if(state <= 0) {
 		term.c_cc[VMIN] = 0;
@@ -34,7 +16,5 @@ int tm_inputblock(int state) {
 	}
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
-
-	return prev_state;
-#endif
 }
+#endif

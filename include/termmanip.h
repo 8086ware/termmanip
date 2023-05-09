@@ -194,8 +194,6 @@ int tm_win_clear(Tm_window* win); // Clear win
 
 int tm_error(); // Return the most recent error
 
-int tm_inputblock(int state); // Depending on state is false or true will turn on or off input blocking which makes tm_win_input_ch return without pressing a single key
-
 void tm_win_scroll_state(Tm_window* win, int state);
 void tm_win_scroll(Tm_window* win, int amount, int direction);
 
