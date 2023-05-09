@@ -160,10 +160,6 @@ int tm_win_input_str_noblock(Tm_window* win, char* str, int max_size, int* lengt
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &ip, 1, &events_read);
 		ch = ip.Event.KeyEvent.uChar.AsciiChar;
 	}
-
-	if(ip.EventType != KEY_EVENT) {
-		return 0;
-	}
 #else
 	terminal_inputblock(0);
 	read(fileno(stdin), ch, 1);
