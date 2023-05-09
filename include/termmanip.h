@@ -184,6 +184,9 @@ int tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the wind
 
 int tm_win_input_ch(Tm_window* win); // Get a single char and return it
 int tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
+															   
+int tm_win_input_ch_noblock(Tm_window* win); // Get a single char and return it
+int tm_win_input_str_noblock(Tm_window* win, char* str, int max_size, int* length); // Get a string
 
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text); // Put a button in the window
 Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
@@ -206,6 +209,8 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_background(ch, attrib) tm_win_background(default_win, ch, attrib)
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input_ch() tm_win_input_ch(default_win)
+#define tm_input_str_noblock(str, max_size, length) tm_win_input_str_noblock(default_win, str, max_size, length)
+#define tm_input_ch_noblock() tm_win_input_ch(default_win)
 #define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
 #define tm_echo(state) tm_win_echo(default_win, state)
 #define tm_raw(state) tm_win_raw(default_win, state)
