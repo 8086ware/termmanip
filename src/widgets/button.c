@@ -22,7 +22,6 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 	tm_win_echo(win, 0);
 	tm_win_raw(win, 1);
-	int prev_state = tm_inputblock(1);
 
 	Tm_window** button_children = NULL;
 	int button_children_amount = 0;
@@ -61,7 +60,6 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 		else if(c == '\n' || c == '\r') {
 			free(button_children);
-			tm_inputblock(prev_state);
 			win->flags = flags;
 			return win->children[option];
 		}
