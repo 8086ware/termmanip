@@ -68,6 +68,8 @@
 #define TM_SCROLL_UP 0
 #define TM_SCROLL_DOWN 1
 
+#define TM_INPUT_FINISHED 0
+
 // Window flags
 
 #define TM_FLAG_RAW            0b0000000000000001
