@@ -31,7 +31,7 @@ int tm_win_input_ch_noblock(Tm_window* win) {
 	}
 #else
 	terminal_inputblock(0);
-	read(fileno(stdin), ch, 1);
+	read(fileno(stdin), &ch, 1);
 	terminal_inputblock(1);
 #endif
 	if(win->flags & TM_FLAG_ECHO) {
@@ -65,7 +65,7 @@ int tm_win_input_str_noblock(Tm_window* win, char* str, int max_size, int* lengt
 	}
 #else
 	terminal_inputblock(0);
-	read(fileno(stdin), ch, 1);
+	read(fileno(stdin), &ch, 1);
 	terminal_inputblock(1);
 #endif
 
