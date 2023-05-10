@@ -9,11 +9,11 @@
 int tm_win_input_ch_noblock(Tm_window* win) {
 	int ret = 0;
 	char ch = 0;
-	INPUT_RECORD ip = {0};
 
 	tm_win_update(win);
 
 #ifdef _WIN32
+	INPUT_RECORD ip = {0};
 	DWORD events_read = 0;
 	DWORD bytes_read = 0;
 
@@ -49,9 +49,9 @@ int tm_win_input_ch_noblock(Tm_window* win) {
 int tm_win_input_str_noblock(Tm_window* win, char* str, int max_size, int* length) { 
 	int ch = 0;
 	int ret = 0;
-	INPUT_RECORD ip = {0};
 
 #ifdef _WIN32
+	INPUT_RECORD ip = {0};
 	DWORD events_read = 0;
 	DWORD bytes_read = 0;
 
