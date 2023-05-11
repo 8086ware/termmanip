@@ -15,15 +15,12 @@ void append_output(char* fmt, ...) {
 	va_end(args);
 	int len = strlen(buffer);
 
-	if(screen->output_len + len > screen->alloc_len) {
-		screen->output = realloc(screen->output, screen->alloc_len + len);
+	screen->output = realloc(screen->output, screen->output_len + len);
 
-		if(screen->output == NULL) {
-			exit_log("append_output", "realloc", 1);
-		}
-
-		screen->alloc_len += len;
+	if(screen->output == NULL) {
+		exit_log("append_output", "realloc", 1);
 	}
+
 
 	for(int i = 0; i < len; i++) {
 		screen->output[screen->output_len + i] = buffer[i];

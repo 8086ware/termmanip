@@ -136,7 +136,9 @@ void tm_screen_update() {
 
 	write(fileno(stdout), screen->output, screen->output_len);
 
+	free(screen->output);
 	screen->output_len = 0;
+	screen->output = NULL;
 }
 
 void tm_win_write_to_screen(Tm_window* win) {

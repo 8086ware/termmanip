@@ -38,6 +38,4 @@ void screen_init() {
 		screen->physical_buffer[i].disp = ' ';
 		screen->physical_buffer[i].attrib = 0;
 	}
-	
-	screen->alloc_len = 0;
 }
