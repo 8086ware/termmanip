@@ -45,6 +45,7 @@ OBJECTS=$(OBJ_DIR)/append_output.o \
 		$(OBJ_DIR)/scroll.o \
 		$(OBJ_DIR)/screen.o \
 		$(OBJ_DIR)/inputnoblock.o \
+		$(OBJ_DIR)/write.o \
 	
 debug: CFLAGS += -g
 debug: CFLAGS += -DDEBUG
@@ -87,6 +88,7 @@ $(OBJ_DIR)/put.o: $(SRC_DIR)/window/put.c
 $(OBJ_DIR)/scroll.o: $(SRC_DIR)/window/scroll.c
 $(OBJ_DIR)/screen.o: $(SRC_DIR)/screen.c
 $(OBJ_DIR)/inputnoblock.o: $(SRC_DIR)/window/inputnoblock.c
+$(OBJ_DIR)/write.o: $(SRC_DIR)/terminal/write.c
 
 $(OBJECTS):
 	$(CC) -c $(CFLAGS) $< -o $@
