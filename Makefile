@@ -82,7 +82,7 @@ $(OBJ_DIR)/button.o: $(SRC_DIR)/widgets/button.c
 $(OBJ_DIR)/dialog.o: $(SRC_DIR)/widgets/dialog.c
 $(OBJ_DIR)/clear.o: $(SRC_DIR)/window/clear.c
 $(OBJ_DIR)/error.o: $(SRC_DIR)/error.c
-$(OBJ_DIR)/inputblock.o: $(SRC_DIR)/inputblock.c
+$(OBJ_DIR)/inputblock.o: $(SRC_DIR)/terminal/inputblock.c
 $(OBJ_DIR)/put.o: $(SRC_DIR)/window/put.c
 $(OBJ_DIR)/scroll.o: $(SRC_DIR)/window/scroll.c
 $(OBJ_DIR)/screen.o: $(SRC_DIR)/screen.c
