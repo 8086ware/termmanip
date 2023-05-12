@@ -19,6 +19,8 @@ void tm_exit() {
 	tm_win_free(default_win);
 
 	free(screen->output);
+	free(screen->buffer);
+	free(screen->physical_buffer);
 	free(screen);
 
 	screen = NULL;
