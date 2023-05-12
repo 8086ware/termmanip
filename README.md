@@ -7,7 +7,7 @@ This project is not complete and a W.I.P so if you find a bug, drop an issue.
 
 This has been tested to work on Ubuntu.
 
-To build and install you will need <strong>binutils</strong> and <strong>build-essential</strong>.
+To build and install you will need <strong>binutils</strong>, <strong>cmake</strong> and <strong>build-essential</strong>.
 If you want to use your own compiler set it in the Makefile.
 
 ### Run these commands in your shell:
@@ -16,7 +16,11 @@ If you want to use your own compiler set it in the Makefile.
 </code>
 <code>$ cd termmanip
 </code>
-<code>$ make release
+<code>$ sh build.sh
+</code>
+<code>$ cd bin/
+</code>
+<code>$ make
 </code>
 <code>$ sudo make install
 </code>
@@ -26,5 +30,5 @@ By default the build type is debug so we need to set it to release.
 
 ### Windows Building
 
-To build on windows, you will need MSYS2 or Cygwin, it has only been tested to work on those. Run the same commands in the MSYS2/Cygwin terminal after installing <strong>make</strong> and <strong>mingw-w64-x86_64-toolchain</strong>for MSYS2 or <strong>gcc-core</strong> for Cygwin.
+To build on windows, you will need MSYS2 or Cygwin, it has only been tested to work on those. Run the same commands in the MSYS2/Cygwin terminal after installing <strong>make</strong>, <strong>mingw-w64-x86_64-cmake/cmake</strong> and <strong>mingw-w64-x86_64-toolchain</strong>for MSYS2 or <strong>gcc-core</strong> for Cygwin.
 I recommend Cygwin if you want a POSIX building experience with a POSIX compatibility layer.
