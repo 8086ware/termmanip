@@ -1,5 +1,5 @@
 AR=ar
-CC=gcc
+CC=cc
 
 ARFLAGS=rcs
 CFLAGS=-Iinclude -Wall
@@ -54,9 +54,11 @@ debug: all
 release: CFLAGS += -O2
 release: all
 
+.SILENT:
 all: $(OBJ_DIR) $(BUILD_DIR) $(BUILD_DIR)/$(OUTPUT_NAME)
 
 $(BUILD_DIR)/$(OUTPUT_NAME): $(OBJECTS)
+	@echo AR $@
 	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/exit_log.o: $(SRC_DIR)/exit_log.c
@@ -91,6 +93,7 @@ $(OBJ_DIR)/inputnoblock.o: $(SRC_DIR)/window/inputnoblock.c
 $(OBJ_DIR)/write.o: $(SRC_DIR)/terminal/write.c
 
 $(OBJECTS):
+	@echo CC $@
 	$(CC) -c $(CFLAGS) $< -o $@
 
 .PHONY: clean make_dirs test install uninstall
@@ -105,9 +108,11 @@ test:
 	$(MAKE) debug && cp $(BUILD_DIR)/$(OUTPUT_NAME) test/ && cp include/termmanip.h test/ && cd test && $(MAKE) && $(MAKE) run
 
 $(BUILD_DIR):
+	@echo MD $@
 	$(MD) $(BUILD_DIR)
 
 $(OBJ_DIR):
+	@echo MD $@
 	$(MD) $(OBJ_DIR)
 
 clean:
