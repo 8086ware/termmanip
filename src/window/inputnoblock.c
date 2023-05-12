@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <unistd.h>
 #include <stdio.h>
+#include "terminal.h"
 
 #ifdef _WIN32
 #include <windows.h>
