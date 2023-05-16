@@ -1,5 +1,6 @@
-bin/
-test/*
-!test/Makefile
-!test/test.c
-compile_commands.json
+*.a
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+Makefile
