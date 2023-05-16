@@ -21,12 +21,12 @@ void tm_screen_update() {
 
 			// If the screen attribute doesn't match the attribute we want to display then output the new attribute
 
-			terminal_write(i % screen->columns, i / screen->columns, disp, attrib);
+			screen_output_write(i % screen->columns, i / screen->columns, disp, attrib);
 		}
 
 	}
 	
-	append_output("\x1b[%d;%dH", screen->cursor_y + 1, screen->cursor_x + 1);
+	screen_append_output("\x1b[%d;%dH", screen->cursor_y + 1, screen->cursor_x + 1);
 
 	write(fileno(stdout), screen->output, screen->output_len);
 
@@ -52,24 +52,23 @@ void tm_win_write_to_screen(Tm_window* win) {
 
 	if(win->flags != screen->flags) {
 		if(win->flags & TM_FLAG_CURSOR_VISIBLE) {
-			append_output("\x1b[?25h");
+			screen_append_output("\x1b[?25h");
 		}
 
 		else if(win->flags & ~TM_FLAG_CURSOR_VISIBLE) {
-			append_output("\x1b[?25l");
+			screen_append_output("\x1b[?25l");
 		}
 
 		screen->flags = win->flags;
 	}
 
-	screen->cursor_x = (win->cursor_x - win->buffer_position_x) + win->position_x + parent_x;
-	screen->cursor_y = (win->cursor_y - win->buffer_position_y) + win->position_y + parent_y;
+	screen_cursor((win->cursor_x - win->buffer_position_x) + win->position_x + parent_x, (win->cursor_y - win->buffer_position_y) + win->position_y + parent_y);
 
 	// Loop through window and put its buffer on the screen buffer
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			screen->buffer[(win->position_y + parent_y + y) * screen->columns + (win->position_x + parent_x + x)] = win->buffer[(win->buffer_position_y + y) * win->buffer_columns + (win->buffer_position_x + x)];
+			screen_buffer_write((win->position_x + parent_x + x), (win->position_y + parent_y + y), win->buffer[(win->buffer_position_y + y) * win->buffer_columns + (win->buffer_position_x + x)]);
 		}	
 	}
 
