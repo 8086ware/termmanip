@@ -170,6 +170,7 @@ int tm_win_cursor_visible(Tm_window* win, int state); // Depending on state is f
 
 void tm_win_echo(Tm_window* win, int state); // Depending on state is false or true will turn on or off input echo
 void tm_win_raw(Tm_window* win, int state); // Depending on state is false or true will turn on or off input raw mode (won't return as soon as it gets a character)
+void tm_win_inputblock(Tm_window* win, int state); // Depending on state is false or true will turn on or off input blocking mode (Non-block returns instantly without user input)
 
 void tm_init(); // Initalize termmanip
 void tm_exit(); // Exit termmanip
