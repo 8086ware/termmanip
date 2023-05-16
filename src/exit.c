@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "terminal.h"
+#include "screen.h"
 #include <unistd.h>
 
 #ifdef _WIN32
@@ -17,13 +17,7 @@ void tm_exit() {
 	write(fileno(stdout), exit, strlen(exit));
 
 	tm_win_free(default_win);
-
-	free(screen->output);
-	free(screen->buffer);
-	free(screen->physical_buffer);
-	free(screen);
-
-	screen = NULL;
+	screen_free();
 #ifdef _WIN32
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
 		exit_log("tm_exit", "SetConsoleMode", 1);
