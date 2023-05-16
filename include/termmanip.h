@@ -8,6 +8,7 @@
 #define TM_INVALID_DIMENSIONS 2
 #define TM_DIALOG_NO_OPTIONS 3
 #define TM_WIN_NULL 4
+#define TM_SCREEN_INVALID_CURSOR 5
 
 // Child window types
 #define TM_CHILD_NONE 0
