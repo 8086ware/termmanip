@@ -3,10 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "exit_log.h"
-#include "append_output.h"
 #include "signal_handler.h"
 #include <signal.h>
 #include "screen.h"
+
 #ifdef _WIN32
 #include <windows.h>
 DWORD og_input_mode;

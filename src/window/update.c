@@ -1,8 +1,7 @@
 #include "termmanip.h"
 #include <stdio.h>
-#include "append_output.h"
 #include <stdlib.h>
-#include "terminal.h"
+#include "screen.h"
 
 #ifdef _WIN32
 #include <windows.h>
