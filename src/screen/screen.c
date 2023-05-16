@@ -39,3 +39,12 @@ void screen_init() {
 		screen->physical_buffer[i].attrib = 0;
 	}
 }
+
+void screen_free() {
+	free(screen->buffer);
+	free(screen->physical_buffer);
+	free(screen->output);
+	free(screen);
+
+	screen = NULL;
+}
