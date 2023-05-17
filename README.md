@@ -18,7 +18,7 @@ If you want to use your own compiler set it in the Makefile.
 </code>
 <code>$ sh build.sh
 </code>
-<code>$ cd bin/
+<code>$ cd build/
 </code>
 <code>$ make
 </code>
