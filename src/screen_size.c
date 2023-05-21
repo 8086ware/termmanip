@@ -1,36 +1,29 @@
 #include "termmanip.h"
-#ifndef _WIN32
-#include <sys/ioctl.h>
-#else
+#ifdef _WIN32
 #include <windows.h>
+#else
+#include <sys/ioctl.h>
 #endif
 
 void tm_get_scrsize(int* x, int* y) {
-#ifndef _WIN32
+#ifdef _WIN32
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+
+	*x = csbi.dwSize.X;
+	*y = csbi.dwSize.Y;
+#else
 	struct winsize ws;
 
 	ioctl(0, TIOCGWINSZ, &ws);
 
 	*x = ws.ws_col;
 	*y = ws.ws_row;
-#else
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-
-	*x = csbi.dwSize.X;
-	*y = csbi.dwSize.Y;
 #endif
 }
 
 void tm_set_scrsize(int x, int y) {
-#ifndef _WIN32
-	struct winsize ws;
-
-	ws.ws_col = x;
-	ws.ws_row = y;
-
-	ioctl(1, TIOCSWINSZ, &ws);
-#else
+#ifdef _WIN32
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 
@@ -39,5 +32,12 @@ void tm_set_scrsize(int x, int y) {
 
 	COORD coord = {x,y};
 	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+#else
+	struct winsize ws;
+
+	ws.ws_col = x;
+	ws.ws_row = y;
+
+	ioctl(1, TIOCSWINSZ, &ws);
 #endif
 }
