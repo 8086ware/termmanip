@@ -12,12 +12,13 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 
 	else {
 		if((ret = tm_win_cursor(win, win->cursor_x + 1, win->cursor_y)) == TM_ERROR) {
-			return ret;
+			win->buffer[win->cursor_y * win->buffer_columns + win->cursor_x].attrib = attrib;
+			win->buffer[win->cursor_y * win->buffer_columns + win->cursor_x].disp = ch;
+			return TM_ERROR;
 		}
 
 		win->buffer[win->cursor_y * win->buffer_columns + win->cursor_x - 1].attrib = attrib;
 		win->buffer[win->cursor_y * win->buffer_columns + win->cursor_x - 1].disp = ch;
-
 	}
 
 	return 0;
