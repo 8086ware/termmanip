@@ -1,6 +1,8 @@
 #include "termmanip.h"
 #include "screen.h"
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 void tm_screen_update() {
 	for(int i = 0; i != screen->columns * screen->rows; i++) {
