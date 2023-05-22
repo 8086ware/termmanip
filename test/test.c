@@ -3,7 +3,7 @@
 int main(void) {
 	tm_init();
 
-	for(int i = 0; i < 10; i++) {
+	for(int i = 0; i <= 1000; i++) {
 		tm_cursor(0, 0);
 		tm_print("Loading... %d", i);
 		tm_update();
@@ -52,4 +52,5 @@ int main(void) {
 
 	tm_button_select();
 	tm_input_ch();
+	tm_exit();
 }
