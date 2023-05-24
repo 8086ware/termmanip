@@ -7,6 +7,7 @@
 #include <windows.h>
 #else
 #include <unistd.h>
+#include <termios.h>
 #endif
 
 void tm_win_write_to_screen(Tm_window* win) {
@@ -25,13 +26,31 @@ void tm_win_write_to_screen(Tm_window* win) {
 	// Update screen flags
 
 	if(win->flags != screen->flags) {
-		if(win->flags & TM_FLAG_CURSOR_VISIBLE) {
+		if(win->flags & TM_FLAG_CURSOR_VISIBLE && screen->flags & ~TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25h");
 		}
 
-		else if(win->flags & ~TM_FLAG_CURSOR_VISIBLE) {
+		else if(win->flags & ~TM_FLAG_CURSOR_VISIBLE && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25l");
 		}
+
+#ifndef _WIN32
+		if(win->flags & ~TM_FLAG_INPUTBLOCK && win->flags & TM_FLAG_INPUTBLOCK) {
+			struct termios term;
+			tcgetattr(fileno(stdout), &term); 
+			term.c_cc[VMIN] = 0;
+			term.c_cc[VTIME] = 0;
+			tcsetattr(fileno(stdout), TCSANOW, &term);
+		}
+
+		else if(win->flags & TM_FLAG_INPUTBLOCK && win->flags & ~TM_FLAG_INPUTBLOCK) {
+			struct termios term;
+			tcgetattr(fileno(stdout), &term); 
+			term.c_cc[VMIN] = 1;
+			term.c_cc[VTIME] = 0;
+			tcsetattr(fileno(stdout), TCSANOW, &term);
+		}
+#endif
 
 		screen->flags = win->flags;
 	}
