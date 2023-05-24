@@ -2,8 +2,6 @@
 #include <string.h>
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
-	int ret = 0;
-
 	int position = win->cursor_y * win->columns + win->cursor_x;
 
 	if(win->flags & TM_FLAG_SCROLL) {
