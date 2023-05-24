@@ -9,16 +9,34 @@
 int tm_win_input_ch(Tm_window* win) {
 	int ret = 0;
 	char ch[4096];
+	*ch = 0;
 
 	tm_win_update(win);
 
 	if(win->flags & TM_FLAG_RAW) {	
+		if(win->flags & ~TM_FLAG_INPUTBLOCK) {
 #ifdef _WIN32
-		DWORD bytes_read = 0;
-		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), ch, 1, &bytes_read, NULL);
-#else
-		read(fileno(stdin), ch, 1);
+			INPUT_RECORD ip;
+			
+			DWORD events_read = 0;
+
+			PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &ip, 1, &events_read);
+			
+			if(events_read > 0) {
+				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &ip, 1, &events_read);
+			}
+			
+			*ch = ip.Event.KeyEvent.uChar.AsciiChar;
 #endif
+		}
+		else {
+#ifdef _WIN32
+			DWORD bytes_read = 0;
+			ReadConsole(GetStdHandle(STD_INPUT_HANDLE), ch, 1, &bytes_read, NULL);
+#else
+			read(fileno(stdin), ch, 1);
+#endif
+		}
 
 		if(win->flags & TM_FLAG_ECHO) {
 			if((ret = tm_win_print(win, "%c", *ch)) == TM_ERROR) {
