@@ -64,6 +64,10 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 
 	for(int i = 0; i < option_amount; i++) {
 		if(button_selected == buttons[i]) {
+			for(int i = 0; i < option_amount; i++) {
+				tm_win_free(buttons[i]);
+			}
+
 			tm_win_free(dialog);
 			return i;
 		}
