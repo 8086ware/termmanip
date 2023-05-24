@@ -9,6 +9,8 @@ set(SOURCES src/exit_log.c src/screen_size.c src/screen/append_output.c src/wind
 add_library(termmanip STATIC ${SOURCES})
 
 target_include_directories(termmanip PRIVATE include)
+target_compile_options(termmanip PRIVATE -Wall)
+target_compile_options(termmanip PRIVATE -Wextra)
 
 install(TARGETS termmanip DESTINATION /usr/lib)
 install(FILES include/termmanip.h DESTINATION /usr/include)
