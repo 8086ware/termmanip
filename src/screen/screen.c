@@ -23,7 +23,7 @@ void screen_init() {
 
 	screen->attrib = 0;
 
-	screen->flags = 0;
+	screen->flags = TM_FLAG_CURSOR_VISIBLE | TM_FLAG_INPUTBLOCK;
 	
 	screen->buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
 	screen->physical_buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
