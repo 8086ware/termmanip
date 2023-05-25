@@ -35,7 +35,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 		}
 
 #ifndef _WIN32
-		if(win->flags & ~TM_FLAG_INPUTBLOCK && win->flags & TM_FLAG_INPUTBLOCK) {
+		if((win->flags & TM_FLAG_INPUTBLOCK) == 0 && screen->flags & TM_FLAG_INPUTBLOCK) {
 			struct termios term;
 			tcgetattr(fileno(stdout), &term); 
 			term.c_cc[VMIN] = 0;
@@ -43,7 +43,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 			tcsetattr(fileno(stdout), TCSANOW, &term);
 		}
 
-		else if(win->flags & TM_FLAG_INPUTBLOCK && win->flags & ~TM_FLAG_INPUTBLOCK) {
+		else if(win->flags & TM_FLAG_INPUTBLOCK && (screen->flags & TM_FLAG_INPUTBLOCK) == 0) {
 			struct termios term;
 			tcgetattr(fileno(stdout), &term); 
 			term.c_cc[VMIN] = 1;
