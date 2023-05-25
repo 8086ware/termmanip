@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "screen.h"
 #include <unistd.h>
+#include "exit_log.h"
 
 #ifdef _WIN32
 #include <windows.h>
