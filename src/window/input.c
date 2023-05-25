@@ -14,7 +14,7 @@ int tm_win_input_ch(Tm_window* win) {
 	tm_win_update(win);
 
 	if(win->flags & TM_FLAG_RAW) {	
-		if(win->flags & ~TM_FLAG_INPUTBLOCK) {
+		if((win->flags & TM_FLAG_INPUTBLOCK) == 0) {
 #ifdef _WIN32
 			INPUT_RECORD ip;
 			
@@ -27,8 +27,11 @@ int tm_win_input_ch(Tm_window* win) {
 			}
 			
 			*ch = ip.Event.KeyEvent.uChar.AsciiChar;
+#else
+			read(fileno(stdin), ch, 1);
 #endif
 		}
+
 		else {
 #ifdef _WIN32
 			DWORD bytes_read = 0;
