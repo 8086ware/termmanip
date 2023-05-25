@@ -43,8 +43,8 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 int tm_win_puts(Tm_window* win, char* str, uint32_t attrib) {
 	int ret = 0;
 
-	for(int i = 0; i < strlen(str); i++) {
-		if((ret = tm_win_putch(win, str[i], attrib)) == TM_ERROR) {
+	for(; *str != '\0'; str++) {
+		if((ret = tm_win_putch(win, *str, attrib)) == TM_ERROR) {
 			return ret;
 		}
 	}
