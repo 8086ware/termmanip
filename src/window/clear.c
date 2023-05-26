@@ -1,8 +1,6 @@
 #include "termmanip.h"
 
 int tm_win_clear(Tm_window* win) {
-	int ret = 0;
-
 	tm_win_cursor(win, 0, 0);
 	
 	for(int y = 0; y < win->buffer_rows; y++) {
