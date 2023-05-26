@@ -4,5 +4,6 @@
 
 void exit_log(char* func, char* msg, int id) {
 	fprintf(stderr, "%s() Error %d: %s", func, id, msg);
-	abort();
+	getchar();
+	exit(-1);
 }
