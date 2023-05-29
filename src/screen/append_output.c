@@ -9,7 +9,7 @@
 void screen_append_output(char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
-	char buffer[strlen(fmt) + 2048];
+	char* buffer = malloc(strlen(fmt) + 2048);
 	vsprintf(buffer, fmt, args);
 
 	va_end(args);
@@ -27,5 +27,6 @@ void screen_append_output(char* fmt, ...) {
 	}
 
 	screen->output_len += len;
+	free(buffer);
 }
 

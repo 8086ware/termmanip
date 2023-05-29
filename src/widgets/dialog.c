@@ -47,7 +47,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	int option_columns = (columns - option_amount - 3) / option_amount;
  	int option_rows = 3;
 
-	Tm_window* buttons[option_amount];
+	Tm_window** buttons = malloc(sizeof(Tm_window*) * option_amount);
 
 	for(int i = 0; i < option_amount; i++) {
 		char* button_text = va_arg(option_args, char*);
@@ -69,6 +69,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 			}
 
 			tm_win_free(dialog);
+			free(buttons);
 			return i;
 		}
 	}

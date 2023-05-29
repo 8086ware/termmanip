@@ -12,7 +12,7 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 	va_start(args, fmt);
 
 	const int size = strlen(fmt) + 2048;
-	char buffer[size];
+	char* buffer = malloc(size);
 
 	vsprintf(buffer, fmt, args);
 
@@ -21,6 +21,8 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 	if((ret = tm_win_puts(win, buffer, win->attrib) == TM_ERROR)) {
 		return ret;
 	}
+
+	free(buffer);
 
 	return 0;
 }
