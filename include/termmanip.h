@@ -215,6 +215,7 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
 #define tm_echo(state) tm_win_echo(default_win, state)
 #define tm_raw(state) tm_win_raw(default_win, state)
+#define tm_inputblock(state) tm_win_inputblock(default_win, state)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
