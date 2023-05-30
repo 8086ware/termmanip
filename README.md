@@ -8,7 +8,6 @@ This project is not complete and a W.I.P so if you find a bug, drop an issue.
 This has been tested to work on Ubuntu.
 
 To build and install you will need <strong>binutils</strong>, <strong>cmake</strong> and <strong>build-essential</strong>.
-If you want to use your own compiler set it in the Makefile.
 
 ### Run these commands in your shell:
 
@@ -16,17 +15,14 @@ If you want to use your own compiler set it in the Makefile.
 </code>
 <code>$ cd termmanip
 </code>
-<code>$ sh build.sh
+<code>$ mkdir build/
+</code>
+<code>$ cmake -B build/ -G"(Generator Here)"
 </code>
 <code>$ cd build/
 </code>
-<code>$ make
+<code>$ (Command for generated build files like make, or ninja)
 </code>
-<code>$ sudo make install
-</code>
-
-
-By default the build type is debug so we need to set it to release.
 
 ### Windows Building
 
