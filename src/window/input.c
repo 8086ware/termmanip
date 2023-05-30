@@ -24,9 +24,11 @@ int tm_win_input_ch(Tm_window* win) {
 			
 			if(events_read > 0) {
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &ip, 1, &events_read);
+
+				if(ip.Event.KeyEvent.bKeyDown) {
+					*ch = ip.Event.KeyEvent.uChar.AsciiChar;
+				}
 			}
-			
-			*ch = ip.Event.KeyEvent.uChar.AsciiChar;
 #else
 			read(fileno(stdin), ch, 1);
 #endif
