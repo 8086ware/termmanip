@@ -96,7 +96,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 				return ret;
 			}
 
-			if((ret = tm_win_print(win, " ")) == TM_ERROR) {
+			if((ret = tm_win_putch(win, win->background_tm_char.disp, win->background_tm_char.attrib)) == TM_ERROR) {
 				return ret;
 			}
 
