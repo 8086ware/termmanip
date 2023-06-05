@@ -12,8 +12,8 @@ target_include_directories(termmanip PRIVATE include)
 target_compile_options(termmanip PRIVATE -Wall)
 target_compile_options(termmanip PRIVATE -Wextra)
 
-install(TARGETS termmanip DESTINATION /usr/lib)
-install(FILES include/termmanip.h DESTINATION /usr/include)
+install(TARGETS termmanip DESTINATION lib)
+install(FILES include/termmanip.h DESTINATION include)
 
 add_executable(termmanip_test test/test.c)
 target_link_libraries(termmanip_test termmanip)
