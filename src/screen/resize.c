@@ -1,6 +1,7 @@
 #include "screen.h"
 #include "termmanip.h"
 #include "exit_log.h"
+#include <stdlib.h>
 
 void screen_resize() {
 	int columns, rows;
