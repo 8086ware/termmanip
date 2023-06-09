@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <string.h>
 #include <stdarg.h>
+#include <stdlib.h>
 
 int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...) {
 	int scr_x = 0, scr_y = 0;
