@@ -186,9 +186,6 @@ int tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the wind
 int tm_win_input_ch(Tm_window* win); // Get a single char and return it
 int tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
 															   
-int tm_win_input_ch_noblock(Tm_window* win); // Get a single char and return it
-int tm_win_input_str_noblock(Tm_window* win, char* str, int max_size, int* length); // Get a string
-
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text); // Put a button in the window
 Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
 
