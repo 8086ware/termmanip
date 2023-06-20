@@ -103,7 +103,5 @@ void screen_output_write(int x, int y, char ch, uint32_t attrib) {
 
 	from_x = x;
 	from_y = y;
-
-	screen->physical_buffer[y * screen->columns + x] = screen->buffer[y * screen->columns + x];
 }
 

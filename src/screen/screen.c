@@ -26,23 +26,19 @@ void screen_init() {
 	screen->flags = TM_FLAG_CURSOR_VISIBLE | TM_FLAG_INPUTBLOCK;
 	
 	screen->buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
-	screen->physical_buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
 
-	if(screen->buffer == NULL || screen->physical_buffer == NULL) {
+	if(screen->buffer == NULL) {
 		exit_log("tm_init", "malloc", 2);
 	}	
 
 	for(int i = 0; i < screen->columns * screen->rows; i++) {
 		screen->buffer[i].disp = ' ';
 		screen->buffer[i].attrib = 0;
-		screen->physical_buffer[i].disp = ' ';
-		screen->physical_buffer[i].attrib = 0;
 	}
 }
 
 void screen_free() {
 	free(screen->buffer);
-	free(screen->physical_buffer);
 	free(screen->output);
 	free(screen);
 

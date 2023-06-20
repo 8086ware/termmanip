@@ -13,16 +13,8 @@ void screen_resize() {
 		exit_log("screen_resize", "realloc", 1);
 	}
 
-	screen->physical_buffer = realloc(screen->physical_buffer, sizeof(Tm_char) * columns * rows);
-
-	if(screen->physical_buffer == NULL) {
-		exit_log("screen_resize", "realloc", 1);
-	}
-
 	for(int i = 0; i < columns * rows; i++) {
 		screen->buffer[i].disp = ' ';
 		screen->buffer[i].attrib = 0;
-		screen->physical_buffer[i].disp = ' ';
-		screen->physical_buffer[i].attrib = 0;
 	}
 }
