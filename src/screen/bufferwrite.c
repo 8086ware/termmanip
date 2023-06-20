@@ -7,5 +7,9 @@ void screen_buffer_write(int x, int y, Tm_char ch) {
 	y = position / screen->columns;
 	x = position % screen->columns;
 
+	if(ch.disp != screen->buffer[position].disp || ch.attrib != screen->buffer[position].attrib) {
+		screen_output_write(x, y, ch.disp, ch.attrib);
+	}
+
 	screen->buffer[position] = ch;
 }
