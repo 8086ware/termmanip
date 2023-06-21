@@ -18,6 +18,9 @@ void screen_init() {
 	screen->cursor_x = 0;
 	screen->cursor_y = 0;
 
+	screen->last_updated_x = 0;
+	screen->last_updated_y = 0;
+
 	screen->output = NULL;
 	screen->output_len = 0;
 

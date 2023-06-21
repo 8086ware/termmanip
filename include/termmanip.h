@@ -101,6 +101,8 @@ typedef struct {
 
 	int cursor_x, cursor_y;
 
+	int last_updated_x, last_updated_y;
+
 	uint32_t attrib;
 
 	char* output;
