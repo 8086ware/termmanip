@@ -5,7 +5,9 @@
 #include <stdio.h>
 
 void tm_screen_update() {
-	screen_append_output("\x1b[%d;%dH", screen->cursor_y + 1, screen->cursor_x + 1);
+	if(screen->last_updated_x + 1 != screen->cursor_x || screen->last_updated_y != screen->cursor_y) {
+		screen_append_output("\x1b[%d;%dH", screen->cursor_y + 1, screen->cursor_x + 1);
+	}
 
 #ifdef _WIN32
 	DWORD bytes_written = 0;

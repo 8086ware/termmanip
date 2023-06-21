@@ -2,7 +2,6 @@
 #include "screen.h"
 
 void screen_output_write(int x, int y, char ch, uint32_t attrib) {
-	static int from_x = 0, from_y = 0;
 	if(screen->attrib != attrib) {
 		if(attrib & TM_ATTRIB_ALTERNATE && (screen->attrib & TM_ATTRIB_ALTERNATE) == 0) {
 			screen_append_output("\x1b(0");
@@ -95,13 +94,13 @@ void screen_output_write(int x, int y, char ch, uint32_t attrib) {
 		screen->attrib = attrib;
 	}
 
-	if(x - from_x != 1 || from_y != y) {
+	if(x - screen->last_updated_x != 1 || screen->last_updated_y != y) {
 		screen_append_output("\x1b[%d;%dH", y + 1, x + 1);
 	}
 
 	screen_append_output("%c", ch);
 
-	from_x = x;
-	from_y = y;
+	screen->last_updated_x = x;
+	screen->last_updated_y = y;
 }
 
