@@ -10,8 +10,8 @@ void tm_get_scrsize(int* x, int* y) {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
 
-	*x = csbi.dwSize.X;
-	*y = csbi.dwSize.Y;
+	*x = csbi.srWindow.Right + 1;
+	*y = csbi.srWindow.Bottom + 1;
 #else
 	struct winsize ws;
 
