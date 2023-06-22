@@ -1,9 +1,11 @@
 #include "termmanip.h"
-#include <unistd.h>
 #include <stdio.h>
 
 #ifdef _WIN32
 #include <windows.h>
+#include <io.h>
+#else
+#include <unistd.h>
 #endif
 
 int tm_win_input_ch(Tm_window* win) {
@@ -35,12 +37,7 @@ int tm_win_input_ch(Tm_window* win) {
 		}
 
 		else {
-#ifdef _WIN32
-			DWORD bytes_read = 0;
-			ReadConsole(GetStdHandle(STD_INPUT_HANDLE), ch, 1, &bytes_read, NULL);
-#else
 			read(fileno(stdin), ch, 1);
-#endif
 		}
 
 		if(win->flags & TM_FLAG_ECHO) {
@@ -69,12 +66,8 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	int ret = 0;
 
 	while(1) {
-#ifdef _WIN32
-		DWORD bytes_read = 0;
-		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
-#else
 		read(fileno(stdin), &ch, 1);
-#endif
+
 		if(ch == '\n' || ch == '\r') {
 			break;
 		}

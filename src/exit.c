@@ -3,13 +3,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "screen.h"
-#include <unistd.h>
 #include "exit_log.h"
 
 #ifdef _WIN32
 #include <windows.h>
+#include <io.h>
 #else
 #include <termios.h>
+#include <unistd.h>
 #endif
 
 void tm_exit() {

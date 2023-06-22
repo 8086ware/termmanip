@@ -7,7 +7,10 @@
 
 #ifndef _WIN32
 #include <unistd.h>
+#else
+#include <io.h>
 #endif
+
 Tm_screen* screen = NULL;
 
 void tm_init() {
