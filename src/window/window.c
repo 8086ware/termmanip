@@ -28,10 +28,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 	tm_win_modify(win, x, y, columns, rows);
 	tm_win_background(win, ' ', 0);
-	tm_win_echo(win, 1);
-	tm_win_raw(win, 1);
-	tm_win_inputblock(win, 1);
-	tm_win_cursor_visible(win, 1);
+	
+	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_RAW | TM_FLAG_INPUTBLOCK | TM_FLAG_CURSOR_VISIBLE, 1);
+
 	tm_win_cursor(win, 0, 0);
 	return win;
 }
