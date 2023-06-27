@@ -76,6 +76,8 @@
 #define TM_FLAG_SCROLL         0b0000000000001000
 #define TM_FLAG_INPUTBLOCK     0b0000000000010000
 
+#define TM_FLAG_ALL            0b1111111111111111
+
 #include <stdint.h>
 #ifdef _WIN32
 #include <windows.h>
