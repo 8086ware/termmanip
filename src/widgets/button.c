@@ -18,12 +18,13 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 }
 
 Tm_window* tm_win_button_select(Tm_window* win) {
-	uint16_t flags = win->flags;
-
-	tm_win_echo(win, 0);
-	tm_win_raw(win, 1);
+	uint16_t flags = tm_win_get_flags(win);
+	
+	tm_win_flags(win, TM_FLAG_INPUTBLOCK | TM_FLAG_RAW, 1);
+	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	Tm_window** button_children = NULL;
+
 	int button_children_amount = 0;
 
 	for(int i = 0; i < win->children_amount; i++) {
@@ -60,7 +61,8 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 
 		else if(c == '\n' || c == '\r') {
 			free(button_children);
-			win->flags = flags;
+			tm_win_flags(win, TM_FLAG_ALL, 0);
+			tm_win_flags(win, flags, 1);
 			return win->children[option];
 		}
 
