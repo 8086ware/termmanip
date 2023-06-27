@@ -191,8 +191,10 @@ int tm_win_clear(Tm_window* win); // Clear win
 
 int tm_error(); // Return the most recent error
 
-void tm_win_scroll_state(Tm_window* win, int state);
 void tm_win_scroll(Tm_window* win, int amount, int direction);
+
+uint16_t tm_win_get_flags(Tm_window* win);
+void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 
 //Bunch of macros that serve the same functionality as other functions except they act upon the default window
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
@@ -208,6 +210,7 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
 #define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
+#define tm_flags(flags, state) tm_win_flags(default_win, flags, state)
 
 #endif
 
