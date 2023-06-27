@@ -166,11 +166,6 @@ int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at
 int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cursor position
 
 int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
-int tm_win_cursor_visible(Tm_window* win, int state); // Depending on state is false or true will turn on or off the cursor visibility
-
-void tm_win_echo(Tm_window* win, int state); // Depending on state is false or true will turn on or off input echo
-void tm_win_raw(Tm_window* win, int state); // Depending on state is false or true will turn on or off input raw mode (won't return as soon as it gets a character)
-void tm_win_inputblock(Tm_window* win, int state); // Depending on state is false or true will turn on or off input blocking mode (Non-block returns instantly without user input)
 
 void tm_init(); // Initalize termmanip
 void tm_exit(); // Exit termmanip
@@ -209,14 +204,10 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input_ch() tm_win_input_ch(default_win)
 #define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
-#define tm_echo(state) tm_win_echo(default_win, state)
-#define tm_raw(state) tm_win_raw(default_win, state)
-#define tm_inputblock(state) tm_win_inputblock(default_win, state)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
 #define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
-#define tm_scroll_state(state) tm_win_scroll_state(default_win, state)
 
 #endif
 

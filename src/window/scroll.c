@@ -2,16 +2,6 @@
 #include <stdlib.h>
 #include "exit_log.h"
 
-void tm_win_scroll_state(Tm_window* win, int state) {
-	if(state <= 0) {
-		win->flags &= ~TM_FLAG_SCROLL;
-	}
-
-	else if(state > 0) {	
-		win->flags |= TM_FLAG_SCROLL;
-	}
-}
-
 void tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
 		if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {

@@ -29,16 +29,3 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	return 0;
 }
 
-int tm_win_cursor_visible(Tm_window* win, int state) {
-	if(state <= 0) {
-		win->flags &= ~TM_FLAG_CURSOR_VISIBLE;
-	}
-
-	else if(state > 0) {	
-		win->flags |= TM_FLAG_CURSOR_VISIBLE;
-	}
-
-
-	return 0;
-}
-
