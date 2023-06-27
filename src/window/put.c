@@ -14,7 +14,7 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 		}
 	}
 
-	else if(win->cursor_y > win->buffer_rows - 1 || win->cursor_y < 0) {
+	else if(win->cursor_y > win->buffer_rows - 1 || win->cursor_x < 0) {
 		tm_error_number = TM_INVALID_CURSOR;
 		return TM_ERROR;
 	}
