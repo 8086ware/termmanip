@@ -10,7 +10,6 @@ add_library(termmanip STATIC ${TERMMANIP_SOURCES})
 
 target_include_directories(termmanip PRIVATE include)
 target_compile_options(termmanip PRIVATE -Wall)
-target_compile_options(termmanip PRIVATE -Wextra)
 
 install(TARGETS termmanip DESTINATION lib)
 install(FILES include/termmanip.h DESTINATION include)
