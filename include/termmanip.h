@@ -150,7 +150,6 @@ Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
 void tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_scrsize(int* x, int* y); // Gets the screensize
-void tm_set_scrsize(int x, int y); // Sets the screensize
 
 void tm_get_winsize(Tm_window* win, int* columns, int* rows); // Gets a windows size
 void tm_get_winpos(Tm_window* win, int* position_x, int* position_y); // Gets a windows position

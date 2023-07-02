@@ -21,23 +21,3 @@ void tm_get_scrsize(int* x, int* y) {
 	*y = ws.ws_row;
 #endif
 }
-
-void tm_set_scrsize(int x, int y) {
-#ifdef _WIN32
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-
-	csbi.dwSize.X = x;
-	csbi.dwSize.Y = y;
-
-	COORD coord = {x,y};
-	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-#else
-	struct winsize ws;
-
-	ws.ws_col = x;
-	ws.ws_row = y;
-
-	ioctl(1, TIOCSWINSZ, &ws);
-#endif
-}
