@@ -153,7 +153,7 @@ void tm_get_scrsize(int* x, int* y); // Gets the screensize
 void tm_get_winsize(Tm_window* win, int* columns, int* rows); // Gets a windows size
 void tm_get_winpos(Tm_window* win, int* position_x, int* position_y); // Gets a windows position
 
-int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
+void tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
 void tm_win_write_to_screen(Tm_window* win); // Writes the window to the screen structure but doesn't display to the actual terminal
 void tm_screen_update(); // Puts the internal screen onto the terminal
@@ -168,14 +168,14 @@ int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
 void tm_init(); // Initalize termmanip
 void tm_exit(); // Exit termmanip
 
-int tm_win_border(Tm_window* win); // Border a window
-int tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
+void tm_win_border(Tm_window* win); // Border a window
+void tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
 
-int tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
+void tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 
 void tm_win_attrib(Tm_window* win, uint32_t attrib, int state); // Set the window attribute
 
-int tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the window background
+void tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the window background
 
 int tm_win_input_ch(Tm_window* win); // Get a single char and return it
 int tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
@@ -185,7 +185,7 @@ Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
 
 int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...); // Make a new dialog in win
 
-int tm_win_clear(Tm_window* win); // Clear win
+void tm_win_clear(Tm_window* win); // Clear win
 
 int tm_error(); // Return the most recent error
 
