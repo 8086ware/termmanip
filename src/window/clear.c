@@ -1,6 +1,6 @@
 #include "termmanip.h"
 
-int tm_win_clear(Tm_window* win) {
+void tm_win_clear(Tm_window* win) {
 	tm_win_cursor(win, 0, 0);
 	
 	for(int y = 0; y < win->buffer_rows; y++) {
@@ -17,6 +17,4 @@ int tm_win_clear(Tm_window* win) {
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_clear(win->children[i]);
 	}
-
-	return 0;
 }

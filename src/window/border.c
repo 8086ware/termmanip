@@ -1,6 +1,6 @@
 #include "termmanip.h"
 
-int tm_win_border(Tm_window* win) {
+void tm_win_border(Tm_window* win) {
 	int temp_x = win->cursor_x;
 	int temp_y = win->cursor_y;
 
@@ -27,5 +27,4 @@ int tm_win_border(Tm_window* win) {
 	tm_win_putch(win, '\x6a', TM_ATTRIB_ALTERNATE | win->attrib);
 	
 	tm_win_cursor(win, temp_x, temp_y);
-	return 0;
 }

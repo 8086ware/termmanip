@@ -3,13 +3,10 @@
 #include <string.h>
 #include "exit_log.h"
 
-int tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
-	int ret = 0;
+void tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	int temp_cursor_x = win->cursor_x, temp_cursor_y = win->cursor_y;
 
-	if((ret = tm_win_cursor(win, 0, 0)) == TM_ERROR) {
-		return ret;
-	}
+	tm_win_cursor(win, 0, 0);
 	
 	for(int y = 0; y < win->buffer_rows; y++) {
 		for(int x = 0; x < win->buffer_columns; x++) {
@@ -35,9 +32,5 @@ int tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 	tm_win_attrib(win, win->background_tm_char.attrib, 1);
 
-	if((ret = tm_win_cursor(win, temp_cursor_x, temp_cursor_y)) == TM_ERROR) {
-		return ret;
-	}
-
-	return 0;
+	tm_win_cursor(win, temp_cursor_x, temp_cursor_y);
 }
