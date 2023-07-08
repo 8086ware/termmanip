@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "exit_log.h"
 
-int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
+void tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	int scr_x, scr_y;
 
 	tm_get_scrsize(&scr_x, &scr_y);
@@ -15,12 +15,12 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 		rows = scr_y;
 	}
 
-	if(rows < 0) {
-		rows = 0;
+	if(rows <= 0) {
+		rows = 1;
 	}
 
-	if(columns < 0) {
-		columns = 0;
+	if(columns <= 0) {
+		columns = 1;
 	}
 
 	if(x < 0) {
@@ -58,8 +58,6 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	}
 
 	tm_win_clear(win);
-	
-	return 0;
 }
 
 
