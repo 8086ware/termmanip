@@ -138,7 +138,6 @@ typedef struct Tm_window {
 extern Tm_window* default_win;
 extern Tm_screen* screen;
 
-extern int tm_error_number;
 #ifdef _WIN32
 extern DWORD og_input_mode;
 extern DWORD og_output_mode;
