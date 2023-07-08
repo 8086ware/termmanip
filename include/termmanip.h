@@ -5,9 +5,9 @@
 
 // Error types
 #define TM_INVALID_CURSOR 1
-#define TM_INVALID_DIMENSIONS 2
 #define TM_DIALOG_NO_OPTIONS 3
-#define TM_WIN_NULL 4
+#define TM_INVALID_WINDOW_SIZE 4
+#define TM_OUT_OF_MEM 5
 
 // Child window types
 #define TM_CHILD_NONE 0
