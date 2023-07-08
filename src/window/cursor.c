@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <stdio.h>
 #include <string.h>
+#include "error.h"
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
 	int position = y * win->columns + x;
@@ -19,7 +20,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	}
 
 	else if(y > win->buffer_rows - 1 || x < 0) {
-		tm_error_number = TM_INVALID_CURSOR;
+		tm_set_error(TM_INVALID_CURSOR);
 		return TM_ERROR;
 	}
 

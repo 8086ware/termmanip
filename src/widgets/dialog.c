@@ -2,8 +2,14 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include "error.h"
 
 int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...) {
+	if(option_amount == 0) {
+		tm_set_error(TM_DIALOG_NO_OPTIONS);
+		return TM_ERROR;
+	}
+
 	int scr_x = 0, scr_y = 0;
 	tm_get_scrsize(&scr_x, &scr_y);
 
@@ -36,11 +42,6 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	va_list option_args;
 
 	va_start(option_args, option_amount);
-
-	if(option_amount == 0) {
-		tm_error_number = TM_DIALOG_NO_OPTIONS;
-		return TM_ERROR;
-	}
 
 	int option_x = 2;
 	int option_y = dialog->rows / 2;
