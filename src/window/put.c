@@ -1,5 +1,6 @@
 #include "termmanip.h" 
 #include <string.h>
+#include "error.h"
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	int position = win->cursor_y * win->columns + win->cursor_x;
@@ -15,7 +16,7 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	}
 
 	else if(win->cursor_y > win->buffer_rows - 1 || win->cursor_x < 0) {
-		tm_error_number = TM_INVALID_CURSOR;
+		tm_set_error(TM_INVALID_CURSOR);
 		return TM_ERROR;
 	}
 
