@@ -75,3 +75,43 @@ void tm_win_free(Tm_window* win) {
 	win->buffer = NULL;
 	free(win);
 }
+
+int tm_win_get_cursor_x(Tm_window* win) {
+	return win->cursor_x;
+}
+
+int tm_win_get_cursor_y(Tm_window* win) {
+	return win->cursor_y;
+}
+
+int tm_win_get_columns(Tm_window* win) {
+	return win->columns;
+}
+
+int tm_win_get_rows(Tm_window* win) {
+	return win->rows;
+}
+
+int tm_win_get_pos_x(Tm_window* win) {
+	return win->position_x;
+}
+
+int tm_win_get_pos_y(Tm_window* win) {
+	return win->position_y;
+}
+
+int tm_win_get_buffer_columns(Tm_window* win) {
+	return win->buffer_columns;
+}
+
+int tm_win_get_buffer_rows(Tm_window* win) {
+	return win->buffer_rows;
+}
+
+int tm_win_get_buffer_pos_x(Tm_window* win) {
+	return win->buffer_position_x;
+}
+
+int tm_win_get_buffer_pos_y(Tm_window* win) {
+	return win->buffer_position_y;
+}
