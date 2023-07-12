@@ -151,8 +151,20 @@ void tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_scrsize(int* x, int* y); // Gets the screensize
 
-void tm_get_winsize(Tm_window* win, int* columns, int* rows); // Gets a windows size
-void tm_get_winpos(Tm_window* win, int* position_x, int* position_y); // Gets a windows position
+int tm_win_get_cursor_x(Tm_window* win);
+int tm_win_get_cursor_y(Tm_window* win);
+
+int tm_win_get_columns(Tm_window* win); // Gets a windows columns size
+int tm_win_get_rows(Tm_window* win); // Gets a windows rows size
+									 //
+int tm_win_get_pos_x(Tm_window* win);
+int tm_win_get_pos_y(Tm_window* win);
+
+int tm_win_get_buffer_columns(Tm_window* win);
+int tm_win_get_buffer_rows(Tm_window* win);
+
+int tm_win_get_buffer_pos_x(Tm_window* win);
+int tm_win_get_buffer_pos_y(Tm_window* win);
 
 void tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
@@ -210,6 +222,12 @@ void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 #define tm_clear() tm_win_clear(default_win)
 #define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
 #define tm_flags(flags, state) tm_win_flags(default_win, flags, state)
+#define tm_get_cursor_x() tm_win_get_cursor_x(default_win)
+#define tm_get_cursor_y() tm_win_get_cursor_y(default_win)
+#define tm_get_buffer_columns() tm_win_get_buffer_columns(default_win)
+#define tm_get_buffer_rows() tm_win_get_buffer_rows(default_win)
+#define tm_get_buffer_pos_x() tm_win_get_buffer_pos_x(default_win)
+#define tm_get_buffer_pos_y() tm_win_get_buffer_pos_y(default_win)
 
 #endif
 
