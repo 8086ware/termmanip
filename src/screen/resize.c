@@ -4,6 +4,11 @@
 #include <stdlib.h>
 
 void screen_resize() {
+	int scr_x, scr_y;
+	tm_get_scrsize(&scr_x, &scr_y);
+	tm_win_modify(default_win, 0, 0, scr_x, scr_y);
+	tm_win_clear(default_win);
+	
 	int columns, rows;
 	tm_get_scrsize(&columns, &rows);
 
@@ -17,4 +22,6 @@ void screen_resize() {
 		screen->buffer[i].disp = ' ';
 		screen->buffer[i].attrib = 0;
 	}
+
+	tm_screen_update();
 }
