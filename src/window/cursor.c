@@ -6,16 +6,13 @@
 int tm_win_cursor(Tm_window* win, int x, int y) {
 	int position = y * win->columns + x;
 
-	x = position % win->columns;
-	y = position / win->columns;
-
 	if(win->flags & TM_FLAG_SCROLL) {
-		if(y > win->rows - 1 + win->buffer_position_y) {
-			tm_win_scroll(win, y - (win->rows - 1 + win->buffer_position_y), TM_SCROLL_DOWN);
+		if(y > tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)) {
+			tm_win_scroll(win, y - (tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)), TM_SCROLL_DOWN);
 		}
 
 		else if(y < win->buffer_position_y) {		
-			tm_win_scroll(win, win->buffer_position_y - y, TM_SCROLL_UP);
+			tm_win_scroll(win, tm_win_get_buffer_pos_y(win)- y, TM_SCROLL_UP);
 		}
 	}
 
@@ -23,6 +20,9 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 		tm_set_error(TM_INVALID_CURSOR);
 		return TM_ERROR;
 	}
+
+	x = position % win->columns;
+	y = position / win->columns;
 
 	win->cursor_x = x;
 	win->cursor_y = y;
