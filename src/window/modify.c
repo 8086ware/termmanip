@@ -56,7 +56,7 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 
 	if(win->buffer == NULL) {
 		tm_set_error(TM_OUT_OF_MEM);
-		return 1;
+		return TM_ERROR;
 	}
 
 	tm_win_clear(win);
