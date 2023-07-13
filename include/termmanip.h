@@ -210,6 +210,8 @@ void tm_win_scroll(Tm_window* win, int amount, int direction);
 uint16_t tm_win_get_flags(Tm_window* win);
 void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 
+void tm_set_title(char* text);
+
 //Bunch of macros that serve the same functionality as other functions except they act upon the default window
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
