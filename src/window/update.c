@@ -17,8 +17,8 @@ void tm_win_write_to_screen(Tm_window* win) {
 	Tm_window* parent = win->parent;
 
 	while(parent != NULL) {	
-		parent_x += tm_win_get_pos_x(win);
-		parent_y += tm_win_get_pos_y(win);
+		parent_x += tm_win_get_pos_x(parent);
+		parent_y += tm_win_get_pos_y(parent);
 
 		parent = parent->parent;
 	}
