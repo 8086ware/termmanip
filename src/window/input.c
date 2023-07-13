@@ -82,14 +82,14 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 				continue;
 			}
 
-			int tempX = win->cursor_x;
-			int tempY = win->cursor_y;
+			int tempX = tm_win_get_cursor_x(win);
+			int tempY = tm_win_get_cursor_y(win);
 
-			if((ret = tm_win_cursor(win, win->cursor_x - 1, win->cursor_y)) == TM_ERROR) {
+			if((ret = tm_win_cursor(win, tm_win_get_cursor_x(win) - 1, tm_win_get_cursor_y(win))) == TM_ERROR) {
 				return ret;
 			}
 
-			if((ret = tm_win_putch(win, win->background_tm_char.disp, win->background_tm_char.attrib)) == TM_ERROR) {
+			if((ret = tm_win_putch(win, tm_win_get_background(win).disp, tm_win_get_background(win).attrib)) == TM_ERROR) {
 				return ret;
 			}
 
