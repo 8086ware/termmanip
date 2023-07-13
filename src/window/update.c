@@ -58,7 +58,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
 				ch.disp = screen->buffer[(y + tm_win_get_pos_y(win)) * screen->columns + (tm_win_get_columns(win) + tm_win_get_pos_x(win))].disp;
 
-				screen_buffer_write(tm_win_get_pos_x(win) + tm_win_get_columns(win), tm_win_get_pos_y(win) + y, ch);
+				screen_buffer_write(tm_win_get_pos_x(win) + tm_win_get_columns(win) + parent_x, tm_win_get_pos_y(win) + y + parent_y, ch);
 			}
 
 			for(int x = 1; x < tm_win_get_columns(win) + 1; x++) {
@@ -66,7 +66,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
 				ch.disp = screen->buffer[(tm_win_get_rows(win) + tm_win_get_pos_y(win)) * screen->columns + (x + tm_win_get_pos_x(win))].disp;
 
-				screen_buffer_write(tm_win_get_pos_x(win) + x, tm_win_get_pos_y(win)+ tm_win_get_rows(win), ch);
+				screen_buffer_write(tm_win_get_pos_x(win) + x + parent_x, tm_win_get_pos_y(win) + tm_win_get_rows(win) + parent_y, ch);
 			}
 		}
 
