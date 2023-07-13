@@ -30,7 +30,7 @@ void tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	win->background_tm_char.disp = ch;
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
-	tm_win_attrib(win, tm_win_get_attrib(win), 1);
+	tm_win_attrib(win, tm_win_get_background(win).attrib, 1);
 
 	tm_win_cursor(win, temp_cursor_x, temp_cursor_y);
 }
