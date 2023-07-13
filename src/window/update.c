@@ -55,16 +55,16 @@ void tm_win_write_to_screen(Tm_window* win) {
 		if(win->flags & TM_FLAG_SHADOW) {
 			for(int y = 1; y < win->rows; y++) {
 				Tm_char ch;
-				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BLACK;
-				ch.disp = ' ';
+				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
+				ch.disp = screen->buffer[(y + win->position_y) * screen->columns + (win->columns + win->position_x)].disp;
 
 				screen_buffer_write(win->position_x + win->columns, win->position_y + y, ch);
 			}
 
 			for(int x = 1; x < win->columns + 1; x++) {
 				Tm_char ch;
-				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BLACK;
-				ch.disp = ' ';
+				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
+				ch.disp = screen->buffer[(win->rows + win->position_y) * screen->columns + (x + win->position_x)].disp;
 
 				screen_buffer_write(win->position_x + x, win->position_y + win->rows, ch);
 			}
