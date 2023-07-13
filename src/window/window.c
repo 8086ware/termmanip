@@ -115,3 +115,15 @@ int tm_win_get_buffer_pos_x(Tm_window* win) {
 int tm_win_get_buffer_pos_y(Tm_window* win) {
 	return win->buffer_position_y;
 }
+
+Tm_char tm_win_get_background(Tm_window* win) {
+	return win->background_tm_char;
+}
+
+uint32_t tm_win_get_attrib(Tm_window* win) {
+	return win->attrib;
+}
+
+uint16_t tm_win_get_flags(Tm_window* win) {
+	return win->flags;
+}
