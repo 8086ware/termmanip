@@ -17,25 +17,25 @@ void tm_win_write_to_screen(Tm_window* win) {
 	Tm_window* parent = win->parent;
 
 	while(parent != NULL) {	
-		parent_x += parent->position_x;
-		parent_y += parent->position_y;
+		parent_x += tm_win_get_pos_x(win);
+		parent_y += tm_win_get_pos_y(win);
 
 		parent = parent->parent;
 	}
 
 	// Update screen flags
 
-	if(win->flags != screen->flags) {
-		if(win->flags & TM_FLAG_CURSOR_VISIBLE && screen->flags & ~TM_FLAG_CURSOR_VISIBLE) {
+	if(tm_win_get_flags(win) != screen->flags) {
+		if(tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE && screen->flags & ~TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25h");
 		}
 
-		else if(win->flags & ~TM_FLAG_CURSOR_VISIBLE && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
+		else if(tm_win_get_flags(win) & ~TM_FLAG_CURSOR_VISIBLE && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25l");
 		}
 
 #ifndef _WIN32
-		if((win->flags & TM_FLAG_INPUTBLOCK) == 0 && screen->flags & TM_FLAG_INPUTBLOCK) {
+		if((tm_win_get_flags(win) & TM_FLAG_INPUTBLOCK) == 0 && screen->flags & TM_FLAG_INPUTBLOCK) {
 			struct termios term;
 			tcgetattr(fileno(stdout), &term); 
 			term.c_cc[VMIN] = 0;
@@ -43,7 +43,7 @@ void tm_win_write_to_screen(Tm_window* win) {
 			tcsetattr(fileno(stdout), TCSANOW, &term);
 		}
 
-		else if(win->flags & TM_FLAG_INPUTBLOCK && (screen->flags & TM_FLAG_INPUTBLOCK) == 0) {
+		else if(tm_win_get_flags(win) & TM_FLAG_INPUTBLOCK && (screen->flags & TM_FLAG_INPUTBLOCK) == 0) {
 			struct termios term;
 			tcgetattr(fileno(stdout), &term); 
 			term.c_cc[VMIN] = 1;
@@ -52,34 +52,34 @@ void tm_win_write_to_screen(Tm_window* win) {
 		}
 #endif
 		
-		if(win->flags & TM_FLAG_SHADOW) {
-			for(int y = 1; y < win->rows; y++) {
+		if(tm_win_get_flags(win) & TM_FLAG_SHADOW) {
+			for(int y = 1; y < tm_win_get_rows(win); y++) {
 				Tm_char ch;
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
-				ch.disp = screen->buffer[(y + win->position_y) * screen->columns + (win->columns + win->position_x)].disp;
+				ch.disp = screen->buffer[(y + tm_win_get_pos_y(win)) * screen->columns + (tm_win_get_columns(win) + tm_win_get_pos_x(win))].disp;
 
-				screen_buffer_write(win->position_x + win->columns, win->position_y + y, ch);
+				screen_buffer_write(tm_win_get_pos_x(win) + tm_win_get_columns(win), tm_win_get_pos_y(win) + y, ch);
 			}
 
-			for(int x = 1; x < win->columns + 1; x++) {
+			for(int x = 1; x < tm_win_get_columns(win) + 1; x++) {
 				Tm_char ch;
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
-				ch.disp = screen->buffer[(win->rows + win->position_y) * screen->columns + (x + win->position_x)].disp;
+				ch.disp = screen->buffer[(tm_win_get_rows(win) + tm_win_get_pos_y(win)) * screen->columns + (x + tm_win_get_pos_x(win))].disp;
 
-				screen_buffer_write(win->position_x + x, win->position_y + win->rows, ch);
+				screen_buffer_write(tm_win_get_pos_x(win) + x, tm_win_get_pos_y(win)+ tm_win_get_rows(win), ch);
 			}
 		}
 
-		screen->flags = win->flags;
+		screen->flags = tm_win_get_flags(win);
 	}
 
-	screen_cursor((win->cursor_x - win->buffer_position_x) + win->position_x + parent_x, (win->cursor_y - win->buffer_position_y) + win->position_y + parent_y);
+	screen_cursor((tm_win_get_cursor_x(win) - tm_win_get_buffer_pos_x(win)) + tm_win_get_pos_x(win) + parent_x, (tm_win_get_cursor_y(win) - tm_win_get_buffer_pos_y(win)) + tm_win_get_pos_y(win) + parent_y);
 
 	// Loop through window and put its buffer on the screen buffer
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			screen_buffer_write((win->position_x + parent_x + x), (win->position_y + parent_y + y), win->buffer[(win->buffer_position_y + y) * win->buffer_columns + (win->buffer_position_x + x)]);
+			screen_buffer_write((tm_win_get_pos_x(win) + parent_x + x), (tm_win_get_pos_y(win) + parent_y + y), win->buffer[(tm_win_get_buffer_pos_y(win) + y) * tm_win_get_buffer_columns(win) + (tm_win_get_buffer_pos_x(win) + x)]);
 		}	
 	}
 
