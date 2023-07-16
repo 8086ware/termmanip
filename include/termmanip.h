@@ -168,7 +168,7 @@ int tm_win_get_buffer_pos_y(Tm_window* win);
 
 Tm_char tm_win_get_background(Tm_window* win);
 
-int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
+void tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
 void tm_win_write_to_screen(Tm_window* win); // Writes the window to the screen structure but doesn't display to the actual terminal
 void tm_screen_update(); // Puts the internal screen onto the terminal
