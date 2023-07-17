@@ -1,12 +1,12 @@
 #include "screen.h"
 #include "termmanip.h"
-#include "exit_log.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include "error.h"
 
-void screen_append_output(char* fmt, ...) {
+int screen_append_output(char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	char* buffer = malloc(strlen(fmt) + 2048);
@@ -18,7 +18,8 @@ void screen_append_output(char* fmt, ...) {
 	screen->output = realloc(screen->output, screen->output_len + len);
 
 	if(screen->output == NULL) {
-		exit_log("append_output", "realloc", 1);
+		tm_set_error(TM_OUT_OF_MEM);
+		return TM_ERROR;
 	}
 
 
@@ -28,5 +29,7 @@ void screen_append_output(char* fmt, ...) {
 
 	screen->output_len += len;
 	free(buffer);
+
+	return 0;
 }
 
