@@ -55,12 +55,8 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL) {
-<<<<<<< HEAD
-		exit_log("tm_win_modify", "realloc", 1);
-=======
 		tm_set_error(TM_OUT_OF_MEM);
 		return TM_ERROR;
->>>>>>> parent of ebc8564 (Revert "Return error if realloc doesnt work")
 	}
 
 	tm_win_clear(win);
