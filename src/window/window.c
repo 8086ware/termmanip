@@ -2,14 +2,20 @@
 #include <stdlib.h>
 #include "exit_log.h"
 #include <stdlib.h>
-
+#include "error.h"
 Tm_window* default_win = NULL;
 
 Tm_window* tm_window(int x, int y, int columns, int rows) {
+	if(columns == 0 || rows == 0) {
+		tm_set_error(TM_INVALID_WINDOW_SIZE);
+		return NULL;
+	}
+
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
-		exit_log("tm_window", "malloc", 1);
+		tm_set_error(TM_OUT_OF_MEM);
+		return NULL;
 	}
 	
 	win->buffer = NULL;
