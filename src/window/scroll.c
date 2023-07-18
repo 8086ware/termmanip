@@ -1,15 +1,16 @@
 #include "termmanip.h"
 #include <stdlib.h>
-#include "exit_log.h"
+#include "error.h"
 
-void tm_win_scroll(Tm_window* win, int amount, int direction) {
+int tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
 		if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
 			win->buffer_rows = win->rows + win->buffer_position_y + amount;
 			win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
 			if(win->buffer == NULL) {
-				exit_log("tm_win_scroll", "realloc", 1);
+				tm_set_error(TM_OUT_OF_MEM);
+				return TM_ERROR;
 			}
 
 			for(int y = win->buffer_rows - amount; y < win->buffer_rows; y++) {
@@ -32,4 +33,6 @@ void tm_win_scroll(Tm_window* win, int amount, int direction) {
 
 		win->buffer_position_y -= amount;
 	}
+
+	return 0;
 }

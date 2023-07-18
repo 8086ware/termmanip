@@ -206,7 +206,7 @@ void tm_win_clear(Tm_window* win); // Clear win
 
 int tm_error(); // Return the most recent error
 
-void tm_win_scroll(Tm_window* win, int amount, int direction);
+int tm_win_scroll(Tm_window* win, int amount, int direction);
 
 uint16_t tm_win_get_flags(Tm_window* win);
 void tm_win_flags(Tm_window* win, uint16_t flags, int state);
