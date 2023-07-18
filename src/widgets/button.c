@@ -49,7 +49,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	int option = 0;
 	char c = 0;
 
-	Tm_char original_background = win->background_tm_char;
+	Tm_char original_background = tm_win_get_background(win);
 
 	while(1) {
 		if(c == 'd') {
