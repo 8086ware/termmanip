@@ -1,7 +1,7 @@
 #include "termmanip.h"
-#include "exit_log.h"
 #include <string.h>
 #include <stdlib.h>
+#include "error.h"
 
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text) {
 	Tm_window* button = tm_window(x, y, columns, rows);
@@ -32,7 +32,8 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			button_children = realloc(button_children, (button_children_amount + 1) * sizeof(Tm_window*));
 
 			if(button_children == NULL) {
-				exit_log("tm_win_button_select", "realloc", 1);
+				tm_set_error(TM_OUT_OF_MEM);
+				return NULL;
 			}
 
 			button_children[button_children_amount] = win->children[i];
