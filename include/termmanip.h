@@ -8,6 +8,7 @@
 #define TM_DIALOG_NO_OPTIONS 3
 #define TM_INVALID_WINDOW_SIZE 4
 #define TM_OUT_OF_MEM 5
+#define TM_ERROR_COULDNT_INIT_TERM 6
 
 // Child window types
 #define TM_CHILD_NONE 0
