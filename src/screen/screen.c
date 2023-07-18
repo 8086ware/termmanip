@@ -1,15 +1,16 @@
 #include "termmanip.h"
-#include "exit_log.h"
 #include "screen.h"
 #include <stdlib.h>
+#include "error.h"
 
-void screen_init() {
+int screen_init() {
 	int scr_columns, scr_rows;
 	tm_get_scrsize(&scr_columns, &scr_rows);
 	screen = malloc(sizeof(Tm_screen));
 
 	if(screen == NULL) {
-		exit_log("tm_init", "malloc", 1);
+		tm_set_error(TM_OUT_OF_MEM);
+		return TM_ERROR;
 	}
 
 	screen->columns = scr_columns;
@@ -31,13 +32,16 @@ void screen_init() {
 	screen->buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
 
 	if(screen->buffer == NULL) {
-		exit_log("tm_init", "malloc", 2);
+		tm_set_error(TM_OUT_OF_MEM);
+		return TM_ERROR;
 	}	
 
 	for(int i = 0; i < screen->columns * screen->rows; i++) {
 		screen->buffer[i].disp = ' ';
 		screen->buffer[i].attrib = 0;
 	}
+	
+	return 0;
 }
 
 void screen_free() {

@@ -4,7 +4,7 @@
 #include "termmanip.h"
 #include <stdint.h>
 
-void screen_init();
+int screen_init();
 void screen_free();
 
 void screen_cursor(int x, int y);
