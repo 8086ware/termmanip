@@ -182,6 +182,7 @@ int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cur
 int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
 
 int tm_init(); // Initalize termmanip
+int tm_exit(); // Exit termmanip
 
 void tm_win_border(Tm_window* win); // Border a window
 void tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
