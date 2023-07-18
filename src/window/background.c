@@ -1,7 +1,6 @@
 #include "termmanip.h"
 #include <stdlib.h>
 #include <string.h>
-#include "exit_log.h"
 
 void tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	int temp_cursor_x = tm_win_get_cursor_x(win), temp_cursor_y = tm_win_get_cursor_y(win);

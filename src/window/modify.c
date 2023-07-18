@@ -1,6 +1,5 @@
 #include "termmanip.h"
 #include <stdlib.h>
-#include "exit_log.h"
 #include "error.h"
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
