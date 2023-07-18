@@ -148,7 +148,7 @@ extern struct termios og_term;
 #endif
 
 Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
-void tm_win_free(Tm_window* win); // Frees and deletes a window
+int tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_scrsize(int* x, int* y); // Gets the screensize
 

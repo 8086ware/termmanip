@@ -1,8 +1,8 @@
 #include "termmanip.h"
 #include <stdlib.h>
-#include "exit_log.h"
 #include <stdlib.h>
 #include "error.h"
+
 Tm_window* default_win = NULL;
 
 Tm_window* tm_window(int x, int y, int columns, int rows) {
@@ -41,9 +41,9 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	return win;
 }
 
-void tm_win_free(Tm_window* win) {
+int tm_win_free(Tm_window* win) {
 	if(win == NULL) {
-		return;
+		return 0;
 	}
 
 	if(win->child_type != TM_CHILD_NONE) {
@@ -59,8 +59,9 @@ void tm_win_free(Tm_window* win) {
 				win->parent->children_amount--;
 
 				if(win->parent->children == NULL && win->parent->children_amount != 0) {
-					exit_log("tm_win_free", "realloc", 1);
-				}		
+					tm_set_error(TM_OUT_OF_MEM);
+					return TM_ERROR;
+				}	
 			}
 		}
 	}
@@ -74,6 +75,8 @@ void tm_win_free(Tm_window* win) {
 	free(win->buffer);
 	win->buffer = NULL;
 	free(win);
+
+	return 0;
 }
 
 int tm_win_get_cursor_x(Tm_window* win) {
