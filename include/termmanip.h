@@ -185,7 +185,7 @@ int tm_init(); // Initalize termmanip
 int tm_exit(); // Exit termmanip
 
 void tm_win_border(Tm_window* win); // Border a window
-void tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
+int tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child be a child to parent window
 
 void tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 

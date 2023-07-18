@@ -1,15 +1,16 @@
 #include "termmanip.h"
-#include "exit_log.h"
 #include <stdlib.h>
+#include "error.h"
 
-void tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
+int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	child->parent = parent;
 	child->child_type = type;
 	
 	parent->children = realloc(parent->children, (parent->children_amount + 1) * sizeof(Tm_window*));
 
 	if(parent->children == NULL) {
-		exit_log("tm_win_parent", "realloc", 1);
+		tm_set_error(TM_OUT_OF_MEM);
+		return TM_ERROR;
 	}
 
 	parent->children[parent->children_amount] = child;
@@ -20,4 +21,6 @@ void tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 
 	tm_win_flags(child, TM_FLAG_ALL, 0);
 	tm_win_flags(child, parent->flags, 1);
+
+	return 0;
 }
