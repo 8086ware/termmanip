@@ -16,6 +16,6 @@ int screen_append_output(char* fmt, ...);
 
 void screen_buffer_write(int x, int y, Tm_char ch);
 
-void screen_resize();
+int screen_resize();
 
 #endif

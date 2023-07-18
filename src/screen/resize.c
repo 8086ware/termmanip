@@ -1,9 +1,9 @@
 #include "screen.h"
 #include "termmanip.h"
-#include "exit_log.h"
 #include <stdlib.h>
+#include "error.h"
 
-void screen_resize() {
+int screen_resize() {
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
 	tm_win_modify(default_win, 0, 0, scr_x, scr_y);
@@ -15,7 +15,8 @@ void screen_resize() {
 	screen->buffer = realloc(screen->buffer, sizeof(Tm_char) * columns * rows);
 
 	if(screen->buffer == NULL) {
-		exit_log("screen_resize", "realloc", 1);
+		tm_set_error(TM_OUT_OF_MEM);
+		return TM_ERROR;
 	}
 
 	for(int i = 0; i < columns * rows; i++) {
@@ -24,4 +25,6 @@ void screen_resize() {
 	}
 
 	tm_screen_update();
+	
+	return 0;
 }
