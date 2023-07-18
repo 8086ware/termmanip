@@ -18,12 +18,10 @@ int tm_win_print(Tm_window* win, char* fmt, ...) {
 
 	va_end(args);
 
-	if((ret = tm_win_puts(win, buffer, win->attrib) == TM_ERROR)) {
-		return ret;
-	}
+	ret = tm_win_puts(win, buffer, win->attrib);
 
 	free(buffer);
 
-	return 0;
+	return ret;
 }
 
