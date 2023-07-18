@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include "signal_handler.h"
 #include <signal.h>
-#include "exit_log.h"
+#include "error.h"
 #include <stdio.h>
 #ifdef _WIN32
 #include <windows.h>
@@ -12,12 +12,13 @@ DWORD og_output_mode;
 struct termios og_term;
 #endif
 
-void term_init() {
+int term_init() {
 #ifdef _WIN32
 	DWORD mode = 0;
 
 	if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &mode) == 0) {
-		exit_log("term_init", "GetConsoleMode", 1);
+		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		return TM_ERROR;
 	}
 
 	og_output_mode = mode;
@@ -25,11 +26,13 @@ void term_init() {
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
-		exit_log("term_init", "SetConsoleMode", 1);
+		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		return TM_ERROR;
 	}
 
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
-		exit_log("term_init", "GetConsoleMode", 2);
+		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		return TM_ERROR;
 	}
 
 	og_input_mode = mode;
@@ -38,7 +41,8 @@ void term_init() {
 	mode &= ~ENABLE_LINE_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		exit_log("termm_init", "SetConsoleMode", 2);
+		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		return TM_ERROR;
 	}
 #else 
 	struct termios term;
@@ -55,5 +59,6 @@ void term_init() {
 #ifdef _WIN32
 #else
 	signal(SIGWINCH, signal_handle);	
-#endif	
+#endif
+	return 0;
 }
