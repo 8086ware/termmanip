@@ -16,7 +16,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 		}
 	}
 
-	else if(position < 0 || position > tm_win_get_buffer_columns(win) * tm_win_get_buffer_rows(win) - 1) {
+	else if(position < 0 || position > tm_win_get_buffer_columns(win) * tm_win_get_buffer_rows(win)) {
 		tm_set_error(TM_INVALID_CURSOR);
 		return TM_ERROR;
 	}
