@@ -68,7 +68,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	while(1) {
-		read(fileno(stdin), &ch, 1);
+		ch = tm_win_input_ch(win);
 
 		if(ch == '\n' || ch == '\r') {
 			break;
