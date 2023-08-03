@@ -96,19 +96,20 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 			continue;
 		}
 
-		if((ret = tm_win_print(win, "%c", ch)) == TM_ERROR) {
-			continue;
-		}
+		if(tm_win_print(win, "%c", ch) != TM_ERROR) {
+			if(i <= max_size) {
+				str[i] = ch;
+				i++;
+			}
 
-		if(i <= max_size) {
-			str[i] = ch;
-			i++;
+			tm_win_update(win);
 		}
-
-		tm_win_update(win);
 	}
 
 	str[i] = '\0';
+
+	tm_win_flags(win, TM_FLAG_ALL, 0);
+	tm_win_flags(win, og_flags, 1);
 
 	return 0;
 }
