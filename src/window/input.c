@@ -59,7 +59,6 @@ int tm_win_input_ch(Tm_window* win) {
 }
 
 int tm_win_input_str(Tm_window* win, char* str, int max_size) { 
-	tm_win_update(win);
 	int i = 0;
 	int ch = 0;
 
