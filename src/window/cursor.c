@@ -4,7 +4,7 @@
 #include "error.h"
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
-	int position = y * win->columns + x;
+	int position = y * tm_win_get_buffer_columns(win) + x;
 
 	if(win->flags & TM_FLAG_SCROLL) {
 		if(y > tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)) {
