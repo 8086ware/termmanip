@@ -62,7 +62,10 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	int i = 0;
 	int ch = 0;
 
-	int ret = 0;
+	int og_flags = tm_win_get_flags(win);
+
+	tm_win_flags(win, TM_FLAG_INPUTBLOCK | TM_FLAG_RAW | TM_FLAG_CURSOR_VISIBLE, 1);
+	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	while(1) {
 		read(fileno(stdin), &ch, 1);
