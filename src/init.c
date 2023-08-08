@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "screen.h"
-#include "term_init.h"
+#include "term.h"
 
 #ifndef _WIN32
 #include <unistd.h>
