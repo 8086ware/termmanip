@@ -37,7 +37,12 @@ int tm_win_input_ch(Tm_window* win) {
 		}
 
 		else {
+#ifdef _WIN32
+			DWORD bytes_read = 0;
+			ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
+#else
 			read(fileno(stdin), ch, 1);
+#endif
 		}
 
 		if(win->flags & TM_FLAG_ECHO) {
