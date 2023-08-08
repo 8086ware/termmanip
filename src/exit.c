@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "screen.h"
 #include "error.h"
+#include "term.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -23,20 +24,6 @@ int tm_exit() {
 	}
 
 	screen_free();
-#ifdef _WIN32
-	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
-		return TM_ERROR;
-	}
-
-	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), og_input_mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
-		return TM_ERROR;
-	}
-#else
-	tcsetattr(fileno(stdin), TCSANOW, &og_term);
-	tcsetattr(fileno(stdout), TCSANOW, &og_term);
-#endif
-
+	term_exit();
 	return 0;
 }
