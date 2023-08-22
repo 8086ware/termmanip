@@ -5,6 +5,10 @@
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	int ret = 0;
 
+	if(ch == '\x1b') {
+		ch = '\0';
+	}
+
 	if(ch == '\n') {
 		ret = tm_win_cursor(win, 0, tm_win_get_cursor_y(win) + 1);
 	}
