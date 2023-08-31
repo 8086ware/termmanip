@@ -39,6 +39,7 @@ int term_init() {
 
 	mode &= ~ENABLE_ECHO_INPUT;
 	mode &= ~ENABLE_LINE_INPUT;
+	mode |= ENABLE_VIRTUAL_TERMINAL_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
 		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
