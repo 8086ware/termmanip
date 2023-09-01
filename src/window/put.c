@@ -9,8 +9,16 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 		return 0;
 	}
 
-	if(ch == '\n') {
+	else if(ch == '\r') {
+		ret = tm_win_cursor(win, 0, tm_win_get_cursor_y(win));
+	}
+
+	else if(ch == '\n') {
 		ret = tm_win_cursor(win, 0, tm_win_get_cursor_y(win) + 1);
+	}
+
+	else if(ch == '\b' || ch == '\177') {
+		ret = tm_win_cursor(win, tm_win_get_cursor_x(win) - 1, tm_win_get_cursor_y(win));
 	}
 
 	else {
