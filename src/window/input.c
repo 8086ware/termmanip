@@ -116,6 +116,7 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, TM_FLAG_ALL, 0);
 	tm_win_flags(win, og_flags, 1);
 
+	tm_win_print(win, "\n");
 	return 0;
 }
 
