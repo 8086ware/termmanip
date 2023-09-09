@@ -117,4 +117,15 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_print(win, "\n");
 }
 
+void tm_win_input(Tm_window* win, char* str, ...) {
+	char new_str[4096];
+	tm_win_input_str(win, new_str, 4096);
 
+	va_list list;
+
+	va_start(list, str);
+
+	vsscanf(new_str, str, list);
+
+	va_end(list);
+}
