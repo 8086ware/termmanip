@@ -55,15 +55,13 @@ int tm_win_input_ch(Tm_window* win) {
 	}
 
 	else {
-		if((ret = tm_win_input_str(win, ch, 4096)) == TM_ERROR) {
-			return ret;
-		}
+		tm_win_input_str(win, ch, 4096);
 	}
 
 	return *ch;
 }
 
-int tm_win_input_str(Tm_window* win, char* str, int max_size) { 
+void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	int i = 0;
 	int ch = 0;
 
@@ -117,7 +115,6 @@ int tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, og_flags, 1);
 
 	tm_win_print(win, "\n");
-	return 0;
 }
 
 
