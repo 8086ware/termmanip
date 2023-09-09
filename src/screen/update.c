@@ -20,6 +20,13 @@ void tm_screen_update() {
 	free(screen->output);
 	screen->output_len = 0;
 	screen->output = NULL;
+
+	int scr_x, scr_y;
+	tm_get_scrsize(&scr_x, &scr_y);
+
+	if(screen->columns != scr_x || screen->rows != scr_y) {
+		screen_resize();
+	}
 }
 
 
