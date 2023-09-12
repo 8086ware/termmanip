@@ -216,6 +216,8 @@ void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 
 void tm_set_title(char* text);
 
+void tm_win_input_timeout(Tm_window* win, int timeout);
+
 //Bunch of macros that serve the same functionality as other functions except they act upon the default window
 #define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
 #define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
@@ -238,6 +240,6 @@ void tm_set_title(char* text);
 #define tm_get_buffer_rows() tm_win_get_buffer_rows(default_win)
 #define tm_get_buffer_pos_x() tm_win_get_buffer_pos_x(default_win)
 #define tm_get_buffer_pos_y() tm_win_get_buffer_pos_y(default_win)
-
+#define tm_input_timeout(amount) tm_win_input_timeout(default_win, amount)
 #endif
 
