@@ -4,13 +4,8 @@
 #include "screen.h"
 
 void signal_handle(int sig) {
-#ifdef _WIN32
-#else
-	if(sig == SIGWINCH) {
-		screen_resize();
-		return;
+	if(sig == SIGINT) {
+		tm_exit();
+		exit(sig);
 	}
-#endif
-	tm_exit();
-	exit(sig);
 }
