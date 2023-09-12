@@ -34,24 +34,6 @@ void tm_win_write_to_screen(Tm_window* win) {
 			screen_append_output("\x1b[?25l");
 		}
 
-#ifndef _WIN32
-		if((tm_win_get_flags(win) & TM_FLAG_INPUTBLOCK) == 0 && screen->flags & TM_FLAG_INPUTBLOCK) {
-			struct termios term;
-			tcgetattr(fileno(stdout), &term); 
-			term.c_cc[VMIN] = 0;
-			term.c_cc[VTIME] = 0;
-			tcsetattr(fileno(stdout), TCSANOW, &term);
-		}
-
-		else if(tm_win_get_flags(win) & TM_FLAG_INPUTBLOCK && (screen->flags & TM_FLAG_INPUTBLOCK) == 0) {
-			struct termios term;
-			tcgetattr(fileno(stdout), &term); 
-			term.c_cc[VMIN] = 1;
-			term.c_cc[VTIME] = 0;
-			tcsetattr(fileno(stdout), TCSANOW, &term);
-		}
-#endif
-		
 		if(tm_win_get_flags(win) & TM_FLAG_SHADOW) {
 			for(int y = 1; y < tm_win_get_rows(win); y++) {
 				Tm_char ch;
