@@ -135,6 +135,8 @@ typedef struct Tm_window {
 	uint16_t flags;
 
 	uint32_t attrib;
+
+	int input_timeout;
 } Tm_window;
 
 extern Tm_window* default_win;
