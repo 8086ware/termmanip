@@ -20,7 +20,6 @@ Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, ch
 Tm_window* tm_win_button_select(Tm_window* win) {
 	uint16_t flags = tm_win_get_flags(win);
 	
-	tm_win_flags(win, TM_FLAG_INPUTBLOCK | TM_FLAG_RAW, 1);
 	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	Tm_window** button_children = NULL;
