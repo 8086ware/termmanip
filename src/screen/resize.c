@@ -22,6 +22,10 @@ int screen_resize() {
 
 	screen->columns = scr_x;
 	screen->rows = scr_y;
+#ifdef _WIN32
+	COORD size = {scr_x, scr_y};
+	SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), size);
+#endif
 
 	return 0;
 }
