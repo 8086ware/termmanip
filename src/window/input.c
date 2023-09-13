@@ -17,7 +17,7 @@ int tm_win_input_ch(Tm_window* win) {
 	tm_win_update(win);
 
 #ifdef _WIN32
-	if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_amount) == WAIT_OBJECT_0) {
+	if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
 		DWORD bytes_read = 0;
 		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
 	}
