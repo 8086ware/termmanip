@@ -1,12 +1,12 @@
 #include "termmanip.h"
 #include <stdio.h>
 #include <stdarg.h>
-#include <sys/select.h>
 
 #ifdef _WIN32
 #include <windows.h>
 #include <io.h>
 #else
+#include <sys/select.h>
 #include <unistd.h>
 #endif
 
