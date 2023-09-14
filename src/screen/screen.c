@@ -27,7 +27,7 @@ int screen_init() {
 
 	screen->attrib = 0;
 
-	screen->flags = TM_FLAG_CURSOR_VISIBLE;
+	screen->flags = TM_FLAG_CURSOR_VISIBLE | TM_FLAG_ECHO;
 	
 	screen->buffer = malloc(sizeof(Tm_char) * screen->columns * screen->rows);
 
