@@ -26,11 +26,11 @@ void tm_win_write_to_screen(Tm_window* win) {
 	// Update screen flags
 
 	if(tm_win_get_flags(win) != screen->flags) {
-		if(tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE && screen->flags & ~TM_FLAG_CURSOR_VISIBLE) {
+		if(tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25h");
 		}
 
-		else if(tm_win_get_flags(win) & ~TM_FLAG_CURSOR_VISIBLE && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
+		else if((tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE) != 1 && screen->flags & TM_FLAG_CURSOR_VISIBLE) {
 			screen_append_output("\x1b[?25l");
 		}
 
