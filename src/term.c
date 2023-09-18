@@ -57,10 +57,6 @@ int term_init() {
 #endif
 	signal(SIGINT, signal_handle);
 	signal(SIGTERM, signal_handle);
-#ifdef _WIN32
-#else
-	signal(SIGWINCH, signal_handle);	
-#endif
 	return 0;
 }
 
