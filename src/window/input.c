@@ -17,10 +17,23 @@ int tm_win_input_ch(Tm_window* win) {
 	tm_win_update(win);
 
 #ifdef _WIN32
-	if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
-		DWORD bytes_read = 0;
-		ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &ch, 1, &bytes_read, NULL);
-	}
+	INPUT_RECORD buffer;
+	_Bool read = 0;
+	do {
+		FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+		if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
+			DWORD bytes_read;
+			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+			if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
+				ch = buffer.Event.KeyEvent.uChar.AsciiChar;
+				read = 1;
+			}
+		}
+
+		else {
+			read = 1;
+		}
+	} while(!read);
 #else
 	fd_set input_set;
 
