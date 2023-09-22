@@ -7,14 +7,6 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 
 	tm_get_scrsize(&scr_x, &scr_y);
 
-	if(columns > scr_x) {
-		columns = scr_x;
-	}
-
-	if(rows > scr_y) {
-		rows = scr_y;
-	}
-
 	if(rows <= 0) {
 		rows = 1;
 	}
@@ -31,12 +23,12 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 		y = 0;
 	}
 
-	if(x > scr_x) {
-		x = scr_x - columns;
+	if(x + columns > scr_x) {
+		columns -= scr_x - x;
 	}
-	
-	if(y > scr_y) {
-		y = scr_y - rows;
+
+	if(y + rows > scr_y) {
+		rows -= scr_y - y;
 	}
 
 	win->position_x = x;
