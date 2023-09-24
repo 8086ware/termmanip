@@ -34,7 +34,7 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 
 			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 				screen_resize();
-				resize = 1;
+				ch = TM_KEY_SCREEN_RESIZED;
 				read = 1;
 			}
 		}
