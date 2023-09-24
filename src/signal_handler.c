@@ -8,4 +8,10 @@ void signal_handle(int sig) {
 		tm_exit();
 		exit(sig);
 	}
+
+#ifndef _WIN32
+	else if(sig == SIGWINCH) {
+		screen_resize();
+	}
+#endif
 }
