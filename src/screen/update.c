@@ -24,9 +24,18 @@ void tm_screen_update() {
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
 
-	if(screen->columns != scr_x || screen->rows != scr_y) {
-		screen_resize();
-	}
-}
+#ifdef _WIN32
+	INPUT_RECORD input;
+	DWORD bytes_read;
+	PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
 
+	if(bytes_read > 0) {
+		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
+
+		if(input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+			screen_resize();
+		}
+	}
+#endif
+}
 
