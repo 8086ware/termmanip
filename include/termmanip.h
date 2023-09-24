@@ -110,6 +110,9 @@ typedef struct {
 	int output_len;
 
 	uint16_t flags;
+#ifndef _WIN32
+	int signal_fd;
+#endif
 } Tm_screen;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
