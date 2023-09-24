@@ -3,12 +3,15 @@
 #include <signal.h>
 #include "error.h"
 #include <stdio.h>
+#include "screen.h"
+
 #ifdef _WIN32
 #include <windows.h>
 DWORD og_input_mode;
 DWORD og_output_mode;
 #else
 #include <termios.h>
+#include <sys/signalfd.h>
 struct termios og_term;
 #endif
 
@@ -58,6 +61,12 @@ int term_init() {
 #endif
 	signal(SIGINT, signal_handle);
 #ifndef _WIN32
+	sigset_t mask;
+	sigemptyset(&mask);
+	sigaddset(&mask, SIGWINCH);
+
+	screen->signal_fd = signalfd(-1, &mask, 0);
+
 	signal(SIGWINCH, signal_handle);	
 #endif
 	return 0;
