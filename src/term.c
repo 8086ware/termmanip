@@ -67,7 +67,10 @@ int term_init() {
 
 	screen->signal_fd = signalfd(-1, &mask, 0);
 
-	signal(SIGWINCH, signal_handle);	
+	if(screen->signal_fd == -1) {
+		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		return TM_ERROR;
+	}
 #endif
 	return 0;
 }
