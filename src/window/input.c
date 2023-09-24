@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <io.h>
 #else
-#include <sys/select.h>
+#include <poll.h>
 #include <unistd.h>
 #endif
 
@@ -34,17 +34,13 @@ int tm_win_input_ch(Tm_window* win) {
 		}
 	} while(!read);
 #else
-	fd_set input_set;
+	struct pollfd s_poll;
+	s_poll.fd = fileno(stdin);
+	s_poll.events = POLLIN;
 
-	FD_ZERO(&input_set);
-	FD_SET(fileno(stdin), &input_set);
+	poll(&s_poll, 1, win->input_timeout);
 
-	struct timeval time;
-	time.tv_usec = win->input_timeout * 1000;
-
-	select(1, &input_set, NULL, NULL, &time);
-
-	if(FD_ISSET(fileno(stdin), &input_set)) {
+	if(s_poll.revents & POLLIN) {
 		read(fileno(stdin), &ch, 1);
 	}
 #endif
