@@ -64,28 +64,22 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 		ch = TM_KEY_SCREEN_RESIZED;
 	}
 #endif
-	if(win->flags & TM_FLAG_ECHO) {
-		if((ret = tm_win_print(win, "%c", ch)) == TM_ERROR) {
-			return ch;
+	if(ch >= 32 && ch <= 127) {
+		if(win->flags & TM_FLAG_ECHO) {
+			if(tm_win_print(win, "%c", ch) == TM_ERROR) {
+				return ch;
+			}
+
+			tm_win_update(win);
 		}
-
-		tm_win_update(win);
 	}
 
-	*c = ch;
-
-	if(resize) {
-		return TM_SCREEN_RESIZE;
-	}
-
-	else {
-		return 0;
-	}
+	return ch;
 }
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	int i = 0;
-	char ch = 0;
+	Tmkey_T ch = 0;
 
 	int og_flags = tm_win_get_flags(win);
 
