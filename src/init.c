@@ -14,13 +14,13 @@
 Tm_screen* screen = NULL;
 
 int tm_init() {
+	if(screen_init() == TM_ERROR) {
+		return TM_ERROR;
+	}
 	if(term_init() == TM_ERROR) {
 		return TM_ERROR;
 	}
 
-	if(screen_init() == TM_ERROR) {
-		return TM_ERROR;
-	}
 
 	int scr_columns = 0, scr_rows = 0;
 	tm_get_scrsize(&scr_columns, &scr_rows);
