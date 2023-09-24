@@ -62,6 +62,8 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 
 	else if(s_poll[1].revents & POLLIN) {
 		ch = TM_KEY_SCREEN_RESIZED;
+		char buf[1024];
+		read(screen->signal_fd, &buf, 1024);
 	}
 #endif
 	if(ch >= 32 && ch <= 127) {
