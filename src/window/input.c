@@ -11,11 +11,8 @@
 #include <unistd.h>
 #endif
 
-int tm_win_input_ch(Tm_window* win, char* c) {
-	int ret = 0;
-	char ch = 0;
-
-	_Bool resize = 0;
+Tmkey_T tm_win_input_ch(Tm_window* win) {
+	Tmkey_T ch = 0;
 
 	tm_win_update(win);
 
