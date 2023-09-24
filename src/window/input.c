@@ -73,8 +73,15 @@ int tm_win_input_ch(Tm_window* win, char* c) {
 		tm_win_update(win);
 	}
 
+	*c = ch;
 
-	return ch;
+	if(resize) {
+		return TM_SCREEN_RESIZE;
+	}
+
+	else {
+		return 0;
+	}
 }
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
