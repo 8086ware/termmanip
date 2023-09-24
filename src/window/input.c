@@ -86,7 +86,7 @@ int tm_win_input_ch(Tm_window* win, char* c) {
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	int i = 0;
-	int ch = 0;
+	char ch = 0;
 
 	int og_flags = tm_win_get_flags(win);
 
@@ -94,7 +94,7 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	while(1) {
-		ch = tm_win_input_ch(win);
+		tm_win_input_ch(win, &ch);
 
 		if(ch == '\n' || ch == '\r') {
 			break;
