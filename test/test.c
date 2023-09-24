@@ -51,6 +51,5 @@ int main(void) {
 	tm_button(0, 5, 10, 10, "Heck No");
 
 	tm_button_select();
-	tm_input_ch();
 	tm_exit();
 }
