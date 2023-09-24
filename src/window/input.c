@@ -10,21 +10,33 @@
 #include <unistd.h>
 #endif
 
-int tm_win_input_ch(Tm_window* win) {
+int tm_win_input_ch(Tm_window* win, char* c) {
 	int ret = 0;
 	char ch = 0;
+
+	_Bool resize = 0;
 
 	tm_win_update(win);
 
 #ifdef _WIN32
 	INPUT_RECORD buffer;
 	_Bool read = 0;
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 	do {
 		if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
 			DWORD bytes_read;
 			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-			if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
-				ch = buffer.Event.KeyEvent.uChar.AsciiChar;
+
+			if(buffer.EventType == KEY_EVENT) {
+				if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
+					ch = buffer.Event.KeyEvent.uChar.AsciiChar;
+					read = 1;
+				}
+			}
+
+			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+				screen_resize();
+				resize = 1;
 				read = 1;
 			}
 		}
