@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include "screen.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -46,17 +47,24 @@ int tm_win_input_ch(Tm_window* win, char* c) {
 		}
 	} while(!read);
 #else
-	struct pollfd s_poll;
-	s_poll.fd = fileno(stdin);
-	s_poll.events = POLLIN;
+	fflush(stdin);
+	struct pollfd s_poll[2];
+	s_poll[0].fd = fileno(stdin);
+	s_poll[0].events = POLLIN;
 
-	poll(&s_poll, 1, win->input_timeout);
+	s_poll[1].fd = screen->signal_fd;
+	s_poll[1].events = POLLIN;
 
-	if(s_poll.revents & POLLIN) {
+	poll(s_poll, 2, win->input_timeout);
+
+	if(s_poll[0].revents & POLLIN) {
 		read(fileno(stdin), &ch, 1);
 	}
-#endif
 
+	else if(s_poll[1].revents & POLLIN) {
+		resize = 1;
+	}
+#endif
 	if(win->flags & TM_FLAG_ECHO) {
 		if((ret = tm_win_print(win, "%c", ch)) == TM_ERROR) {
 			return ch;
