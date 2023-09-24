@@ -48,9 +48,11 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 	struct pollfd s_poll[2];
 	s_poll[0].fd = fileno(stdin);
 	s_poll[0].events = POLLIN;
+	s_poll[0].revents = 0;
 
 	s_poll[1].fd = screen->signal_fd;
 	s_poll[1].events = POLLIN;
+	s_poll[1].revents = 0;
 
 	poll(s_poll, 2, win->input_timeout);
 
