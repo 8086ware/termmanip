@@ -61,7 +61,7 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 	}
 
 	else if(s_poll[1].revents & POLLIN) {
-		resize = 1;
+		ch = TM_KEY_SCREEN_RESIZED;
 	}
 #endif
 	if(win->flags & TM_FLAG_ECHO) {
