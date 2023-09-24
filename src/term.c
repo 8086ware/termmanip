@@ -65,6 +65,7 @@ int term_init() {
 	sigemptyset(&mask);
 	sigaddset(&mask, SIGWINCH);
 
+	sigprocmask(SIG_BLOCK, &mask, NULL);
 	screen->signal_fd = signalfd(-1, &mask, 0);
 
 	if(screen->signal_fd == -1) {
