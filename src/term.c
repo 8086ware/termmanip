@@ -57,9 +57,7 @@ int term_init() {
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 #endif
 	signal(SIGINT, signal_handle);
-	signal(SIGTERM, signal_handle);
-#ifdef _WIN32
-#else
+#ifndef _WIN32
 	signal(SIGWINCH, signal_handle);	
 #endif
 	return 0;
