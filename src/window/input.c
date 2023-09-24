@@ -89,39 +89,43 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	while(1) {
 		ch = tm_win_input_ch(win);
 
-		if(ch == '\n' || ch == '\r') {
-			break;
-		}
-
-		if(ch == '\177' || ch == '\b') {
-			if(i > 0) {
-				str[i] = '\0';
-				i--;
+		if(ch <= 127) {
+			if(ch == '\n' || ch == '\r') {
+				break;
 			}
 
-			else {
+			if(ch == '\177' || ch == '\b') {
+				if(i > 0) {
+					str[i] = '\0';
+					i--;
+				}
+
+				else {
+					continue;
+				}
+
+				int tempX = tm_win_get_cursor_x(win);
+				int tempY = tm_win_get_cursor_y(win);
+
+				tm_win_cursor(win, tm_win_get_cursor_x(win) - 1, tm_win_get_cursor_y(win));
+				tm_win_putch(win, tm_win_get_background(win).disp, tm_win_get_background(win).attrib);
+				tm_win_cursor(win, tempX - 1, tempY);
+
+				tm_win_update(win);
+
 				continue;
 			}
 
-			int tempX = tm_win_get_cursor_x(win);
-			int tempY = tm_win_get_cursor_y(win);
 
-			tm_win_cursor(win, tm_win_get_cursor_x(win) - 1, tm_win_get_cursor_y(win));
-			tm_win_putch(win, tm_win_get_background(win).disp, tm_win_get_background(win).attrib);
-			tm_win_cursor(win, tempX - 1, tempY);
 
-			tm_win_update(win);
+			if(tm_win_print(win, "%c", ch) != TM_ERROR) {
+				if(i <= max_size) {
+					str[i] = ch;
+					i++;
+				}
 
-			continue;
-		}
-
-		if(tm_win_print(win, "%c", ch) != TM_ERROR) {
-			if(i <= max_size) {
-				str[i] = ch;
-				i++;
+				tm_win_update(win);
 			}
-
-			tm_win_update(win);
 		}
 	}
 
