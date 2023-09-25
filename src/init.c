@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "screen.h"
+#include "terminal.h"
 #include "term.h"
 
 #ifndef _WIN32
@@ -11,16 +11,12 @@
 #include <io.h>
 #endif
 
-Tm_screen* screen = NULL;
+Tm_terminal* terminal = NULL;
 
 int tm_init() {
-	if(screen_init() == TM_ERROR) {
+	if(terminal_init() == TM_ERROR) {
 		return TM_ERROR;
 	}
-	if(term_init() == TM_ERROR) {
-		return TM_ERROR;
-	}
-
 
 	int scr_columns = 0, scr_rows = 0;
 	tm_get_scrsize(&scr_columns, &scr_rows);
