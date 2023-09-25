@@ -4,18 +4,18 @@
 #include "termmanip.h"
 #include <stdint.h>
 
-int screen_init();
-void screen_free();
+int terminal_init();
+void terminal_free();
 
-void screen_cursor(int x, int y);
+void terminal_cursor(int x, int y);
 
-void screen_attrib(uint32_t attrib);
+void terminal_attrib(uint32_t attrib);
 
-void screen_output_write(int x, int y, char ch, uint32_t attrib);
-int screen_append_output(char* fmt, ...);
+void terminal_output_write(int x, int y, char ch, uint32_t attrib);
+int terminal_append_output(char* fmt, ...);
 
-void screen_buffer_write(int x, int y, Tm_char ch);
+void terminal_buffer_write(int x, int y, Tm_char ch);
 
-int screen_resize();
+int terminal_resize();
 
 #endif
