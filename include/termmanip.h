@@ -91,9 +91,9 @@ typedef struct {
 	char disp;
 } Tm_char;
 
-// Tm_screen structure contains the physical entire screen which is the columns and rows of the terminal. It has the pending changes which is an array with all
+// Tm_terminal structure contains the physical entire terminal which is the columns and rows of the terminal. It has the pending changes which is an array with all
 // the characters and attributes to be written at an x,y, it has an attrib variable which identifies the last attribute used, an output char array which is
-// the output to be put on screen (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
+// the output to be put on terminal (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
 typedef struct {
 	int columns, rows;
@@ -116,7 +116,7 @@ typedef struct {
 } Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
-// the buffer containing its contents, a physical buffer to represent what has been copied onto the screen, its flags and its current attrib.
+// the buffer containing its contents, a physical buffer to represent what has been copied onto the terminal, its flags and its current attrib.
 
 typedef struct Tm_window {
 	int position_x, position_y, columns, rows;
@@ -154,7 +154,7 @@ extern struct termios og_term;
 Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
-void tm_get_scrsize(int* x, int* y); // Gets the screensize
+void tm_get_scrsize(int* x, int* y); // Gets the terminalsize
 
 int tm_win_get_cursor_x(Tm_window* win);
 int tm_win_get_cursor_y(Tm_window* win);
@@ -175,9 +175,9 @@ Tm_char tm_win_get_background(Tm_window* win);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
-void tm_win_write_to_screen(Tm_window* win); // Writes the window to the screen structure but doesn't display to the actual terminal
-void tm_screen_update(); // Puts the internal screen onto the terminal
-void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_screen and tm_screen_update
+void tm_win_write_to_terminal(Tm_window* win); // Writes the window to the terminal structure but doesn't display to the actual terminal
+void tm_terminal_update(); // Puts the internal terminal onto the terminal
+void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
 int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute

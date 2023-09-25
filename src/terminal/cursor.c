@@ -1,12 +1,12 @@
-#include "screen.h"
+#include "terminal.h"
 #include "termmanip.h"
 
-void screen_cursor(int x, int y) {
-	int position = y * screen->columns + x;
+void terminal_cursor(int x, int y) {
+	int position = y * terminal->columns + x;
 
-	y = position / screen->columns;
-	x = position % screen->columns;
+	y = position / terminal->columns;
+	x = position % terminal->columns;
 
-	screen->cursor_x = x;
-	screen->cursor_y = y;
+	terminal->cursor_x = x;
+	terminal->cursor_y = y;
 }

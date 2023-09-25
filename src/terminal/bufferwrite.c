@@ -1,15 +1,15 @@
-#include "screen.h"
+#include "terminal.h"
 #include "termmanip.h"
 
-void screen_buffer_write(int x, int y, Tm_char ch) {
-	int position = y * screen->columns + x;
+void terminal_buffer_write(int x, int y, Tm_char ch) {
+	int position = y * terminal->columns + x;
 
-	y = position / screen->columns;
-	x = position % screen->columns;
+	y = position / terminal->columns;
+	x = position % terminal->columns;
 
-	if(ch.disp != screen->buffer[position].disp || ch.attrib != screen->buffer[position].attrib) {
-		screen_output_write(x, y, ch.disp, ch.attrib);
+	if(ch.disp != terminal->buffer[position].disp || ch.attrib != terminal->buffer[position].attrib) {
+		terminal_output_write(x, y, ch.disp, ch.attrib);
 	}
 
-	screen->buffer[position] = ch;
+	terminal->buffer[position] = ch;
 }

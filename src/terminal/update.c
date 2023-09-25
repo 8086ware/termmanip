@@ -1,5 +1,5 @@
 #include "termmanip.h"
-#include "screen.h"
+#include "terminal.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -10,16 +10,16 @@
 #include <unistd.h>
 #endif
 
-void tm_screen_update() {
-	if(screen->last_updated_x + 1 != screen->cursor_x || screen->last_updated_y != screen->cursor_y) {
-		screen_append_output("\x1b[%d;%dH", screen->cursor_y + 1, screen->cursor_x + 1);
+void tm_terminal_update() {
+	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
+		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 	}
 
-	write(fileno(stdout), screen->output, screen->output_len);
+	write(fileno(stdout), terminal->output, terminal->output_len);
 
-	free(screen->output);
-	screen->output_len = 0;
-	screen->output = NULL;
+	free(terminal->output);
+	terminal->output_len = 0;
+	terminal->output = NULL;
 
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
@@ -33,7 +33,7 @@ void tm_screen_update() {
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
 
 		if(input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-			screen_resize();
+			terminal_resize();
 		}
 	}
 #endif

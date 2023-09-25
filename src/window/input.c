@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include <stdio.h>
 #include <stdarg.h>
-#include "screen.h"
+#include "terminal.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,7 +33,7 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 			}
 
 			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-				screen_resize();
+				terminal_resize();
 				ch = TM_KEY_SCREEN_RESIZED;
 				read = 1;
 			}
@@ -50,7 +50,7 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 	s_poll[0].events = POLLIN;
 	s_poll[0].revents = 0;
 
-	s_poll[1].fd = screen->signal_fd;
+	s_poll[1].fd = terminal->signal_fd;
 	s_poll[1].events = POLLIN;
 	s_poll[1].revents = 0;
 
@@ -63,7 +63,7 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 	else if(s_poll[1].revents & POLLIN) {
 		ch = TM_KEY_SCREEN_RESIZED;
 		char buf[1024];
-		read(screen->signal_fd, &buf, 1024);
+		read(terminal->signal_fd, &buf, 1024);
 	}
 #endif
 	if(ch >= 32 && ch <= 127) {
