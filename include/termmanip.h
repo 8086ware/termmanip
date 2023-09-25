@@ -113,7 +113,7 @@ typedef struct {
 #ifndef _WIN32
 	int signal_fd;
 #endif
-} Tm_screen;
+} Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
 // the buffer containing its contents, a physical buffer to represent what has been copied onto the screen, its flags and its current attrib.
@@ -142,7 +142,7 @@ typedef struct Tm_window {
 } Tm_window;
 
 extern Tm_window* default_win;
-extern Tm_screen* screen;
+extern Tm_terminal* terminal;
 
 #ifdef _WIN32
 extern DWORD og_input_mode;
