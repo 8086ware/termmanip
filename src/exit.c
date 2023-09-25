@@ -2,9 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "screen.h"
+#include "terminal.h"
 #include "error.h"
-#include "term.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -23,7 +22,6 @@ int tm_exit() {
 		return TM_ERROR;	
 	}
 
-	screen_free();
-	term_exit();
+	terminal_free();
 	return 0;
 }
