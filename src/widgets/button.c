@@ -84,7 +84,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			}
 		}
 
-		c = tm_win_input_ch(win);
+		c = tm_win_input(win).key;
 	}
 
 }
