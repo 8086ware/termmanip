@@ -11,30 +11,40 @@
 #include <unistd.h>
 #endif
 
-Tmkey_T tm_win_input_ch(Tm_window* win) {
-	Tmkey_T ch = 0;
+Tm_input tm_win_input(Tm_window* win) {
+	Tm_input input = {0};
 
 	tm_win_update(win);
 
-#ifdef _WIN32
-	INPUT_RECORD buffer;
 	_Bool read = 0;
-	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 	do {
+#ifdef _WIN32
+		INPUT_RECORD buffer;
 		if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
 			DWORD bytes_read;
 			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
 			if(buffer.EventType == KEY_EVENT) {
+				if(buffer.Event.KeyEvent.dwControlKeyState & RIGHT_ALT_PRESSED || buffer.Event.KeyEvent.dwControlKeyState & LEFT_ALT_PRESSED) {
+					input.alt_down = 1;
+					continue;
+				}
+
+				if(buffer.Event.KeyEvent.dwControlKeyState & RIGHT_CTRL_PRESSED || buffer.Event.KeyEvent.dwControlKeyState & LEFT_CTRL_PRESSED) {
+					input.ctrl_down = 1;
+					continue;
+				}
+
 				if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
-					ch = buffer.Event.KeyEvent.uChar.AsciiChar;
+					input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
 					read = 1;
 				}
+
 			}
 
 			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 				terminal_resize();
-				ch = TM_KEY_SCREEN_RESIZED;
+				input.terminal_resized = 1;
 				read = 1;
 			}
 		}
@@ -42,41 +52,42 @@ Tmkey_T tm_win_input_ch(Tm_window* win) {
 		else {
 			read = 1;
 		}
-	} while(!read);
 #else
-	fflush(stdin);
-	struct pollfd s_poll[2];
-	s_poll[0].fd = fileno(stdin);
-	s_poll[0].events = POLLIN;
-	s_poll[0].revents = 0;
+		fflush(stdin);
+		struct pollfd s_poll[2];
+		s_poll[0].fd = fileno(stdin);
+		s_poll[0].events = POLLIN;
+		s_poll[0].revents = 0;
 
-	s_poll[1].fd = terminal->signal_fd;
-	s_poll[1].events = POLLIN;
-	s_poll[1].revents = 0;
+		s_poll[1].fd = terminal->signal_fd;
+		s_poll[1].events = POLLIN;
+		s_poll[1].revents = 0;
 
-	poll(s_poll, 2, win->input_timeout);
+		poll(s_poll, 2, win->input_timeout);
 
-	if(s_poll[0].revents & POLLIN) {
-		read(fileno(stdin), &ch, 1);
-	}
+		if(s_poll[0].revents & POLLIN) {
+			read(fileno(stdin), &input.key, 1);
+		}
 
-	else if(s_poll[1].revents & POLLIN) {
-		ch = TM_KEY_SCREEN_RESIZED;
-		char buf[1024];
-		read(terminal->signal_fd, &buf, 1024);
-	}
+		else if(s_poll[1].revents & POLLIN) {
+			char buf[1024];
+			read(terminal->signal_fd, &buf, 1024);
+			input.terminal_sized = 1;
+		}
 #endif
-	if(ch >= 32 && ch <= 127) {
+	} while(!read);
+
+	if(input.key >= 32 && input.key <= 127) {
 		if(win->flags & TM_FLAG_ECHO) {
-			if(tm_win_print(win, "%c", ch) == TM_ERROR) {
-				return ch;
+			if(tm_win_print(win, "%c", input.key) == TM_ERROR) {
+				return input;
 			}
 
 			tm_win_update(win);
 		}
 	}
 
-	return ch;
+	return input;
 }
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
