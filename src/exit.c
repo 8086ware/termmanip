@@ -22,6 +22,9 @@ int tm_exit() {
 		return TM_ERROR;	
 	}
 
-	terminal_free();
+	if(terminal_free() == TM_ERROR) {
+		return TM_ERROR;
+	}
+
 	return 0;
 }
