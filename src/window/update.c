@@ -30,7 +30,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 			terminal_append_output("\x1b[?25h");
 		}
 
-		else if((tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE) != 1 && terminal->flags & TM_FLAG_CURSOR_VISIBLE) {
+		else if((tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE) == 0 && terminal->flags & TM_FLAG_CURSOR_VISIBLE) {
 			terminal_append_output("\x1b[?25l");
 		}
 
