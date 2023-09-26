@@ -100,7 +100,7 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	while(1) {
-		ch = tm_win_input_ch(win);
+		ch = tm_win_input(win).key;
 
 		if(ch <= 127) {
 			if(ch == '\n' || ch == '\r') {
