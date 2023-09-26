@@ -72,7 +72,8 @@ Tm_input tm_win_input(Tm_window* win) {
 		else if(s_poll[1].revents & POLLIN) {
 			char buf[1024];
 			read(terminal->signal_fd, &buf, 1024);
-			input.terminal_sized = 1;
+			terminal_resize();
+			input.terminal_resized = 1;
 		}
 #endif
 	} while(!read);
