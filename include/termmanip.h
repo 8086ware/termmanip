@@ -96,6 +96,15 @@ typedef struct {
 // the output to be put on terminal (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
 typedef struct {
+	_Bool ctrl_down;
+	_Bool alt_down;
+
+	_Bool terminal_resized;
+
+	Tmkey_T key;
+} Tm_input;
+
+typedef struct {
 	int columns, rows;
 
 	Tm_char* buffer;
