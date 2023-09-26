@@ -116,7 +116,7 @@ int terminal_init() {
 	return 0;
 }
 
-void terminal_free() {
+int terminal_free() {
 #ifdef _WIN32
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
 		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
@@ -136,4 +136,5 @@ void terminal_free() {
 	free(terminal);
 
 	terminal = NULL;
+	return 0;
 }

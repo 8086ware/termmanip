@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 int terminal_init();
-void terminal_free();
+int terminal_free();
 
 void terminal_cursor(int x, int y);
 
