@@ -36,6 +36,18 @@ void tm_terminal_update() {
 			terminal_resize();
 		}
 	}
+#else
+	struct pollfd signal_poll;
+	signal_poll.fd = terminal->signal_fd;
+	signal_poll.events = POLLIN;
+
+	poll(&signal_poll, 1, 0);
+
+	if(signal_poll.revents & POLLIN) {
+		char buf[1024];
+		read(terminal->signal_fd, &buf, 1024);
+		terminal_resize();
+	}
 #endif
 }
 
