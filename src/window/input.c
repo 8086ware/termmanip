@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "terminal.h"
+#include <ctype.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -67,6 +68,32 @@ Tm_input tm_win_input(Tm_window* win) {
 
 		if(s_poll[0].revents & POLLIN) {
 			read(fileno(stdin), &input.key, 1);
+
+			if(input.key == TM_KEY_ESC) {
+				poll(s_poll, 1, 0);
+				if(s_poll[0].revents & POLLIN) {
+					char escape_input[10];		
+					read(fileno(stdin), &escape_input[0], 1);
+
+					poll(s_poll, 1, 0);
+					
+					if(s_poll[0].revents & POLLIN) {
+						read(fileno(stdin), &escape_input[1], 1);
+					}
+					
+					else {
+						input.key = escape_input[0];
+						input.alt_down = 1;
+					}
+				}
+			}
+
+			if(input.key <= 32) {
+				input.key += 64;
+				input.ctrl_down = 1;
+			}
+
+			read_input = 1;
 		}
 
 		else if(s_poll[1].revents & POLLIN) {
