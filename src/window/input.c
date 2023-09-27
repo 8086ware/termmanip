@@ -16,7 +16,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 	tm_win_update(win);
 
-	_Bool read = 0;
+	_Bool read_input = 0;
 	do {
 #ifdef _WIN32
 		INPUT_RECORD buffer;
@@ -37,7 +37,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 				if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
 					input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
-					read = 1;
+					read_input = 1;
 				}
 
 			}
@@ -45,12 +45,12 @@ Tm_input tm_win_input(Tm_window* win) {
 			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 				terminal_resize();
 				input.terminal_resized = 1;
-				read = 1;
+				read_input = 1;
 			}
 		}
 
 		else {
-			read = 1;
+			read_input = 1;
 		}
 #else
 		fflush(stdin);
@@ -74,6 +74,7 @@ Tm_input tm_win_input(Tm_window* win) {
 			read(terminal->signal_fd, &buf, 1024);
 			terminal_resize();
 			input.terminal_resized = 1;
+			read_input = 1;
 		}
 #endif
 	} while(!read);
