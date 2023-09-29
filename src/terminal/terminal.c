@@ -13,6 +13,7 @@ DWORD og_output_mode;
 #else
 #include <termios.h>
 #include <sys/signalfd.h>
+#include <unistd.h>
 struct termios og_term;
 #endif
 
@@ -130,9 +131,9 @@ int terminal_free() {
 #else
 	tcsetattr(fileno(stdin), TCSANOW, &og_term);
 	tcsetattr(fileno(stdout), TCSANOW, &og_term);
-#endif
 
 	close(terminal->signal_fd);
+#endif
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal);
