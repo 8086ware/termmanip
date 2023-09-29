@@ -131,6 +131,8 @@ int terminal_free() {
 	tcsetattr(fileno(stdin), TCSANOW, &og_term);
 	tcsetattr(fileno(stdout), TCSANOW, &og_term);
 #endif
+
+	close(terminal->signal_fd);
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal);
