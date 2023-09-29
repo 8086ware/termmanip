@@ -21,8 +21,8 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 		return TM_ERROR;
 	}
 
-	x = position % win->columns;
-	y = position / win->columns;
+	x = position % tm_win_get_buffer_columns(win);
+	y = position / tm_win_get_buffer_columns(win);
 
 	win->cursor_x = x;
 	win->cursor_y = y;
