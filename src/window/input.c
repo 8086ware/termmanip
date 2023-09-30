@@ -26,16 +26,6 @@ Tm_input tm_win_input(Tm_window* win) {
 			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
 			if(buffer.EventType == KEY_EVENT) {
-				if(buffer.Event.KeyEvent.dwControlKeyState & RIGHT_ALT_PRESSED || buffer.Event.KeyEvent.dwControlKeyState & LEFT_ALT_PRESSED) {
-					input.alt_down = 1;
-					continue;
-				}
-
-				if(buffer.Event.KeyEvent.dwControlKeyState & RIGHT_CTRL_PRESSED || buffer.Event.KeyEvent.dwControlKeyState & LEFT_CTRL_PRESSED) {
-					input.ctrl_down = 1;
-					continue;
-				}
-
 				if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
 					input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
 					read_input = 1;
