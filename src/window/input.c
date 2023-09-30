@@ -64,6 +64,8 @@ Tm_input tm_win_input(Tm_window* win) {
 		else {
 			read_input = 1;
 		}
+
+	} while(!read_input);
 #else
 		fflush(stdin);
 		struct pollfd s_poll[2];
