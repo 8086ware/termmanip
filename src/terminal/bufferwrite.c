@@ -4,6 +4,10 @@
 void terminal_buffer_write(int x, int y, Tm_char ch) {
 	int position = y * terminal->columns + x;
 
+	if(position > terminal->columns * terminal->rows || position < 0) {
+		return;
+	}
+
 	y = position / terminal->columns;
 	x = position % terminal->columns;
 
