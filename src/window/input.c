@@ -28,6 +28,27 @@ Tm_input tm_win_input(Tm_window* win) {
 			if(buffer.EventType == KEY_EVENT) {
 				if(buffer.Event.KeyEvent.bKeyDown == TRUE) {
 					input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
+
+					if(input.key == TM_KEY_ESC) {
+						input.alt_down = 1;
+						PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+						if(bytes_read > 0) {
+							ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+
+							PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+
+							if(bytes_read == 0) {
+								input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
+								input.alt_down = 1;
+							}
+						}
+					}
+
+					if(input.key < 32) {
+						input.key += 64;
+						input.ctrl_down = 1;
+					}
+
 					read_input = 1;
 				}
 
