@@ -88,7 +88,6 @@ int terminal_init() {
 		return TM_ERROR;
 	}
 
-	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 #else 
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
