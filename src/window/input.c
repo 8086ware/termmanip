@@ -67,57 +67,52 @@ Tm_input tm_win_input(Tm_window* win) {
 
 	} while(!read_input);
 #else
-		fflush(stdin);
-		struct pollfd s_poll[2];
-		s_poll[0].fd = fileno(stdin);
-		s_poll[0].events = POLLIN;
-		s_poll[0].revents = 0;
+	struct pollfd s_poll[2];
+	s_poll[0].fd = fileno(stdin);
+	s_poll[0].events = POLLIN;
+	s_poll[0].revents = 0;
 
-		s_poll[1].fd = terminal->signal_fd;
-		s_poll[1].events = POLLIN;
-		s_poll[1].revents = 0;
+	s_poll[1].fd = terminal->signal_fd;
+	s_poll[1].events = POLLIN;
+	s_poll[1].revents = 0;
 
-		poll(s_poll, 2, win->input_timeout);
+	poll(s_poll, 2, win->input_timeout);
 
-		if(s_poll[0].revents & POLLIN) {
-			read(fileno(stdin), &input.key, 1);
+	if(s_poll[0].revents & POLLIN) {
+		read(fileno(stdin), &input.key, 1);
 
-			if(input.key == TM_KEY_ESC) {
+		if(input.key == TM_KEY_ESC) {
+			poll(s_poll, 1, 0);
+			if(s_poll[0].revents & POLLIN) {
+				char escape_input = 0;
+				read(fileno(stdin), &escape_input, 1);
+
 				poll(s_poll, 1, 0);
-				if(s_poll[0].revents & POLLIN) {
-					char escape_input[10];		
-					read(fileno(stdin), &escape_input[0], 1);
 
-					poll(s_poll, 1, 0);
-					
-					if(s_poll[0].revents & POLLIN) {
-						read(fileno(stdin), &escape_input[1], 1);
-					}
-					
-					else {
-						input.key = escape_input[0];
-						input.alt_down = 1;
-					}
+				if(s_poll[0].revents & POLLIN) {
+					read(fileno(stdin), &escape_input, 1);
+				}
+
+				else {
+					input.key = escape_input;
+					input.alt_down = 1;
 				}
 			}
-
-			if(input.key <= 32) {
-				input.key += 64;
-				input.ctrl_down = 1;
-			}
-
-			read_input = 1;
 		}
 
-		else if(s_poll[1].revents & POLLIN) {
-			char buf[1024];
-			read(terminal->signal_fd, &buf, 1024);
-			terminal_resize();
-			input.terminal_resized = 1;
-			read_input = 1;
+		if(input.key < 32) {
+			input.key += 64;
+			input.ctrl_down = 1;
 		}
+	}
+
+	else if(s_poll[1].revents & POLLIN) {
+		char buf[1024];
+		read(terminal->signal_fd, &buf, 1024);
+		terminal_resize();
+		input.terminal_resized = 1;
+	}
 #endif
-	} while(!read);
 
 	if(input.key >= 32 && input.key <= 127) {
 		if(win->flags & TM_FLAG_ECHO) {
