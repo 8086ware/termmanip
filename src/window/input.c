@@ -16,10 +16,10 @@ Tm_input tm_win_input(Tm_window* win) {
 	Tm_input input = {0};
 
 	tm_win_update(win);
-
+#ifdef _WIN32
 	_Bool read_input = 0;
 	do {
-#ifdef _WIN32
+		FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
 		INPUT_RECORD buffer;
 		if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
 			DWORD bytes_read;
