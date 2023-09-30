@@ -6,11 +6,6 @@
 Tm_window* default_win = NULL;
 
 Tm_window* tm_window(int x, int y, int columns, int rows) {
-	if(columns == 0 || rows == 0) {
-		tm_set_error(TM_INVALID_WINDOW_SIZE);
-		return NULL;
-	}
-
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
@@ -30,6 +25,18 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 
 	win->background_tm_char.attrib = 0;
 	win->background_tm_char.disp = ' ';
+
+	win->columns = 0;
+	win->rows = 0;
+
+	win->cursor_x = 0;
+	win->cursor_y = 0;
+
+	win->buffer_columns = 0;
+	win->buffer_rows = 0;
+
+	win->buffer_position_x = 0;
+	win->buffer_position_y = 0;
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 	tm_win_modify(win, x, y, columns, rows);
