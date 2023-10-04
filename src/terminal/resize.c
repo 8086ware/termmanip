@@ -25,6 +25,9 @@ int terminal_resize() {
 		Tm_char ch;
 		ch.attrib = 0;
 		ch.disp = ' ';
+		
+		terminal->buffer[i].disp = 0;
+		terminal->buffer[i].attrib = 0;
 
 		terminal_buffer_write(i % terminal->columns, i / terminal->columns, ch);
 		terminal_output_write(i % terminal->columns, i / terminal->columns, ch.disp, ch.attrib);
@@ -32,15 +35,13 @@ int terminal_resize() {
 
 	for(int y = 0; y < og_rows; y++) {
 		for(int x = 0; x < og_cols; x++) {
-			if(x < terminal->columns && y < terminal->rows) {
-				terminal_buffer_write(x, y, temp[y * og_cols + x]);
-				terminal_output_write(x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
-			}
+			terminal_buffer_write(x, y, temp[y * og_cols + x]);
+			terminal_output_write(x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
 		}
 	}
 
 	free(temp);
-	
+
 	tm_terminal_update();
 
 	return 0;
