@@ -78,29 +78,28 @@ Tm_input tm_win_input(Tm_window* win) {
 
 	poll(s_poll, 2, win->input_timeout);
 
+	char escape_input[20];
+	int escape_s_amount = 0;
+
 	if(s_poll[0].revents & POLLIN) {
 		read(fileno(stdin), &input.key, 1);
 
 		if(input.key == TM_KEY_ESC) {
-			poll(s_poll, 1, 0);
-			if(s_poll[0].revents & POLLIN) {
-				char escape_input = 0;
-				read(fileno(stdin), &escape_input, 1);
-
+			do {	
 				poll(s_poll, 1, 0);
-
+				
 				if(s_poll[0].revents & POLLIN) {
-					read(fileno(stdin), &escape_input, 1);
+					read(fileno(stdin), &escape_input[escape_s_amount], 1);
+					escape_s_amount++;
 				}
+			} while(s_poll[0].revents & POLLIN);
+			
+			escape_input[escape_s_amount] = '\0';
 
-				else {
-					input.key = escape_input;
-					input.alt_down = 1;
-				}
-			}
+			process_esc_input(&input, escape_input);
 		}
 
-		if(input.key < 32) {
+		if(input.key < 32 && input.key < 7 && input.key > 14) {
 			input.key += 64;
 			input.ctrl_down = 1;
 		}
