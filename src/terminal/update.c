@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include <io.h>
 #else
+#include <poll.h>
 #include <unistd.h>
 #endif
 
