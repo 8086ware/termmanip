@@ -8,41 +8,38 @@
 int terminal_resize() {
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
-	tm_win_modify(default_win, 0, 0, scr_x, scr_y);
 
 	Tm_char* temp = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
-	memcpy(temp, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
-
-	terminal->buffer = realloc(terminal->buffer, sizeof(Tm_char) * scr_x * scr_y);
+	memcpy(temp, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows)
 
 	int og_cols = terminal->columns, og_rows = terminal->rows;
 
 	terminal->columns = scr_x;
 	terminal->rows = scr_y;
 
-	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
-		Tm_char ch;
-		ch.attrib = 0;
-		ch.disp = ' ';
-		
-		terminal->buffer[i].disp = 0;
-		terminal->buffer[i].attrib = 0;
+	terminal->buffer = realloc(terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
-		terminal_buffer_write(i % terminal->columns, i / terminal->columns, ch);
-		terminal_output_write(i % terminal->columns, i / terminal->columns, ch.disp, ch.attrib);
+	for(int y = 0; y < terminal->rows; y++) {
+		for(int x = 0; x < terminal->columns; x++) {
+			Tm_char ch = {0, ' '};
+
+			terminal->buffer[y * terminal->columns + x].disp = 0;
+			terminal->buffer[y * terminal->columns + x].attrib = 0;
+
+			terminal_buffer_write(x, y, ch);
+		}
 	}
 
 	for(int y = 0; y < og_rows; y++) {
 		for(int x = 0; x < og_cols; x++) {
 			terminal_buffer_write(x, y, temp[y * og_cols + x]);
-			terminal_output_write(x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
 		}
 	}
 
-	free(temp);
-
 	tm_terminal_update();
+
+	free(temp);
 
 	return 0;
 }
