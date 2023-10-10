@@ -11,7 +11,7 @@ int terminal_resize() {
 
 	Tm_char* temp = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
-	memcpy(temp, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows)
+	memcpy(temp, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	int og_cols = terminal->columns, og_rows = terminal->rows;
 
