@@ -16,7 +16,7 @@ void terminal_write(int x, int y, char ch, uint32_t attrib) {
 	}
 
 	terminal->buffer[position].disp = ch;
-	terminal->buffer[position].disp = attrib;
+	terminal->buffer[position].attrib = attrib;
 
 	if(terminal->attrib != attrib) {
 		if(attrib & TM_ATTRIB_ALTERNATE && (terminal->attrib & TM_ATTRIB_ALTERNATE) == 0) {
