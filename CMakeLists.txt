@@ -4,7 +4,7 @@ project(termmanip)
 
 include(CTest)
 
-set(TERMMANIP_SOURCES src/terminal/terminal_size.c src/terminal/append_output.c src/window/window.c src/window/print.c src/window/modify.c src/window/update.c src/window/cursor.c src/init.c src/exit.c src/window/border.c src/window/parent.c src/window/fill.c src/window/attrib.c src/window/background.c src/window/input.c src/signal_handler.c src/widgets/button.c src/widgets/button.c src/widgets/dialog.c src/window/clear.c src/error.c src/window/put.c src/window/scroll.c src/terminal/terminal.c src/terminal/write.c src/terminal/bufferwrite.c src/terminal/cursor.c src/terminal/update.c src/terminal/resize.c src/window/flags.c src/title.c src/window/timeout.c src/window/process_esc_input.c)
+set(TERMMANIP_SOURCES src/terminal/terminal_size.c src/terminal/append_output.c src/window/window.c src/window/print.c src/window/modify.c src/window/update.c src/window/cursor.c src/init.c src/exit.c src/window/border.c src/window/parent.c src/window/fill.c src/window/attrib.c src/window/background.c src/window/input.c src/signal_handler.c src/widgets/button.c src/widgets/button.c src/widgets/dialog.c src/window/clear.c src/error.c src/window/put.c src/window/scroll.c src/terminal/terminal.c src/terminal/write.c src/terminal/cursor.c src/terminal/update.c src/terminal/resize.c src/window/flags.c src/title.c src/window/timeout.c src/window/process_esc_input.c)
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})
 
