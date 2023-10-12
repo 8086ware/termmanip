@@ -21,6 +21,10 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 		ret = tm_win_cursor(win, tm_win_get_cursor_x(win) - 1, tm_win_get_cursor_y(win));
 	}
 
+	else if(ch == '\t') {
+		ret = tm_win_cursor(win, tm_win_get_cursor_x(win) + 4, tm_win_get_cursor_y(win));
+	}
+
 	else {
 		ret = tm_win_cursor(win, tm_win_get_cursor_x(win) + 1, tm_win_get_cursor_y(win));
 
