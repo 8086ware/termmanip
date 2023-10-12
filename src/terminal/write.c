@@ -11,7 +11,7 @@ void terminal_write(int x, int y, char ch, uint32_t attrib) {
 	y = position / terminal->columns;
 	x = position % terminal->columns;
 
-	if(ch == terminal->buffer[position].disp || attrib == terminal->buffer[position].attrib) {
+	if(ch == terminal->buffer[position].disp && attrib == terminal->buffer[position].attrib) {
 		return;
 	}
 
