@@ -40,7 +40,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
 				ch.disp = terminal->buffer[(y + tm_win_get_pos_y(win)) * terminal->columns + (tm_win_get_columns(win) + tm_win_get_pos_x(win))].disp;
 
-				terminal_buffer_write(tm_win_get_pos_x(win) + tm_win_get_columns(win) + parent_x, tm_win_get_pos_y(win) + y + parent_y, ch);
+				terminal_write(tm_win_get_pos_x(win) + tm_win_get_columns(win) + parent_x, tm_win_get_pos_y(win) + y + parent_y, ch.disp, ch.attrib);
 			}
 
 			for(int x = 1; x < tm_win_get_columns(win) + 1; x++) {
@@ -48,7 +48,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 				ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
 				ch.disp = terminal->buffer[(tm_win_get_rows(win) + tm_win_get_pos_y(win)) * terminal->columns + (x + tm_win_get_pos_x(win))].disp;
 
-				terminal_buffer_write(tm_win_get_pos_x(win) + x + parent_x, tm_win_get_pos_y(win) + tm_win_get_rows(win) + parent_y, ch);
+				terminal_write(tm_win_get_pos_x(win) + x + parent_x, tm_win_get_pos_y(win) + tm_win_get_rows(win) + parent_y, ch.disp, ch.attrib);
 			}
 		}
 
@@ -61,7 +61,11 @@ void tm_win_write_to_terminal(Tm_window* win) {
 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
-			terminal_buffer_write((tm_win_get_pos_x(win) + parent_x + x), (tm_win_get_pos_y(win) + parent_y + y), win->buffer[(tm_win_get_buffer_pos_y(win) + y) * tm_win_get_buffer_columns(win) + (tm_win_get_buffer_pos_x(win) + x)]);
+			Tm_char ch;
+			ch.disp = win->buffer[(tm_win_get_buffer_pos_y(win) + y) * tm_win_get_buffer_columns(win) + (tm_win_get_buffer_pos_x(win) + x)].disp;
+			ch.attrib = win->buffer[(tm_win_get_buffer_pos_y(win) + y) * tm_win_get_buffer_columns(win) + (tm_win_get_buffer_pos_x(win) + x)].attrib;
+
+			terminal_write((tm_win_get_pos_x(win) + parent_x + x), (tm_win_get_pos_y(win) + parent_y + y), ch.disp, ch.attrib);
 		}	
 	}
 

@@ -27,13 +27,13 @@ int terminal_resize() {
 			terminal->buffer[y * terminal->columns + x].disp = 0;
 			terminal->buffer[y * terminal->columns + x].attrib = 0;
 
-			terminal_buffer_write(x, y, ch);
+			terminal_write(x, y, ch.disp, ch.attrib);
 		}
 	}
 
 	for(int y = 0; y < og_rows; y++) {
 		for(int x = 0; x < og_cols; x++) {
-			terminal_buffer_write(x, y, temp[y * og_cols + x]);
+			terminal_write(x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
 		}
 	}
 
