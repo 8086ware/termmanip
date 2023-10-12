@@ -1,7 +1,23 @@
 #include "termmanip.h"
 #include "terminal.h"
 
-void terminal_output_write(int x, int y, char ch, uint32_t attrib) {
+void terminal_write(int x, int y, char ch, uint32_t attrib) {
+	int position = y * terminal->columns + x;
+
+	if(position > terminal->columns * terminal->rows - 1 || position < 0) {
+		return;
+	}
+
+	y = position / terminal->columns;
+	x = position % terminal->columns;
+
+	if(ch == terminal->buffer[position].disp || attrib == terminal->buffer[position].attrib) {
+		return;
+	}
+
+	terminal->buffer[position].disp = ch;
+	terminal->buffer[position].disp = attrib;
+
 	if(terminal->attrib != attrib) {
 		if(attrib & TM_ATTRIB_ALTERNATE && (terminal->attrib & TM_ATTRIB_ALTERNATE) == 0) {
 			terminal_append_output("\x1b(0");
