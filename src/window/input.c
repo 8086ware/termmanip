@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include "terminal.h"
 #include <ctype.h>
+#include "process_esc_input.h"
 
 #ifdef _WIN32
 #include <windows.h>

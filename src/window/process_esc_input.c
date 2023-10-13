@@ -1,4 +1,4 @@
-#include "termmanip.h"
+#include "process_esc_input.h"
 #include <string.h>
 
 void process_esc_input(Tm_input* input, char* escape_input) {
