@@ -2,54 +2,80 @@
 
 int main(void) {
 	tm_init();
+	tm_dialog(0, 0, 10, 10, 0, "Test", "Testing", 2, "Ok", "No");
+	tm_input_timeout(0);
+	tm_flags(TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
+	while(1) {
+		tm_attrib(TM_ATTRIB_BG_MAGENTA, 1);
+		tm_win_border(default_win);
+		tm_cursor(1, 0);
+		tm_print("Termmanip Color Test");
+		tm_attrib(TM_ATTRIB_BG_MAGENTA, 0);
 
-	for(int i = 0; i <= 1000; i++) {
-		tm_cursor(0, 0);
-		tm_print("Loading... %d", i);
-		tm_update();
+		uint32_t color = rand() % 15;
+
+		switch(color) {
+				case 0:
+				color = TM_ATTRIB_BG_BLACK;
+				break;
+				case 1:
+				color = TM_ATTRIB_BG_RED;
+				break;
+				case 2:
+				color = TM_ATTRIB_BG_GREEN;
+				break;
+				case 3:
+				color = TM_ATTRIB_BG_YELLOW;
+				break;
+				case 4:
+				color = TM_ATTRIB_BG_BLUE;
+				break;
+				case 5:
+				color = TM_ATTRIB_BG_MAGENTA;
+				break;
+				case 6:
+				color = TM_ATTRIB_BG_CYAN;
+				break;
+				case 7:
+				color = TM_ATTRIB_BG_WHITE;
+				break;
+				case 8:
+				color = TM_ATTRIB_BG_BRIGHTBLACK;
+				break;
+				case 9:
+				color = TM_ATTRIB_BG_BRIGHTRED;
+				break;
+				case 10:
+				color = TM_ATTRIB_BG_BRIGHTGREEN;
+				break;
+				case 11:
+				color = TM_ATTRIB_BG_BRIGHTYELLOW;
+				break;
+				case 12:
+				color = TM_ATTRIB_BG_BRIGHTBLUE;
+				break;
+				case 13:
+				color = TM_ATTRIB_BG_BRIGHTMAGENTA;
+				break;
+				case 14:
+				color = TM_ATTRIB_BG_BRIGHTCYAN;
+				break;
+				case 15:
+				color = TM_ATTRIB_BG_BRIGHTWHITE;
+				break;
+		}
+
+		int scr_x, scr_y;
+		tm_get_scrsize(&scr_x, &scr_y);
+		
+		tm_fill(rand() % scr_x, rand() % scr_y, rand() % scr_x, rand() % scr_y, ' ', color);
+
+		Tm_input input = tm_input();
+		if(input.terminal_resized) {
+			tm_get_scrsize(&scr_x, &scr_y);
+			tm_win_modify(default_win, 0, 0, scr_x, scr_y);
+		}
 	}
 
-	tm_cursor(10, 10);
-	tm_print("Done!");
-	tm_update();
-	sleep(2);
-
-	tm_clear();
-	tm_print("Hello World");
-	tm_clear();
-	tm_print("Hello... World?");
-	tm_fill(10, 10, 20, 20, 't', TM_ATTRIB_BG_BLUE);
-	tm_update();
-	char buffer[1024];
-	Tm_window* win = tm_window(40, 20, 10, 10);
-	tm_win_border(win);
-	tm_win_input_str(win, buffer, 1024);
-
-	tm_attrib(TM_ATTRIB_BG_RED, 1);
-	int scr_x, scr_y;
-	tm_get_scrsize(&scr_x, &scr_y);
-
-	int i = 0;
-
-	while(i != 1000) {
-		tm_cursor(rand() % scr_x, rand() % scr_y);
-		tm_print("ERROR");
-		tm_update();
-		i++;
-	}
-
-	tm_attrib(TM_ATTRIB_BG_YELLOW, 1);
-	tm_clear();
-	tm_update();
-
-	sleep(3);
-
-	tm_print("Welcome to termmanip. Enjoy your tui!");
-	tm_update();
-
-	tm_button(10, 10, 10, 10, "Of course");
-	tm_button(0, 5, 10, 10, "Heck No");
-
-	tm_button_select();
 	tm_exit();
 }
