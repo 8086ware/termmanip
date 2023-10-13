@@ -14,6 +14,9 @@
 void tm_terminal_update() {
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
 		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
+
+		terminal->last_updated_x = terminal->cursor_x - 1;
+		terminal->last_updated_y = terminal->cursor_y;
 	}
 
 	write(fileno(stdout), terminal->output, terminal->output_len);
