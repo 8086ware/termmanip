@@ -24,12 +24,12 @@ int terminal_resize() {
 		for(int x = 0; x < terminal->columns; x++) {
 			Tm_char ch = {0, ' '};
 
-			terminal->buffer[y * terminal->columns + x].disp = 0;
+			terminal->buffer[y * terminal->columns + x].disp = ' ';
 			terminal->buffer[y * terminal->columns + x].attrib = 0;
-
-			terminal_write(x, y, ch.disp, ch.attrib);
 		}
 	}
+	
+	terminal_append_output("\x1b[2J");
 
 	for(int y = 0; y < og_rows; y++) {
 		for(int x = 0; x < og_cols; x++) {
