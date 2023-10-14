@@ -10,7 +10,7 @@
 void tm_set_title(char* text) {
 	char buffer[2048];
 	
-	int bytes_written = sprintf(buffer, "\x1b]0;%s", text);
+	int bytes_written = sprintf(buffer, "\x1b]0;%s\007", text);
 
 	write(fileno(stdout), buffer, bytes_written);
 }
