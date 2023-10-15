@@ -26,7 +26,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 	// Update terminal flags
 
 	if(tm_win_get_flags(win) != terminal->flags) {
-		if(tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE && terminal->flags & TM_FLAG_CURSOR_VISIBLE) {
+		if(tm_win_get_flags(win) & TM_FLAG_CURSOR_VISIBLE && (terminal->flags & TM_FLAG_CURSOR_VISIBLE) == 0) {
 			terminal_append_output("\x1b[?25h");
 		}
 
