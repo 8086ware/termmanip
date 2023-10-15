@@ -9,6 +9,7 @@
 #define TM_INVALID_WINDOW_SIZE 4
 #define TM_OUT_OF_MEM 5
 #define TM_COULDNT_INIT_TERM 6
+#define TM_TERMINAL_RESIZED 7
 
 // Child window types
 #define TM_CHILD_NONE 0
@@ -186,7 +187,7 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modif
 
 void tm_win_write_to_terminal(Tm_window* win); // Writes the window to the terminal structure but doesn't display to the actual terminal
 int tm_terminal_update(); // Puts the internal terminal onto the terminal
-void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
+int tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
 int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute
