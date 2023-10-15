@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include "terminal.h"
 #include <stdlib.h>
-#include "error.h"
+#include "return.h"
 #include <stdio.h>
 #include "signal_handler.h"
 #include <signal.h>
@@ -23,7 +23,7 @@ int terminal_init() {
 	terminal = malloc(sizeof(Tm_terminal));
 
 	if(terminal == NULL) {
-		tm_set_error(TM_OUT_OF_MEM);
+		tm_set_return(TM_OUT_OF_MEM);
 		return TM_ERROR;
 	}
 
@@ -46,7 +46,7 @@ int terminal_init() {
 	terminal->buffer = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	if(terminal->buffer == NULL) {
-		tm_set_error(TM_OUT_OF_MEM);
+		tm_set_return(TM_OUT_OF_MEM);
 		return TM_ERROR;
 	}	
 
@@ -58,7 +58,7 @@ int terminal_init() {
 	DWORD mode = 0;
 
 	if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
@@ -67,12 +67,12 @@ int terminal_init() {
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
@@ -84,7 +84,7 @@ int terminal_init() {
 	mode |= ENABLE_VIRTUAL_TERMINAL_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_ERROR_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
@@ -108,7 +108,7 @@ int terminal_init() {
 	terminal->signal_fd = signalfd(-1, &mask, 0);
 
 	if(terminal->signal_fd == -1) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 #endif
@@ -119,12 +119,12 @@ int terminal_init() {
 int terminal_free() {
 #ifdef _WIN32
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), og_input_mode) == 0) {
-		tm_set_error(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 #else

@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include "error.h"
+#include "return.h"
 
 int terminal_append_output(char* fmt, ...) {
 	va_list args;
@@ -18,7 +18,7 @@ int terminal_append_output(char* fmt, ...) {
 	terminal->output = realloc(terminal->output, terminal->output_len + len);
 
 	if(terminal->output == NULL) {
-		tm_set_error(TM_OUT_OF_MEM);
+		tm_set_return(TM_OUT_OF_MEM);
 		return TM_ERROR;
 	}
 

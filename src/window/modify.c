@@ -1,6 +1,6 @@
 #include "termmanip.h"
 #include <stdlib.h>
-#include "error.h"
+#include "return.h"
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	int scr_x, scr_y;
@@ -46,7 +46,7 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL) {
-		tm_set_error(TM_OUT_OF_MEM);
+		tm_set_return(TM_OUT_OF_MEM);
 		return TM_ERROR;
 	}
 

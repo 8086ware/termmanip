@@ -1,6 +1,6 @@
 #include "termmanip.h"
 #include <stdlib.h>
-#include "error.h"
+#include "return.h"
 
 int tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
@@ -9,7 +9,7 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 			win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
 			if(win->buffer == NULL) {
-				tm_set_error(TM_OUT_OF_MEM);
+				tm_set_return(TM_OUT_OF_MEM);
 				return TM_ERROR;
 			}
 

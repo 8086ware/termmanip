@@ -8,7 +8,7 @@
 #define TM_DIALOG_NO_OPTIONS 3
 #define TM_INVALID_WINDOW_SIZE 4
 #define TM_OUT_OF_MEM 5
-#define TM_ERROR_COULDNT_INIT_TERM 6
+#define TM_COULDNT_INIT_TERM 6
 
 // Child window types
 #define TM_CHILD_NONE 0
@@ -185,7 +185,7 @@ Tm_char tm_win_get_background(Tm_window* win);
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
 void tm_win_write_to_terminal(Tm_window* win); // Writes the window to the terminal structure but doesn't display to the actual terminal
-void tm_terminal_update(); // Puts the internal terminal onto the terminal
+int tm_terminal_update(); // Puts the internal terminal onto the terminal
 void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
@@ -218,7 +218,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, uint16_t 
 
 void tm_win_clear(Tm_window* win); // Clear win
 
-int tm_error(); // Return the most recent error
+int tm_return(); // Return the most recent error
 
 int tm_win_scroll(Tm_window* win, int amount, int direction);
 

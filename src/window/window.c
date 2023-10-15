@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include <stdlib.h>
 #include <stdlib.h>
-#include "error.h"
+#include "return.h"
 
 Tm_window* default_win = NULL;
 
@@ -9,7 +9,7 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
-		tm_set_error(TM_OUT_OF_MEM);
+		tm_set_return(TM_OUT_OF_MEM);
 		return NULL;
 	}
 	
@@ -69,7 +69,7 @@ int tm_win_free(Tm_window* win) {
 				win->parent->children_amount--;
 
 				if(win->parent->children == NULL && win->parent->children_amount != 0) {
-					tm_set_error(TM_OUT_OF_MEM);
+					tm_set_return(TM_OUT_OF_MEM);
 					return TM_ERROR;
 				}	
 			}
