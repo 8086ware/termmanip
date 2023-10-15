@@ -14,7 +14,7 @@
 #endif
 
 int tm_exit() {
-	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l";
+	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l\x1b[?1003l\x1b[?1006l";
 
 	write(fileno(stdout), exit, strlen(exit));
 
