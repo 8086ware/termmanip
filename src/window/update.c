@@ -34,6 +34,14 @@ void tm_win_write_to_terminal(Tm_window* win) {
 			terminal_append_output("\x1b[?25l");
 		}
 
+		if(tm_win_get_flags(win) & TM_FLAG_MOUSE_INPUT && (terminal->flags & TM_FLAG_MOUSE_INPUT) == 0) {
+			terminal_append_output("\x1b[?1003h\x1b[?1006h");
+		}
+
+		else if((tm_win_get_flags(win) & TM_FLAG_MOUSE_INPUT) == 0 && terminal->flags & TM_FLAG_MOUSE_INPUT) {
+			terminal_append_output("\x1b[?1003l\x1b[?1006l");
+		}
+
 		if(tm_win_get_flags(win) & TM_FLAG_SHADOW) {
 			for(int y = 1; y < tm_win_get_rows(win); y++) {
 				Tm_char ch;
