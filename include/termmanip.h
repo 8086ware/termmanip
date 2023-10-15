@@ -105,6 +105,18 @@ typedef struct {
 	_Bool terminal_resized;
 
 	Tmkey_T key;
+
+	_Bool mouse_moved;
+
+	_Bool mouse_left;
+	_Bool mouse_right;
+	_Bool mouse_middle;
+
+	_Bool mouse_down;
+	_Bool mouse_up;
+
+	int mouse_x;
+	int mouse_y;
 } Tm_input;
 
 typedef struct {
