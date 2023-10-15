@@ -84,7 +84,7 @@ int terminal_init() {
 	mode |= ENABLE_VIRTUAL_TERMINAL_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		tm_set_return(TM_ERROR_COULDNT_INIT_TERM);
+		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
