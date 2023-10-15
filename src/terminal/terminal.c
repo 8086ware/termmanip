@@ -82,6 +82,9 @@ int terminal_init() {
 	mode &= ~ENABLE_LINE_INPUT;
 
 	mode |= ENABLE_VIRTUAL_TERMINAL_INPUT;
+	mode |= ENABLE_MOUSE_INPUT;
+	mode |= ENABLE_EXTENDED_FLAGS;
+	mode |= ENABLE_WINDOW_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
