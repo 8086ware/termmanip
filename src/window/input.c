@@ -15,107 +15,116 @@
 
 Tm_input tm_win_input(Tm_window* win) {
 	Tm_input input = {0};
+	_Bool read_input = 0;
 
-	tm_win_update(win);
+	int win_update_ret = tm_win_update(win);
+
+	if(win_update_ret) {
+		if(tm_return() == TM_TERMINAL_RESIZED) {
+			input.terminal_resized = 1;
+			read_input = 1;
+		}
+	}
 
 	char escape_input[20];
 	int escape_s_amount = 0;
 
+	if(!read_input) {
 #ifdef _WIN32
-	_Bool read_input = 0;
-	do {
-		INPUT_RECORD buffer;
-		if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
-			DWORD bytes_read;
-			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+		do {
+			INPUT_RECORD buffer;
+			if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
+				DWORD bytes_read;
+				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
-			if(buffer.EventType == KEY_EVENT) {
-				if(buffer.Event.KeyEvent.bKeyDown) {
-					input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
+				if(buffer.EventType == KEY_EVENT) {
+					if(buffer.Event.KeyEvent.bKeyDown) {
+						input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
 
-					if(input.key == TM_KEY_ESC) {
-						do {
-							PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+						if(input.key == TM_KEY_ESC) {
+							do {
+								PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
-							if(bytes_read > 0) {
-								ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-								if(buffer.Event.KeyEvent.bKeyDown) {
-									escape_input[escape_s_amount] = buffer.Event.KeyEvent.uChar.AsciiChar;
-									escape_s_amount++;
+								if(bytes_read > 0) {
+									ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+									if(buffer.Event.KeyEvent.bKeyDown) {
+										escape_input[escape_s_amount] = buffer.Event.KeyEvent.uChar.AsciiChar;
+										escape_s_amount++;
+									}
 								}
-							}
-						} while(bytes_read > 0);
+							} while(bytes_read > 0);
 
-						escape_input[escape_s_amount] = '\0';
+							escape_input[escape_s_amount] = '\0';
 
-						process_esc_input(&input, escape_input);
+							process_esc_input(&input, escape_input);
+						}
+
+						if(input.key < 32 && input.key < 7 && input.key > 14) {
+							input.key += 64;
+							input.ctrl_down = 1;
+						}
+
+						read_input = 1;
 					}
 
-					if(input.key < 32 && input.key < 7 && input.key > 14) {
-						input.key += 64;
-						input.ctrl_down = 1;
-					}
+				}
 
+				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+					terminal_resize();
+					input.terminal_resized = 1;
 					read_input = 1;
 				}
-
 			}
 
-			else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-				terminal_resize();
-				input.terminal_resized = 1;
+			else {
 				read_input = 1;
 			}
-		}
 
-		else {
-			read_input = 1;
-		}
-
-	} while(!read_input);
+		} while(!read_input);
 #else
-	struct pollfd s_poll[2];
-	s_poll[0].fd = fileno(stdin);
-	s_poll[0].events = POLLIN;
-	s_poll[0].revents = 0;
+		struct pollfd s_poll[2];
+		s_poll[0].fd = fileno(stdin);
+		s_poll[0].events = POLLIN;
+		s_poll[0].revents = 0;
 
-	s_poll[1].fd = terminal->signal_fd;
-	s_poll[1].events = POLLIN;
-	s_poll[1].revents = 0;
+		s_poll[1].fd = terminal->signal_fd;
+		s_poll[1].events = POLLIN;
+		s_poll[1].revents = 0;
 
-	poll(s_poll, 2, win->input_timeout);
+		poll(s_poll, 2, win->input_timeout);
 
-	if(s_poll[0].revents & POLLIN) {
-		read(fileno(stdin), &input.key, 1);
+		if(s_poll[0].revents & POLLIN) {
+			read(fileno(stdin), &input.key, 1);
 
-		if(input.key == TM_KEY_ESC) {
-			do {	
-				poll(s_poll, 1, 0);
+			if(input.key == TM_KEY_ESC) {
+				do {	
+					poll(s_poll, 1, 0);
 
-				if(s_poll[0].revents & POLLIN) {
-					read(fileno(stdin), &escape_input[escape_s_amount], 1);
-					escape_s_amount++;
-				}
-			} while(s_poll[0].revents & POLLIN);
+					if(s_poll[0].revents & POLLIN) {
+						read(fileno(stdin), &escape_input[escape_s_amount], 1);
+						escape_s_amount++;
+					}
+				} while(s_poll[0].revents & POLLIN);
 
-			escape_input[escape_s_amount] = '\0';
+				escape_input[escape_s_amount] = '\0';
 
-			process_esc_input(&input, escape_input);
+				process_esc_input(&input, escape_input);
+			}
+
+			if(input.key < 32 && input.key < 7 && input.key > 14) {
+				input.key += 64;
+				input.ctrl_down = 1;
+			}
 		}
 
-		if(input.key < 32 && input.key < 7 && input.key > 14) {
-			input.key += 64;
-			input.ctrl_down = 1;
+		else if(s_poll[1].revents & POLLIN) {
+			char buf[1024];
+			read(terminal->signal_fd, &buf, 1024);
+			terminal_resize();
+			input.terminal_resized = 1;
 		}
-	}
-
-	else if(s_poll[1].revents & POLLIN) {
-		char buf[1024];
-		read(terminal->signal_fd, &buf, 1024);
-		terminal_resize();
-		input.terminal_resized = 1;
-	}
 #endif
+	}
 
 	if(input.key >= 32 && input.key <= 127) {
 		if(win->flags & TM_FLAG_ECHO) {
