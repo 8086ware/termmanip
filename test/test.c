@@ -2,8 +2,8 @@
 
 int main(void) {
 	tm_init();
-	tm_dialog(0, 0, 10, 10, 0, "Test", "Testing", 2, "Ok", "No");
-	tm_input_timeout(0);
+	tm_set_title("Termmanip Test");
+	tm_dialog(0, 0, 50, 20, 0, "Test", "Testing", 2, "Ok", "No");
 	tm_flags(TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
 	while(1) {
 		tm_attrib(TM_ATTRIB_BG_MAGENTA, 1);
@@ -70,10 +70,11 @@ int main(void) {
 		
 		tm_fill(rand() % scr_x, rand() % scr_y, rand() % scr_x, rand() % scr_y, ' ', color);
 
-		Tm_input input = tm_input();
-		if(input.terminal_resized) {
-			tm_get_scrsize(&scr_x, &scr_y);
-			tm_win_modify(default_win, 0, 0, scr_x, scr_y);
+		if(tm_update()) {
+			if(tm_return() == TM_TERMINAL_RESIZED) {
+				tm_get_scrsize(&scr_x, &scr_y);
+				tm_win_modify(default_win, 0, 0, scr_x, scr_y);
+			}
 		}
 	}
 
