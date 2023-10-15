@@ -2,6 +2,7 @@
 #include "terminal.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "return.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -11,7 +12,7 @@
 #include <unistd.h>
 #endif
 
-void tm_terminal_update() {
+int tm_terminal_update() {
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
 		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 
@@ -38,6 +39,8 @@ void tm_terminal_update() {
 
 		if(input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 			terminal_resize();
+			tm_set_return(TM_TERMINAL_RESIZED);
+			return 1;
 		}
 	}
 #else
@@ -51,7 +54,10 @@ void tm_terminal_update() {
 		char buf[1024];
 		read(terminal->signal_fd, &buf, 1024);
 		terminal_resize();
+		tm_set_return(TM_TERMINAL_RESIZED);
+		return 1;
 	}
 #endif
+	return 0;
 }
 
