@@ -1,5 +1,6 @@
 #include "process_esc_input.h"
 #include <string.h>
+#include <stdio.h>
 
 void process_esc_input(Tm_input* input, char* escape_input) {
 	if(strcmp(escape_input, "[A") == 0) {
