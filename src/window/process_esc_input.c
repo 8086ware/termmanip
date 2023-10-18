@@ -150,25 +150,29 @@ void process_esc_input(Tm_input* input, char* escape_input) {
 			input->mouse_right = 1;
 		}
 
+		if(mouse_type == 64 || mouse_type == 72 || mouse_type == 80 || mouse_type == 88) {
+			input->scroll_up = 1;
 		}
 
-		if(mouse_type == 16 || mouse_type == 17 || mouse_type == 18 || mouse_type == 48 || mouse_type == 49 || mouse_type == 50 || mouse_type == 51) {
+		if(mouse_type == 65 || mouse_type == 73 || mouse_type == 81 || mouse_type == 89) {
+			input->scroll_down = 1;
+		}
+
+		if(mouse_type == 16 || mouse_type == 17 || mouse_type == 18 || mouse_type == 48 || mouse_type == 49 || mouse_type == 50 || mouse_type == 51 || mouse_type == 80 || mouse_type == 81) {
 			input->ctrl_down = 1;
 		}
 
-		if(mouse_type == 8 || mouse_type == 9 || mouse_type == 10 || mouse_type == 40 || mouse_type == 41 || mouse_type == 42 || mouse_type == 43) {
+		if(mouse_type == 8 || mouse_type == 9 || mouse_type == 10 || mouse_type == 40 || mouse_type == 41 || mouse_type == 42 || mouse_type == 43 || mouse_type == 72 || mouse_type == 73) {
 			input->alt_down = 1;
 		}
 
-		if(mouse_type == 24 || mouse_type == 25 || mouse_type == 26 || mouse_type == 56 || mouse_type == 57 || mouse_type == 58 || mouse_type == 59) {
+		if(mouse_type == 24 || mouse_type == 25 || mouse_type == 26 || mouse_type == 56 || mouse_type == 57 || mouse_type == 58 || mouse_type == 59 || mouse_type == 88 || mouse_type == 89) {
 			input->ctrl_down = 1;
 			input->alt_down = 1;
 		}
 
 		input->mouse_x = x;
 		input->mouse_y = y;
-		
-		input->key = 0;
 	}
 
 	else {
