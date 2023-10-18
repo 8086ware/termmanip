@@ -147,7 +147,9 @@ void process_esc_input(Tm_input* input, char* escape_input) {
 		}
 
 		if(mouse_type == 2 || mouse_type == 34 || mouse_type == 10 || mouse_type == 42 || mouse_type == 18 || mouse_type == 50 || mouse_type == 26 || mouse_type == 58) {
-			input->mouse_middle = 1;
+			input->mouse_right = 1;
+		}
+
 		}
 
 		if(mouse_type == 16 || mouse_type == 17 || mouse_type == 18 || mouse_type == 48 || mouse_type == 49 || mouse_type == 50 || mouse_type == 51) {

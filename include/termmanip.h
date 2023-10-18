@@ -104,6 +104,7 @@ typedef struct {
 
 	_Bool terminal_resized;
 
+	Tmkey_T ctrl_character;
 	Tmkey_T key;
 
 	_Bool mouse_moved;
