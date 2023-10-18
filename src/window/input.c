@@ -62,7 +62,8 @@ Tm_input tm_win_input(Tm_window* win) {
 							process_esc_input(&input, escape_input);
 						}
 
-						if(input.key < 32 && input.key < 7 && input.key > 14) {
+						if(input.key < 32 && input.key >= 0) {
+							input.ctrl_character = input.key;
 							input.key += 64;
 							input.ctrl_down = 1;
 						}
