@@ -58,6 +58,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 							escape_input[escape_s_amount] = '\0';
 
+							input.key = -1;
 							process_esc_input(&input, escape_input);
 						}
 
