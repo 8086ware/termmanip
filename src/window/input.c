@@ -130,7 +130,7 @@ Tm_input tm_win_input(Tm_window* win) {
 #endif
 	}
 
-	if(input.key >= 32 && input.key <= 127) {
+	if(input.key != -1) {
 		if(win->flags & TM_FLAG_ECHO) {
 			if(tm_win_print(win, "%c", input.key) == TM_ERROR) {
 				return input;
