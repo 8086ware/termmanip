@@ -15,6 +15,8 @@
 
 Tm_input tm_win_input(Tm_window* win) {
 	Tm_input input = {0};
+	input.key = -1;
+
 	_Bool read_input = 0;
 
 	int win_update_ret = tm_win_update(win);
