@@ -65,6 +65,7 @@ Tm_input tm_win_input(Tm_window* win) {
 			terminal_resize();
 			input.terminal_resized = 1;
 		}
+	}
 #endif
 
 	if(input.key < 32 && input.key >= 0) {
