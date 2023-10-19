@@ -55,16 +55,8 @@ Tm_input tm_win_input(Tm_window* win) {
 				} while(bytes_read > 0);
 
 				escape_input[escape_s_amount] = '\0';
-				
 				input.key = TM_KEY_NONE;
 				process_esc_input(&input, escape_input);
-			}
-
-
-			if(input.key < 32 && input.key >= 0) {
-				input.ctrl_character = input.key;
-				input.key += 64;
-				input.ctrl_down = 1;
 			}
 		}
 
@@ -74,6 +66,11 @@ Tm_input tm_win_input(Tm_window* win) {
 			input.terminal_resized = 1;
 		}
 #endif
+
+	if(input.key < 32 && input.key >= 0) {
+		input.ctrl_character = input.key;
+		input.key += 64;
+		input.ctrl_down = 1;
 	}
 
 	if(input.key != -1) {
