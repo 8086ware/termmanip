@@ -24,11 +24,11 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	}
 
 	if(x + columns > scr_x) {
-		columns -= scr_x - x;
+		columns -= scr_x - (x + columns);
 	}
 
 	if(y + rows > scr_y) {
-		rows -= scr_y - y;
+		rows -= scr_y - (y + rows);
 	}
 
 	win->position_x = x;
