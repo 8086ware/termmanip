@@ -15,8 +15,8 @@
 
 Tm_input tm_win_input(Tm_window* win) {
 	Tm_input input = {0};
-	input.key = -1;
-
+	
+	input.key = TM_KEY_NONE;
 	_Bool read_input = 0;
 
 	int win_update_ret = tm_win_update(win);
@@ -57,8 +57,7 @@ Tm_input tm_win_input(Tm_window* win) {
 							} while(bytes_read > 0);
 
 							escape_input[escape_s_amount] = '\0';
-
-							input.key = -1;
+							input.key = TM_KEY_NONE;
 							process_esc_input(&input, escape_input);
 						}
 
@@ -101,7 +100,7 @@ Tm_input tm_win_input(Tm_window* win) {
 			read(fileno(stdin), &input.key, 1);
 
 			if(input.key == TM_KEY_ESC) {
-				do {	
+				do {
 					poll(s_poll, 1, 0);
 
 					if(s_poll[0].revents & POLLIN) {
@@ -111,11 +110,14 @@ Tm_input tm_win_input(Tm_window* win) {
 				} while(s_poll[0].revents & POLLIN);
 
 				escape_input[escape_s_amount] = '\0';
-
+				
+				input.key = TM_KEY_NONE;
 				process_esc_input(&input, escape_input);
 			}
 
-			if(input.key < 32 && input.key < 7 && input.key > 14) {
+
+			if(input.key < 32 && input.key >= 0) {
+				input.ctrl_character = input.key;
 				input.key += 64;
 				input.ctrl_down = 1;
 			}
