@@ -31,83 +31,28 @@ Tm_input tm_win_input(Tm_window* win) {
 	char escape_input[20];
 	int escape_s_amount = 0;
 
-	if(!read_input) {
 #ifdef _WIN32
-		do {
-			INPUT_RECORD buffer;
-			if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
-				DWORD bytes_read;
-				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+	INPUT_RECORD buffer;
+	if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
+		DWORD bytes_read;
+		PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
-				if(buffer.EventType == KEY_EVENT) {
-					if(buffer.Event.KeyEvent.bKeyDown) {
-						input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
-
-						if(input.key == TM_KEY_ESC) {
-							do {
-								PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-
-								if(bytes_read > 0) {
-									ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-									if(buffer.Event.KeyEvent.bKeyDown) {
-										escape_input[escape_s_amount] = buffer.Event.KeyEvent.uChar.AsciiChar;
-										escape_s_amount++;
-									}
-								}
-							} while(bytes_read > 0);
-
-							escape_input[escape_s_amount] = '\0';
-							input.key = TM_KEY_NONE;
-							process_esc_input(&input, escape_input);
-						}
-
-						if(input.key < 32 && input.key >= 0) {
-							input.ctrl_character = input.key;
-							input.key += 64;
-							input.ctrl_down = 1;
-						}
-
-						read_input = 1;
-					}
-
-				}
-
-				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-					terminal_resize();
-					input.terminal_resized = 1;
-					read_input = 1;
-				}
-			}
-
-			else {
-				read_input = 1;
-			}
-
-		} while(!read_input);
-#else
-		struct pollfd s_poll[2];
-		s_poll[0].fd = fileno(stdin);
-		s_poll[0].events = POLLIN;
-		s_poll[0].revents = 0;
-
-		s_poll[1].fd = terminal->signal_fd;
-		s_poll[1].events = POLLIN;
-		s_poll[1].revents = 0;
-
-		poll(s_poll, 2, win->input_timeout);
-
-		if(s_poll[0].revents & POLLIN) {
-			read(fileno(stdin), &input.key, 1);
+		if(buffer.EventType == KEY_EVENT) {
+			ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &input.key, 1, &bytes_read, NULL);
 
 			if(input.key == TM_KEY_ESC) {
 				do {
-					poll(s_poll, 1, 0);
+					PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
-					if(s_poll[0].revents & POLLIN) {
-						read(fileno(stdin), &escape_input[escape_s_amount], 1);
+					if(buffer.EventType == KEY_EVENT && bytes_read > 0) {
+						ReadConsole(GetStdHandle(STD_INPUT_HANDLE), &escape_input[escape_s_amount], 1, &bytes_read, NULL);
 						escape_s_amount++;
 					}
-				} while(s_poll[0].revents & POLLIN);
+
+					else if(bytes_read > 0) {
+						ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+					}
+				} while(bytes_read > 0);
 
 				escape_input[escape_s_amount] = '\0';
 				
@@ -123,9 +68,8 @@ Tm_input tm_win_input(Tm_window* win) {
 			}
 		}
 
-		else if(s_poll[1].revents & POLLIN) {
-			char buf[1024];
-			read(terminal->signal_fd, &buf, 1024);
+		else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+			ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 			terminal_resize();
 			input.terminal_resized = 1;
 		}
