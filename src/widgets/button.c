@@ -46,18 +46,22 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 	}
 
 	int option = 0;
+
 	Tm_input input = {0};
+	Tmkey_T key;
 	Tmkey_T c = 0;
 
 	Tm_char original_background = tm_win_get_background(win);
 
 	while(1) {
-		c = input.key;
-		if(c == TM_KEY_RIGHT) {
+		key = input.key;
+		c = input.ctrl_character;
+
+		if(key == TM_KEY_RIGHT) {
 			option++;
 		}
 
-		else if(c == TM_KEY_LEFT) {
+		else if(key == TM_KEY_LEFT) {
 			option--;
 		}
 
