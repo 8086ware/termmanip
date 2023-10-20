@@ -61,12 +61,6 @@ Tm_input tm_win_input(Tm_window* win) {
 							process_esc_input(&input, escape_input);
 						}
 
-						if(input.key < 32 && input.key >= 0) {
-							input.ctrl_character = input.key;
-							input.key += 64;
-							input.ctrl_down = 1;
-						}
-
 						read_input = 1;
 					}
 
@@ -121,8 +115,8 @@ Tm_input tm_win_input(Tm_window* win) {
 			terminal_resize();
 			input.terminal_resized = 1;
 		}
-	}
 #endif
+	}
 
 	if(input.key < 32 && input.key >= 0) {
 		input.ctrl_character = input.key;
