@@ -27,9 +27,6 @@ int tm_init() {
 		return TM_ERROR;
 	}
 
-	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
-
-	write(fileno(stdout), init, strlen(init));
 
 	return 0;
 }
