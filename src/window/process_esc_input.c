@@ -3,6 +3,15 @@
 #include <stdio.h>
 
 void process_esc_input(Tm_input* input, char* escape_input) {
+	int len = strlen(escape_input);
+		
+	for(int i = 0; i < len; i++) {
+		if(escape_input[i] == '\x1b') {
+			escape_input[i] = '\0';
+			break;
+		}
+	}
+
 	if(strcmp(escape_input, "[A") == 0) {
 		input->key = TM_KEY_UP;
 	}
