@@ -34,7 +34,7 @@ int tm_terminal_update() {
 	DWORD bytes_read;
 	PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
 
-	if(bytes_read > 0) {
+	if(bytes_read > 0 && input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
 
 		if(input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
