@@ -121,16 +121,14 @@ void process_esc_input(Tm_input* input, char* escape_input) {
 		input->key = TM_KEY_LEFT;
 	}
 	
-	else if(*escape_input == '[' && *(escape_input + 1) == '<') {
-		escape_input += 2;
-		
+	else if(escape_input[0] == '[' && escape_input[1] == '<') {
 		int mouse_type = 0;
 		int x = 0;
 		int y = 0;
 		
 		char up_or_down = 0;
 
-		sscanf(escape_input, "%d;%d;%d%c", &mouse_type, &x, &y, &up_or_down);
+		sscanf(escape_input, "[<%d;%d;%d%c", &mouse_type, &x, &y, &up_or_down);
 	
 		x--;
 		y--;
