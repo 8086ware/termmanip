@@ -26,9 +26,6 @@ int tm_terminal_update() {
 	terminal->output_len = 0;
 	terminal->output = NULL;
 
-	int scr_x, scr_y;
-	tm_get_scrsize(&scr_x, &scr_y);
-
 #ifdef _WIN32
 	INPUT_RECORD input;
 	DWORD bytes_read;
