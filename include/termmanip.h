@@ -9,7 +9,6 @@
 #define TM_INVALID_WINDOW_SIZE 4
 #define TM_OUT_OF_MEM 5
 #define TM_COULDNT_INIT_TERM 6
-#define TM_TERMINAL_RESIZED 7
 
 // Child window types
 #define TM_CHILD_NONE 0
