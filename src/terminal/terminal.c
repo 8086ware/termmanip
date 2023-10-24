@@ -43,6 +43,8 @@ int terminal_init() {
 
 	terminal->flags = TM_FLAG_CURSOR_VISIBLE | TM_FLAG_ECHO;
 
+	terminal->resized = 0;
+
 	terminal->buffer = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	if(terminal->buffer == NULL) {
