@@ -82,7 +82,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 	}
 }
 
-int tm_win_update(Tm_window* win) {
+void tm_win_update(Tm_window* win) {
 	tm_win_write_to_terminal(win);
-	return tm_terminal_update();
+	tm_terminal_update();
 }

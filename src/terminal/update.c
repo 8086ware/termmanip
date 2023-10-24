@@ -12,7 +12,7 @@
 #include <unistd.h>
 #endif
 
-int tm_terminal_update() {
+void tm_terminal_update() {
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
 		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 
@@ -33,12 +33,8 @@ int tm_terminal_update() {
 
 	if(bytes_read > 0 && input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
-
-		if(input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-			terminal_resize();
-			tm_set_return(TM_TERMINAL_RESIZED);
-			return 1;
-		}
+		terminal_resize();
+		terminal->resized = 1;
 	}
 #else
 	struct pollfd signal_poll;
@@ -51,10 +47,8 @@ int tm_terminal_update() {
 		char buf[1024];
 		read(terminal->signal_fd, &buf, 1024);
 		terminal_resize();
-		tm_set_return(TM_TERMINAL_RESIZED);
-		return 1;
+		terminal->resized = 1;
 	}
 #endif
-	return 0;
 }
 

@@ -204,8 +204,8 @@ Tm_char tm_win_get_background(Tm_window* win);
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows); // Modifies a windows x, y, columns and rows
 
 void tm_win_write_to_terminal(Tm_window* win); // Writes the window to the terminal structure but doesn't display to the actual terminal
-int tm_terminal_update(); // Puts the internal terminal onto the terminal
-int tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
+void tm_terminal_update(); // Puts the internal terminal onto the terminal
+void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
 int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute
