@@ -18,14 +18,13 @@ Tm_input tm_win_input(Tm_window* win) {
 	
 	input.key = TM_KEY_NONE;
 	_Bool read_input = 0;
+	
+	tm_win_update(win);
 
-	int win_update_ret = tm_win_update(win);
-
-	if(win_update_ret) {
-		if(tm_return() == TM_TERMINAL_RESIZED) {
-			input.terminal_resized = 1;
-			read_input = 1;
-		}
+	if(terminal->resized) {
+		input.terminal_resized = 1;
+		read_input = 1;
+		terminal->resized = 0;
 	}
 
 	char escape_input[20];
