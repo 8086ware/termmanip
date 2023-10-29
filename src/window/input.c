@@ -144,7 +144,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 void tm_win_input_str(Tm_window* win, char* str, int max_size) { 
 	int i = 0;
-	Tmkey_T ch = 0;
+	Tm_input t = {0};
 
 	int og_flags = tm_win_get_flags(win);
 
@@ -152,14 +152,14 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 	tm_win_flags(win, TM_FLAG_ECHO, 0);
 
 	while(1) {
-		ch = tm_win_input(win).key;
+		t = tm_win_input(win);
 
-		if(ch <= 127) {
-			if(ch == '\n' || ch == '\r') {
+		if(t.key <= 127) {
+			if(t.ctrl_character == '\n' || t.ctrl_character == '\r') {
 				break;
 			}
 
-			if(ch == '\177' || ch == '\b') {
+			if(t.ctrl_character == '\177' || t.ctrl_character == '\b') {
 				if(i > 0) {
 					str[i] = '\0';
 					i--;
@@ -183,9 +183,9 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 
 
 
-			if(tm_win_print(win, "%c", ch) != TM_ERROR) {
+			if(tm_win_print(win, "%c", t.key) != TM_ERROR) {
 				if(i <= max_size) {
-					str[i] = ch;
+					str[i] = t.key;
 					i++;
 				}
 
