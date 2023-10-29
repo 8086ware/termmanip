@@ -117,9 +117,15 @@ Tm_input tm_win_input(Tm_window* win) {
 #endif
 	}
 
-	if(input.key < 32 && input.key >= 0) {
+	if((input.key < 32 && input.key > 0) || input.key == 127) {
 		input.ctrl_character = input.key;
+
+		if(input.key == 127) {
+			input.key = TM_KEY_QUESTION;
+		}
+
 		input.key += 64;
+
 		input.ctrl_down = 1;
 	}
 
