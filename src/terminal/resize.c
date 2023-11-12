@@ -22,8 +22,6 @@ int terminal_resize() {
 
 	for(int y = 0; y < terminal->rows; y++) {
 		for(int x = 0; x < terminal->columns; x++) {
-			Tm_char ch = {0, ' '};
-
 			terminal->buffer[y * terminal->columns + x].disp = ' ';
 			terminal->buffer[y * terminal->columns + x].attrib = 0;
 		}

@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "signal_handler.h"
 #include <signal.h>
+#include <string.h>
 
 #ifdef _WIN32
 #include <windows.h>
