@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "return.h"
 
-int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, uint16_t flags, char* title, char* message, const int option_amount, ...) {
+int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...) {
 	if(option_amount == 0) {
 		tm_set_return(TM_DIALOG_NO_OPTIONS);
 		return TM_ERROR;
@@ -13,12 +13,15 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, uint16_t 
 	int scr_x = 0, scr_y = 0;
 	tm_get_scrsize(&scr_x, &scr_y);
 
+	int columns = win->columns / 2;
+	int rows = win->rows / 2;
+
+	int x = win->columns / 2 - columns / 2;
+	int y = win->rows / 2 - rows / 2;
+
 	Tm_window* dialog = tm_window(x, y, columns, rows);
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
-
-	tm_win_flags(dialog, TM_FLAG_ALL, 0);
-	tm_win_flags(dialog, flags, 1);
 
 	tm_win_border(dialog);
 
@@ -44,7 +47,7 @@ int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, uint16_t 
 	int option_y = dialog->rows / 2;
 
 	int option_columns = (columns - option_amount - 3) / option_amount;
- 	int option_rows = rows / 3;
+ 	int option_rows = 3;
 
 	Tm_window** buttons = malloc(sizeof(Tm_window*) * option_amount);
 

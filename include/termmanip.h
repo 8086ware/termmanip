@@ -233,7 +233,7 @@ void tm_win_input_strf(Tm_window* win, char* str, ...);
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text); // Put a button in the window
 Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
 
-int tm_win_dialog(Tm_window* win, int x, int y, int columns, int rows, uint16_t flags, char* title, char* message, const int option_amount, ...); // Make a new dialog in win
+int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...); // Make a new dialog in win
 
 void tm_win_clear(Tm_window* win); // Clear win
 
@@ -258,7 +258,7 @@ void tm_win_input_timeout(Tm_window* win, int timeout);
 #define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
 #define tm_input() tm_win_input(default_win)
 #define tm_input_strf(str, ...) tm_win_input_strf(default_win, str, ## __VA_ARGS__)
-#define tm_dialog(x, y, columns, rows, flags, title, message, option_amount, ...) tm_win_dialog(default_win, x, y, columns, rows, flags, title, message, option_amount, ## __VA_ARGS__)
+#define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
 #define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
 #define tm_button_select() tm_win_button_select(default_win);
 #define tm_clear() tm_win_clear(default_win)
