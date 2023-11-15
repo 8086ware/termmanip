@@ -15,15 +15,18 @@
 
 Tm_input tm_win_input(Tm_window* win) {
 	Tm_input input = {0};
-	
+
 	input.key = TM_KEY_NONE;
 	_Bool read_input = 0;
-	
+
 	tm_win_update(win);
 
 	if(terminal->resized) {
-		input.terminal_resized = 1;
-		read_input = 1;
+		if(win->flags & TM_FLAG_TERMINAL_INPUT) {
+			input.terminal_resized = 1;
+			read_input = 1;
+		}
+
 		terminal->resized = 0;
 	}
 
@@ -60,15 +63,20 @@ Tm_input tm_win_input(Tm_window* win) {
 							process_esc_input(&input, escape_input);
 						}
 
-						read_input = 1;
+
+						if(input.key != 0) {
+							read_input = 1;
+						}
 					}
 
 				}
 
 				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 					terminal_resize();
-					input.terminal_resized = 1;
-					read_input = 1;
+					if(win->flags & TM_FLAG_TERMINAL_INPUT) {
+						input.terminal_resized = 1;
+						read_input = 1;
+					}
 				}
 			}
 
@@ -108,12 +116,15 @@ Tm_input tm_win_input(Tm_window* win) {
 			}
 		}
 
-		else if(s_poll[1].revents & POLLIN) {
-			char buf[1024];
-			read(terminal->signal_fd, &buf, 1024);
-			terminal_resize();
-			input.terminal_resized = 1;
-		}
+			else if(s_poll[1].revents & POLLIN) {
+				char buf[1024];
+				read(terminal->signal_fd, &buf, 1024);
+				terminal_resize();
+				if(win->flags & TM_FLAG_TERMINAL_INPUT) {
+					input.terminal_resized = 1;
+					read_input = 1;
+				}
+			}
 #endif
 	}
 
