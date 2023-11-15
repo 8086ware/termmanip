@@ -4,6 +4,7 @@
 #include "terminal.h"
 #include <ctype.h>
 #include "process_esc_input.h"
+#include <time.h>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,8 +34,9 @@ Tm_input tm_win_input(Tm_window* win) {
 	char escape_input[20];
 	int escape_s_amount = 0;
 
+	int remaining_time = win->input_timeout;
+
 	if(!read_input) {
-		int remaining_time = win->input_timeout;
 		do {
 #ifdef _WIN32
 			INPUT_RECORD buffer;
@@ -115,17 +117,21 @@ Tm_input tm_win_input(Tm_window* win) {
 
 			struct timespec ts_start;
 
-			clock_gettime(CLOCK_REALTIME, &start);
+			clock_gettime(CLOCK_REALTIME, &ts_start);
 
-			poll(s_poll, 2, time_remaining);
+			poll(s_poll, 2, remaining_time);
+
+			if(s_poll[0].revents & POLLIN || s_poll[1].revents & POLLIN) {
+				struct timespec ts_elapsed;
+				clock_gettime(CLOCK_REALTIME, &ts_elapsed);
+
+				int elapsed = (ts_elapsed.tv_sec * 1000 + ts_elapsed.tv_nsec / 1000000) - (ts_start.tv_sec * 1000 + ts_start.tv_nsec / 1000000);
+
+				remaining_time -= elapsed;
+
+			}
 
 			if(s_poll[0].revents & POLLIN) {
-				struct timespec ts_elapsed;
-				clock_gettime(CLOCK_REALTIME, &elapsed);
-
-				int elapsed = (ts_elapsed.tv_sec * 1000 + ts_elapsed.tv_usec / 1000000) - (ts_start.tv_sec * 1000 + ts_start.tv_usec / 1000000);
-
-				time_remaining -= elapsed;
 				read(fileno(stdin), &input.key, 1);
 
 				if(input.key == TM_KEY_ESC) {
@@ -154,6 +160,10 @@ Tm_input tm_win_input(Tm_window* win) {
 					input.terminal_resized = 1;
 					read_input = 1;
 				}
+			}
+
+			else {
+				read_input = 1;
 			}
 #endif
 		} while(!read_input);
