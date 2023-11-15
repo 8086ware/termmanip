@@ -34,10 +34,29 @@ Tm_input tm_win_input(Tm_window* win) {
 	int escape_s_amount = 0;
 
 	if(!read_input) {
-#ifdef _WIN32
+		int remaining_time = win->input_timeout;
 		do {
+#ifdef _WIN32
 			INPUT_RECORD buffer;
-			if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), win->input_timeout) == WAIT_OBJECT_0) {
+			FILETIME start_time;
+			GetSystemTimeAsFileTime(&start_time);
+
+			if(WaitForSingleObject(GetStdHandle(STD_INPUT_HANDLE), remaining_time) == WAIT_OBJECT_0) {
+				FILETIME elapsed_time;
+				GetSystemTimeAsFileTime(&elapsed_time);
+
+				ULARGE_INTEGER start;
+
+				start.LowPart = start_time.dwLowDateTime;
+				start.HighPart = start_time.dwHighDateTime;
+
+				ULARGE_INTEGER elapsed;
+
+				elapsed.LowPart = elapsed_time.dwLowDateTime;
+				elapsed.HighPart = elapsed_time.dwHighDateTime;
+
+				remaining_time -= (elapsed.QuadPart - start.QuadPart) / 10000;
+
 				DWORD bytes_read;
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
@@ -84,37 +103,48 @@ Tm_input tm_win_input(Tm_window* win) {
 				read_input = 1;
 			}
 
-		} while(!read_input);
 #else
-		struct pollfd s_poll[2];
-		s_poll[0].fd = fileno(stdin);
-		s_poll[0].events = POLLIN;
-		s_poll[0].revents = 0;
+			struct pollfd s_poll[2];
+			s_poll[0].fd = fileno(stdin);
+			s_poll[0].events = POLLIN;
+			s_poll[0].revents = 0;
 
-		s_poll[1].fd = terminal->signal_fd;
-		s_poll[1].events = POLLIN;
-		s_poll[1].revents = 0;
+			s_poll[1].fd = terminal->signal_fd;
+			s_poll[1].events = POLLIN;
+			s_poll[1].revents = 0;
 
-		poll(s_poll, 2, win->input_timeout);
+			struct timespec ts_start;
 
-		if(s_poll[0].revents & POLLIN) {
-			read(fileno(stdin), &input.key, 1);
+			clock_gettime(CLOCK_REALTIME, &start);
 
-			if(input.key == TM_KEY_ESC) {
-				do {
-					poll(s_poll, 1, 0);
+			poll(s_poll, 2, time_remaining);
 
-					if(s_poll[0].revents & POLLIN) {
-						read(fileno(stdin), &escape_input[escape_s_amount], 1);
-						escape_s_amount++;
-					}
-				} while(s_poll[0].revents & POLLIN);
+			if(s_poll[0].revents & POLLIN) {
+				struct timespec ts_elapsed;
+				clock_gettime(CLOCK_REALTIME, &elapsed);
 
-				escape_input[escape_s_amount] = '\0';
-				input.key = TM_KEY_NONE;
-				process_esc_input(&input, escape_input);
+				int elapsed = (ts_elapsed.tv_sec * 1000 + ts_elapsed.tv_usec / 1000000) - (ts_start.tv_sec * 1000 + ts_start.tv_usec / 1000000);
+
+				time_remaining -= elapsed;
+				read(fileno(stdin), &input.key, 1);
+
+				if(input.key == TM_KEY_ESC) {
+					do {
+						poll(s_poll, 1, 0);
+
+						if(s_poll[0].revents & POLLIN) {
+							read(fileno(stdin), &escape_input[escape_s_amount], 1);
+							escape_s_amount++;
+						}
+					} while(s_poll[0].revents & POLLIN);
+
+					escape_input[escape_s_amount] = '\0';
+					input.key = TM_KEY_NONE;
+					process_esc_input(&input, escape_input);
+				}
+
+				read_input = 1;
 			}
-		}
 
 			else if(s_poll[1].revents & POLLIN) {
 				char buf[1024];
@@ -126,8 +156,8 @@ Tm_input tm_win_input(Tm_window* win) {
 				}
 			}
 #endif
+		} while(!read_input);
 	}
-
 	if((input.key < 32 && input.key > 0) || input.key == 127) {
 		input.ctrl_character = input.key;
 
