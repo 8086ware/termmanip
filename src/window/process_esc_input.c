@@ -88,6 +88,10 @@ void process_esc_input(Tm_input* input, char* escape_input) {
 		input->key = TM_KEY_INSERT;
 	}
 
+	else if(strcmp(escape_input, "[3~") == 0) {
+		input->key = TM_KEY_DELETE;
+	}
+
 	else if(strcmp(escape_input, "[5~") == 0) {
 		input->key = TM_KEY_PG_UP;
 	}
