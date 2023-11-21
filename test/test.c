@@ -3,7 +3,7 @@
 int main(void) {
 	tm_init();
 	tm_set_title("Termmanip Test");
-	tm_dialog(0, 0, 50, 20, 0, "Test", "Testing", 2, "Ok", "No");
+	tm_dialog("Test", "Testing", 2, "Ok", "No");
 	tm_flags(TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
 	tm_input_timeout(0);
 
