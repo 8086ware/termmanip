@@ -31,7 +31,7 @@ Tm_input tm_win_input(Tm_window* win) {
 		terminal->resized = 0;
 	}
 
-	char escape_input[20];
+	char escape_input[120];
 	int escape_s_amount = 0;
 
 	int remaining_time = win->input_timeout;
@@ -39,7 +39,7 @@ Tm_input tm_win_input(Tm_window* win) {
 	if(!read_input) {
 		do {
 #ifdef _WIN32
-			INPUT_RECORD buffer;
+			INPUT_RECORD buffer[128];
 			FILETIME start_time;
 			GetSystemTimeAsFileTime(&start_time);
 
@@ -60,39 +60,28 @@ Tm_input tm_win_input(Tm_window* win) {
 				remaining_time -= (elapsed.QuadPart - start.QuadPart) / 10000;
 
 				DWORD bytes_read;
-				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+				PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, 128, &bytes_read);
+				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, bytes_read, &bytes_read);
 
-				if(buffer.EventType == KEY_EVENT) {
-					if(buffer.Event.KeyEvent.bKeyDown) {
-						input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
-
-						if(input.key == TM_KEY_ESC) {
-							do {
-								PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-
-								if(bytes_read > 0) {
-									ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
-									if(buffer.Event.KeyEvent.bKeyDown) {
-										escape_input[escape_s_amount] = buffer.Event.KeyEvent.uChar.AsciiChar;
-										escape_s_amount++;
-									}
-								}
-							} while(bytes_read > 0);
+				if(buffer[0].EventType == KEY_EVENT) {
+					if(buffer[0].Event.KeyEvent.bKeyDown) {
+						if(buffer[0].Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
+							for(int i = 0; i < bytes_read; i++) {
+								escape_input[i] = buffer[i].Event.KeyEvent.uChar.AsciiChar;
+							}
 
 							escape_input[escape_s_amount] = '\0';
-							input.key = TM_KEY_NONE;
 							process_esc_input(&input, escape_input);
 						}
 
-
-						if(input.key != 0) {
+						else {
+							input.key = buffer[0].Event.KeyEvent.uChar.AsciiChar;
 							read_input = 1;
 						}
 					}
-
 				}
 
-				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+				else if(buffer[0].EventType == WINDOW_BUFFER_SIZE_EVENT) {
 					terminal_resize();
 					if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 						input.terminal_resized = 1;
