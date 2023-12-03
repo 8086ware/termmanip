@@ -38,6 +38,9 @@ Tm_input tm_win_input(Tm_window* win) {
 
 	if(!read_input) {
 		do {
+			if(remaining_time < 0 && win->input_timeout >= 0) {
+				remaining_time = 0;
+			}
 #ifdef _WIN32
 			INPUT_RECORD buffer[128];
 			FILETIME start_time;
