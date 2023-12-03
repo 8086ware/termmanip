@@ -62,18 +62,20 @@ Tm_input tm_win_input(Tm_window* win) {
 				remaining_time -= (elapsed.QuadPart - start.QuadPart) / 10000;
 
 				DWORD bytes_read;
+
 				PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, 128, &bytes_read);
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, bytes_read, &bytes_read);
 
 				if(buffer[0].EventType == KEY_EVENT) {
 					if(buffer[0].Event.KeyEvent.bKeyDown) {
 						if(buffer[0].Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
-							for(int i = 0; i < bytes_read; i++) {
-								escape_input[i] = buffer[i].Event.KeyEvent.uChar.AsciiChar;
+							for(int i = 1; i < bytes_read; i++) {
+								escape_input[i - 1] = buffer[i].Event.KeyEvent.uChar.AsciiChar;
 							}
 
-							escape_input[escape_s_amount] = '\0';
+							escape_input[bytes_read] = '\0';
 							process_esc_input(&input, escape_input);
+							read_input = 1;
 						}
 
 						else {
