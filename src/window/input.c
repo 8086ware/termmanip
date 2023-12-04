@@ -32,6 +32,7 @@ Tm_input tm_win_input(Tm_window* win) {
 	}
 
 	char escape_input[120];
+	int escape_s_amount = 0;
 
 	int remaining_time = win->input_timeout;
 
@@ -99,7 +100,6 @@ Tm_input tm_win_input(Tm_window* win) {
 			}
 
 #else
-			int escape_s_amount = 0;
 			struct pollfd s_poll[2];
 			s_poll[0].fd = fileno(stdin);
 			s_poll[0].events = POLLIN;
