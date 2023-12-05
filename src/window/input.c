@@ -68,21 +68,26 @@ Tm_input tm_win_input(Tm_window* win) {
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, bytes_read, &bytes_read);
 
 				if(buffer[0].EventType == KEY_EVENT) {
-					if(buffer[0].Event.KeyEvent.bKeyDown) {
-						if(buffer[0].Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
-							for(int i = 1; i < bytes_read; i++) {
-								escape_input[i - 1] = buffer[i].Event.KeyEvent.uChar.AsciiChar;
+					if(buffer[0].Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
+						for(int i = 1, k = 1; i < bytes_read; i++, k++) {
+							if(buffer[k].Event.KeyEvent.bKeyDown) {
+								escape_input[i - 1] = buffer[k].Event.KeyEvent.uChar.AsciiChar;
+								escape_s_amount++;
 							}
 
-							escape_input[bytes_read] = '\0';
-							process_esc_input(&input, escape_input);
-							read_input = 1;
+							else {
+								i--;
+							}
 						}
 
-						else {
-							input.key = buffer[0].Event.KeyEvent.uChar.AsciiChar;
-							read_input = 1;
-						}
+						escape_input[escape_s_amount] = '\0';
+						process_esc_input(&input, escape_input);
+						read_input = 1;
+					}
+
+					else {
+						input.key = buffer[0].Event.KeyEvent.uChar.AsciiChar;
+						read_input = 1;
 					}
 				}
 
