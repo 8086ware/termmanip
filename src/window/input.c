@@ -64,7 +64,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 				DWORD bytes_read;
 
-				PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, 128, &bytes_read);
+				GetNumberOfConsoleInputEvents(GetStdHandle(STD_INPUT_HANDLE), &bytes_read);
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, bytes_read, &bytes_read);
 
 				if(buffer[0].EventType == KEY_EVENT) {
