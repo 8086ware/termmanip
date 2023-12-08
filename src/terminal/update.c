@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "return.h"
+#include <memory.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -13,6 +14,8 @@
 #endif
 
 void tm_terminal_update() {
+	terminal_make_output();
+
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
 		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 
@@ -25,6 +28,8 @@ void tm_terminal_update() {
 	free(terminal->output);
 	terminal->output_len = 0;
 	terminal->output = NULL;
+
+	memcpy(terminal->physical_buffer, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 #ifdef _WIN32
 	INPUT_RECORD input;
