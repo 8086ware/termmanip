@@ -47,8 +47,9 @@ int terminal_init() {
 	terminal->resized = 0;
 
 	terminal->buffer = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
+	terminal->physical_buffer = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
-	if(terminal->buffer == NULL) {
+	if(terminal->buffer == NULL || terminal->physical_buffer == NULL) {
 		tm_set_return(TM_OUT_OF_MEM);
 		return TM_ERROR;
 	}	
@@ -56,7 +57,10 @@ int terminal_init() {
 	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
 		terminal->buffer[i].disp = ' ';
 		terminal->buffer[i].attrib = 0;
+		terminal->physical_buffer[i].disp = ' ';
+		terminal->physical_buffer[i].attrib = 0;
 	}
+
 #ifdef _WIN32
 	DWORD mode = 0;
 
@@ -149,6 +153,8 @@ int terminal_free() {
 #endif
 	free(terminal->buffer);
 	free(terminal->output);
+	free(terminal->physical_buffer);
+
 	free(terminal);
 
 	terminal = NULL;

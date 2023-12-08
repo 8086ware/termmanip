@@ -126,7 +126,8 @@ typedef struct {
 typedef struct {
 	int columns, rows;
 
-	Tm_char* buffer;
+    	Tm_char* buffer;
+	Tm_char* physical_buffer;
 
 	int cursor_x, cursor_y;
 

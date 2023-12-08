@@ -19,11 +19,15 @@ int terminal_resize() {
 	terminal->rows = scr_y;
 
 	terminal->buffer = realloc(terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
+	terminal->physical_buffer = realloc(terminal->physical_buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	for(int y = 0; y < terminal->rows; y++) {
 		for(int x = 0; x < terminal->columns; x++) {
 			terminal->buffer[y * terminal->columns + x].disp = ' ';
 			terminal->buffer[y * terminal->columns + x].attrib = 0;
+
+			terminal->physical_buffer[y * terminal->columns + x].disp = ' ';
+			terminal->physical_buffer[y * terminal->columns + x].attrib = 0;
 		}
 	}
 	
