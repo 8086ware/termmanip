@@ -88,7 +88,9 @@ Tm_input tm_win_input(Tm_window* win) {
 					else {
 						if(buffer[0].Event.KeyEvent.bKeyDown) {
 							input.key = buffer[0].Event.KeyEvent.uChar.AsciiChar;
-							read_input = 1;
+							if(input.key != 0) {
+								read_input = 1;
+							}
 						}
 					}
 				}
