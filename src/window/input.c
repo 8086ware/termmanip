@@ -42,7 +42,7 @@ Tm_input tm_win_input(Tm_window* win) {
 				remaining_time = 0;
 			}
 #ifdef _WIN32
-			INPUT_RECORD buffer[128];
+			INPUT_RECORD buffer;
 			FILETIME start_time;
 			GetSystemTimeAsFileTime(&start_time);
 
@@ -64,19 +64,19 @@ Tm_input tm_win_input(Tm_window* win) {
 
 				DWORD bytes_read;
 
-				GetNumberOfConsoleInputEvents(GetStdHandle(STD_INPUT_HANDLE), &bytes_read);
-				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), buffer, bytes_read, &bytes_read);
+				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
-				if(buffer[0].EventType == KEY_EVENT) {
-					if(buffer[0].Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
-						for(int i = 1, k = 1; i < bytes_read; i++, k++) {
-							if(buffer[k].Event.KeyEvent.bKeyDown) {
-								escape_input[i - 1] = buffer[k].Event.KeyEvent.uChar.AsciiChar;
-								escape_s_amount++;
-							}
+				if(buffer.EventType == KEY_EVENT) {
+					if(buffer.Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
+						while(bytes_read != 0) {
+							GetNumberOfConsoleInputEvents(GetStdHandle(STD_INPUT_HANDLE), &bytes_read);
 
-							else {
-								i--;
+							if(bytes_read > 0) {
+								ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
+								if(buffer.Event.KeyEvent.bKeyDown) {
+									escape_input[escape_s_amount] = buffer.Event.KeyEvent.uChar.AsciiChar;
+									escape_s_amount++;
+								}
 							}
 						}
 
@@ -86,8 +86,8 @@ Tm_input tm_win_input(Tm_window* win) {
 					}
 
 					else {
-						if(buffer[0].Event.KeyEvent.bKeyDown) {
-							input.key = buffer[0].Event.KeyEvent.uChar.AsciiChar;
+						if(buffer.Event.KeyEvent.bKeyDown) {
+							input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
 							if(input.key != 0) {
 								read_input = 1;
 							}
@@ -95,7 +95,7 @@ Tm_input tm_win_input(Tm_window* win) {
 					}
 				}
 
-				else if(buffer[0].EventType == WINDOW_BUFFER_SIZE_EVENT) {
+				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 					terminal_resize();
 					if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 						input.terminal_resized = 1;
