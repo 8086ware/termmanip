@@ -115,7 +115,6 @@ typedef struct {
 	_Bool mouse_middle;
 
 	_Bool mouse_down;
-	_Bool mouse_up;
 
 	_Bool scroll_up;
 	_Bool scroll_down;
