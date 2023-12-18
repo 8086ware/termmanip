@@ -101,6 +101,7 @@ typedef struct {
 typedef struct {
 	_Bool ctrl_down;
 	_Bool alt_down;
+	_Bool shift_down;
 
 	_Bool terminal_resized;
 
