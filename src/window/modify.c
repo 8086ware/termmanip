@@ -37,20 +37,33 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows) {
 	win->columns = columns;
 	win->rows = rows;
 
-	win->buffer_position_x = 0;
-	win->buffer_position_y = 0;
+	if(win->buffer_columns < columns || win->buffer_rows < rows) {
+		int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
 
-	win->buffer_columns = win->columns;
-	win->buffer_rows = win->rows;
+		win->buffer_columns = columns;
+		win->buffer_rows = rows;
 
-	win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
+		Tm_char* temp = malloc(sizeof(Tm_char) * og_cols * og_rows);
+		memcpy(temp, win->buffer, sizeof(Tm_char) * og_cols * og_rows);
 
-	if(win->buffer == NULL) {
-		tm_set_return(TM_OUT_OF_MEM);
-		return TM_ERROR;
+		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
+
+		if(win->buffer == NULL) {
+			tm_set_return(TM_OUT_OF_MEM);
+			return TM_ERROR;
+		}
+
+		for(int i = 0; i < win->buffer_columns * win->buffer_rows; i++) { 
+			win->buffer[i] = tm_win_get_background(win);
+		}
+		
+		for(int y = 0; y < og_rows; y++) {
+			for(int x = 0; x < og_cols; x++) {
+				win->buffer[y * win->buffer_columns + x] = temp[y * og_cols + x];
+			}
+		}
 	}
 
-	tm_win_clear(win);
 	return 0;
 }
 
