@@ -26,22 +26,29 @@ Tm_window* tm_window(int x, int y, int columns, int rows) {
 	win->background_tm_char.attrib = 0;
 	win->background_tm_char.disp = ' ';
 
-	win->columns = 0;
-	win->rows = 0;
+	win->position_x = x;
+	win->position_y = y;
 
-	win->cursor_x = 0;
-	win->cursor_y = 0;
-
-	win->buffer_columns = 0;
-	win->buffer_rows = 0;
+	win->columns = columns;
+	win->rows = rows;
 
 	win->buffer_position_x = 0;
 	win->buffer_position_y = 0;
 
+	win->buffer_columns = win->columns;
+	win->buffer_rows = win->rows;
+
+	win->buffer = malloc(sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
+
+	if(win->buffer == NULL) {
+		tm_set_return(TM_OUT_OF_MEM);
+		return (struct Tm_window*)TM_ERROR;
+	}
+
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
-	tm_win_modify(win, x, y, columns, rows);
 	tm_win_background(win, ' ', 0);
-	
+
+	tm_win_clear(win);
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 1);
 
 	tm_win_cursor(win, 0, 0);
