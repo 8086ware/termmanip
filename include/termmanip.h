@@ -68,6 +68,8 @@
 
 #define TM_SCROLL_UP 0
 #define TM_SCROLL_DOWN 1
+#define TM_SCROLL_RIGHT 2
+#define TM_SCROLL_LEFT 3 
 
 // Window flags
 
