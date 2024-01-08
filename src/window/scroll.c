@@ -5,6 +5,13 @@
 int tm_win_scroll(Tm_window* win, int amount, int direction) {
 	if(direction == TM_SCROLL_DOWN) {
 		if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
+			int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
+			Tm_char* temp = malloc(sizeof(Tm_char) * og_cols * og_rows);
+
+			for(int i = 0; i < og_cols * og_rows; i++) {
+				temp[i] = win->buffer[i];
+			}
+
 			win->buffer_rows = win->rows + win->buffer_position_y + amount;
 			win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
@@ -13,13 +20,19 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 				return TM_ERROR;
 			}
 
-			for(int y = win->buffer_rows - amount; y < win->buffer_rows; y++) {
-				for(int x = 0; x < win->buffer_columns; x++) {
-					win->buffer[y * win->columns + x].disp = win->background_tm_char.disp;
-					win->buffer[y * win->columns + x].attrib = win->background_tm_char.attrib;
+			for(int i = 0; i < win->buffer_columns * win->buffer_rows; i++) { 
+				win->buffer[i] = tm_win_get_background(win);
+			}
+
+			for(int y = 0; y < og_rows; y++) {
+				for(int x = 0; x < og_cols; x++) {
+					if(x < win->buffer_columns && y < win->buffer_rows) { 
+						win->buffer[y * win->buffer_columns + x] = temp[y * og_cols + x];
+					}
 				}
 			}
 
+			free(temp);
 		}
 
 		win->buffer_position_y += amount;
