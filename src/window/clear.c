@@ -13,8 +13,4 @@ void tm_win_clear(Tm_window* win) {
 	tm_win_attrib(win, tm_win_get_background(win).disp, tm_win_get_background(win).attrib);
 	
 	tm_win_cursor(win, 0, 0);
-
-	for(int i = 0; i < win->children_amount; i++) {
-		tm_win_clear(win->children[i]);
-	}
 }
