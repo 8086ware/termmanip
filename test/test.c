@@ -5,6 +5,7 @@ int main(void) {
 	tm_set_title("Termmanip Test");
 	tm_dialog("Test", "Testing", 2, "Ok", "No");
 	tm_flags(TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
+	tm_flags(TM_FLAG_TERMINAL_INPUT, 1);
 	tm_input_timeout(0);
 
 	while(1) {
@@ -74,7 +75,7 @@ int main(void) {
 
 		if(tm_input().terminal_resized) {
 			tm_get_scrsize(&scr_x, &scr_y);
-			tm_win_modify(default_win, 0, 0, scr_x, scr_y);
+			tm_win_modify(default_win, 0, 0, scr_x, scr_y, 1);
 		}
 	}
 
