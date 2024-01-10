@@ -10,6 +10,7 @@ void tm_win_background(Tm_window* win, char ch, uint32_t attrib) {
 	for(int y = 0; y < tm_win_get_buffer_rows(win); y++) {
 		for(int x = 0; x < tm_win_get_buffer_columns(win); x++) {
 			if(win->buffer[y * tm_win_get_buffer_columns(win) + x].disp != win->background_tm_char.disp) {
+				tm_win_cursor(win, x, y);
 				if(win->buffer[y * tm_win_get_buffer_columns(win) + x].attrib & TM_ATTRIB_ALTERNATE) {
 					tm_win_putch(win, win->buffer[y * tm_win_get_buffer_columns(win) + x].disp, attrib | TM_ATTRIB_ALTERNATE); 
 				}
