@@ -5,20 +5,20 @@
 
 int tm_win_cursor(Tm_window* win, int x, int y) {
 	if(win->flags & TM_FLAG_SCROLL) {
-		if(win->cursor_y > tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)) {
-			tm_win_scroll(win, win->cursor_y - (tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)), TM_SCROLL_DOWN);
+		if(y > tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)) {
+			tm_win_scroll(win, y - (tm_win_get_rows(win) - 1 + tm_win_get_buffer_pos_y(win)), TM_SCROLL_DOWN);
 		}
 
-		else if(win->cursor_y < win->buffer_position_y) {		
-			tm_win_scroll(win, tm_win_get_buffer_pos_y(win)- win->cursor_y, TM_SCROLL_UP);
+		else if(y < win->buffer_position_y) {		
+			tm_win_scroll(win, tm_win_get_buffer_pos_y(win)- y, TM_SCROLL_UP);
 		}
 
-		if(win->cursor_x > tm_win_get_columns(win) - 1 + tm_win_get_buffer_pos_x(win)) {
-			tm_win_scroll(win, win->cursor_x - (tm_win_get_columns(win) - 1 + tm_win_get_buffer_pos_x(win)), TM_SCROLL_RIGHT);
+		if(x > tm_win_get_columns(win) - 1 + tm_win_get_buffer_pos_x(win)) {
+			tm_win_scroll(win, x - (tm_win_get_columns(win) - 1 + tm_win_get_buffer_pos_x(win)), TM_SCROLL_RIGHT);
 		}
 
 		else if(win->cursor_x < win->buffer_position_x) {		
-			tm_win_scroll(win, tm_win_get_buffer_pos_x(win)- win->cursor_x, TM_SCROLL_LEFT);
+			tm_win_scroll(win, tm_win_get_buffer_pos_x(win)- x, TM_SCROLL_LEFT);
 		}
 	}
 
