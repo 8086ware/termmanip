@@ -17,7 +17,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 			tm_win_scroll(win, x - (tm_win_get_columns(win) - 1 + tm_win_get_buffer_pos_x(win)), TM_SCROLL_RIGHT);
 		}
 
-		else if(win->cursor_x < win->buffer_position_x) {		
+		else if(x < win->buffer_position_x) {		
 			tm_win_scroll(win, tm_win_get_buffer_pos_x(win)- x, TM_SCROLL_LEFT);
 		}
 	}
