@@ -39,7 +39,24 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 
 	win->physical_buffer = realloc(win->physical_buffer, sizeof(Tm_char) * win->columns * win->rows);
 
-	if(win->buffer_columns < columns || win->buffer_rows < rows) {
+	if(resize_buffer) {
+		win->buffer_columns = columns;
+		win->buffer_rows = rows;
+
+		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
+
+		if(win->buffer == NULL) {
+			tm_set_return(TM_OUT_OF_MEM);
+			return TM_ERROR;
+		}
+
+		tm_win_clear(win);
+
+		win->buffer_position_x = 0;
+		win->buffer_position_y = 0;
+	}
+
+	else if(win->buffer_columns < columns || win->buffer_rows < rows) {
 		int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
 
 		win->buffer_columns = columns;
@@ -71,23 +88,6 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		}
 
 		free(temp);
-	}
-
-	else if(resize_buffer) {
-		win->buffer_columns = columns;
-		win->buffer_rows = rows;
-
-		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
-
-		if(win->buffer == NULL) {
-			tm_set_return(TM_OUT_OF_MEM);
-			return TM_ERROR;
-		}
-
-		tm_win_clear(win);
-
-		win->buffer_position_x = 0;
-		win->buffer_position_y = 0;
 	}
 
 	return 0;
