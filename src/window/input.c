@@ -8,7 +8,6 @@
 
 #ifdef _WIN32
 #include <windows.h>
-#include <io.h>
 #else
 #include <poll.h>
 #include <unistd.h>

@@ -8,11 +8,9 @@
 #include <string.h>
 
 #ifdef _WIN32
-#include <windows.h>
 DWORD og_input_mode;
 DWORD og_output_mode;
 #else
-#include <termios.h>
 #include <sys/signalfd.h>
 #include <unistd.h>
 struct termios og_term;

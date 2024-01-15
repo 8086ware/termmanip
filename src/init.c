@@ -1,15 +1,6 @@
 #include "termmanip.h"
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "terminal.h"
 #include "term.h"
-
-#ifndef _WIN32
-#include <unistd.h>
-#else
-#include <io.h>
-#endif
 
 Tm_terminal* terminal = NULL;
 
