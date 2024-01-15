@@ -122,9 +122,12 @@ int terminal_init() {
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
 
-	write(fileno(stdout), init, strlen(init));
 #ifdef _WIN32
+	DWORD bytes_written = 0;
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), init, strlen(init), &bytes_written, NULL);
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+#else
+	write(fileno(stdout), init, strlen(init));
 #endif
 	return 0;
 }
@@ -132,8 +135,9 @@ int terminal_init() {
 int terminal_free() {
 	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l\x1b[?1003l\x1b[?1006l";
 
-	write(fileno(stdout), exit, strlen(exit));
 #ifdef _WIN32
+	DWORD bytes_written = 0;
+	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), exit, strlen(exit), &bytes_written, NULL);
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
@@ -144,6 +148,8 @@ int terminal_free() {
 		return TM_ERROR;
 	}
 #else
+	write(fileno(stdout), exit, strlen(exit));
+
 	tcsetattr(fileno(stdin), TCSANOW, &og_term);
 	tcsetattr(fileno(stdout), TCSANOW, &og_term);
 
