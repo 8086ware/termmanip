@@ -13,14 +13,13 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 
 	switch(direction) {
 		case TM_SCROLL_DOWN:
-		if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
-			win->buffer_rows = win->rows + win->buffer_position_y + amount;
+			if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
+				win->buffer_rows = win->rows + win->buffer_position_y + amount;
 
-			new_buffer = 1;
-		}
-		win->buffer_position_y += amount;
-		break;
-
+				new_buffer = 1;
+			}
+			win->buffer_position_y += amount;
+			break;
 
 		case TM_SCROLL_UP: 
 			if(win->buffer_position_y - amount < 0) {
@@ -28,7 +27,7 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 			}
 
 			win->buffer_position_y -= amount;
-		break;
+			break;
 
 		case TM_SCROLL_RIGHT:
 			if(win->buffer_position_x + win->columns + amount > win->buffer_columns) {
@@ -37,7 +36,7 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 			}
 
 			win->buffer_position_x += amount;
-		break;
+			break;
 
 		case TM_SCROLL_LEFT: 
 			if(win->buffer_position_x - amount < 0) {
@@ -45,7 +44,7 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 			}
 
 			win->buffer_position_x -= amount;
-		break;
+			break;
 	}
 
 	if(new_buffer) {
