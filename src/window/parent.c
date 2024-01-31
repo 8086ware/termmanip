@@ -17,10 +17,5 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type) {
 	
 	parent->children_amount++;
 
-	tm_win_background(child, parent->background_tm_char.disp, parent->background_tm_char.attrib);
-
-	tm_win_flags(child, TM_FLAG_ALL, 0);
-	tm_win_flags(child, parent->flags, 1);
-
 	return 0;
 }
