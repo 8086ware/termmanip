@@ -58,11 +58,11 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 
 	else {
 		if(win->buffer_position_x + columns > win->buffer_columns) {
-			tm_win_scroll(win, win->buffer_columns - (win->buffer_position_x + columns), TM_SCROLL_RIGHT);
+			tm_win_scroll(win, (win->buffer_position_x + columns) - win->buffer_columns, TM_SCROLL_RIGHT);
 		}
 
 		if(win->buffer_position_y + rows > win->buffer_rows) {
-			tm_win_scroll(win, win->buffer_rows - (win->buffer_position_y + rows), TM_SCROLL_DOWN);
+			tm_win_scroll(win, (win->buffer_position_y + rows) - win->buffer_rows, TM_SCROLL_DOWN);
 		}
 	}
 
