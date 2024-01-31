@@ -3,14 +3,8 @@
 #include "return.h"
 
 int tm_win_scroll(Tm_window* win, int amount, int direction) {
-	int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
-	Tm_char* temp = malloc(sizeof(Tm_char) * og_cols * og_rows);
 	_Bool new_buffer = 0;
-
-	for(int i = 0; i < og_cols * og_rows; i++) {
-		temp[i] = win->buffer[i];
-	}
-
+	int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
 	switch(direction) {
 		case TM_SCROLL_DOWN:
 			if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
@@ -48,6 +42,13 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 	}
 
 	if(new_buffer) {
+		Tm_char* temp = malloc(sizeof(Tm_char) * og_cols * og_rows);
+
+		for(int i = 0; i < og_cols * og_rows; i++) {
+			temp[i] = win->buffer[i];
+		}
+
+
 		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
 		if(win->buffer == NULL) {
@@ -66,8 +67,8 @@ int tm_win_scroll(Tm_window* win, int amount, int direction) {
 				}
 			}
 		}
+		free(temp);
 	}
 
-	free(temp);
 	return 0;
 }
