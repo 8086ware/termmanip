@@ -3,16 +3,16 @@
 #include <stdlib.h>
 #include "return.h"
 
-Tm_window* default_win = NULL;
-
-Tm_window* tm_window(int x, int y, int columns, int rows) {
+Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows) {
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
 		tm_set_return(TM_OUT_OF_MEM);
 		return NULL;
 	}
-	
+
+	win->terminal = terminal;
+
 	win->buffer = NULL;
 	
 	win->parent = NULL;

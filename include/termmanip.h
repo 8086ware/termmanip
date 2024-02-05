@@ -155,6 +155,7 @@ typedef struct {
 // the buffer containing its contents, a physical buffer to represent what has been copied onto the terminal, its flags and its current attrib.
 
 typedef struct Tm_window {
+	Tm_terminal* terminal;
 	int position_x, position_y, columns, rows;
 	int buffer_position_x, buffer_position_y, buffer_columns, buffer_rows;
 	int cursor_x, cursor_y;
@@ -181,7 +182,7 @@ typedef struct Tm_window {
 Tm_terminal* tm_terminal();
 int tm_terminal_free(Tm_terminal* terminal);
 
-Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
+Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_scrsize(int* x, int* y); // Gets the terminalsize
