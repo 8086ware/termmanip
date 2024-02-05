@@ -4,7 +4,7 @@
 #include "return.h"
 
 Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text) {
-	Tm_window* button = tm_window(x, y, columns, rows);
+	Tm_window* button = tm_window(win->terminal, x, y, columns, rows);
 
 	tm_win_parent(win, button, TM_CHILD_BUTTON);
 	

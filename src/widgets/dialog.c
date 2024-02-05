@@ -19,7 +19,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	int x = win->columns / 2 - columns / 2;
 	int y = win->rows / 2 - rows / 2;
 
-	Tm_window* dialog = tm_window(x, y, columns, rows);
+	Tm_window* dialog = tm_window(win->terminal, x, y, columns, rows);
 
 	tm_win_parent(win, dialog, TM_CHILD_NORMAL);
 
