@@ -21,13 +21,13 @@ Tm_input tm_win_input(Tm_window* win) {
 
 	tm_win_update(win);
 
-	if(terminal->resized) {
+	if(win->terminal->resized) {
 		if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 			input.terminal_resized = 1;
 			read_input = 1;
 		}
 
-		terminal->resized = 0;
+		win->terminal->resized = 0;
 	}
 
 	char escape_input[120];
@@ -95,7 +95,7 @@ Tm_input tm_win_input(Tm_window* win) {
 				}
 
 				else if(buffer.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-					terminal_resize();
+					terminal_resize(win->terminal);
 					if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 						input.terminal_resized = 1;
 						read_input = 1;
@@ -157,7 +157,7 @@ Tm_input tm_win_input(Tm_window* win) {
 			else if(s_poll[1].revents & POLLIN) {
 				char buf[1024];
 				read(terminal->signal_fd, &buf, 1024);
-				terminal_resize();
+				terminal_resize(win->terminal);
 				if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 					input.terminal_resized = 1;
 					read_input = 1;
