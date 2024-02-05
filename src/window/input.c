@@ -113,7 +113,7 @@ Tm_input tm_win_input(Tm_window* win) {
 			s_poll[0].events = POLLIN;
 			s_poll[0].revents = 0;
 
-			s_poll[1].fd = terminal->signal_fd;
+			s_poll[1].fd = win->terminal->signal_fd;
 			s_poll[1].events = POLLIN;
 			s_poll[1].revents = 0;
 
@@ -156,7 +156,7 @@ Tm_input tm_win_input(Tm_window* win) {
 
 			else if(s_poll[1].revents & POLLIN) {
 				char buf[1024];
-				read(terminal->signal_fd, &buf, 1024);
+				read(win->terminal->signal_fd, &buf, 1024);
 				terminal_resize(win->terminal);
 				if(win->flags & TM_FLAG_TERMINAL_INPUT) {
 					input.terminal_resized = 1;
