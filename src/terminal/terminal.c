@@ -7,23 +7,19 @@
 #include <signal.h>
 #include <string.h>
 
-#ifdef _WIN32
-DWORD og_input_mode;
-DWORD og_output_mode;
-#else
+#ifndef _WIN32
 #include <sys/signalfd.h>
 #include <unistd.h>
-struct termios og_term;
 #endif
 
-int terminal_init() {
+Tm_terminal* tm_terminal() {
 	int scr_columns, scr_rows;
 	tm_get_scrsize(&scr_columns, &scr_rows);
-	terminal = malloc(sizeof(Tm_terminal));
+	Tm_terminal* terminal = malloc(sizeof(Tm_terminal));
 
 	if(terminal == NULL) {
 		tm_set_return(TM_OUT_OF_MEM);
-		return TM_ERROR;
+		return NULL;
 	}
 
 	terminal->columns = scr_columns;
@@ -49,7 +45,7 @@ int terminal_init() {
 
 	if(terminal->buffer == NULL || terminal->physical_buffer == NULL) {
 		tm_set_return(TM_OUT_OF_MEM);
-		return TM_ERROR;
+		return NULL;
 	}	
 
 	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
@@ -64,24 +60,24 @@ int terminal_init() {
 
 	if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
-		return TM_ERROR;
+		return NULL;
 	}
 
-	og_output_mode = mode;
+	terminal->og_output_mode = mode;
 
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
-		return TM_ERROR;
+		return NULL;
 	}
 
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
-		return TM_ERROR;
+		return NULL;
 	}
 
-	og_input_mode = mode;
+	terminal->og_input_mode = mode;
 
 	mode &= ~ENABLE_ECHO_INPUT;
 	mode &= ~ENABLE_LINE_INPUT;
@@ -92,13 +88,13 @@ int terminal_init() {
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
-		return TM_ERROR;
+		return NULL;
 	}
 
 #else 
 	struct termios term;
 	tcgetattr(fileno(stdin), &term);
-	og_term = term;
+	terminal->og_term = term;
 
 	term.c_lflag &= ~ECHO;
 	term.c_lflag &= ~ICANON;
@@ -129,29 +125,29 @@ int terminal_init() {
 #else
 	write(fileno(stdout), init, strlen(init));
 #endif
-	return 0;
+	return terminal;
 }
 
-int terminal_free() {
+int tm_terminal_free(Tm_terminal* terminal) {
 	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l\x1b[?1003l\x1b[?1006l";
 
 #ifdef _WIN32
 	DWORD bytes_written = 0;
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), exit, strlen(exit), &bytes_written, NULL);
-	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), og_output_mode) == 0) {
+	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), terminal->og_output_mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
-	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), og_input_mode) == 0) {
+	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), terminal->og_input_mode) == 0) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 #else
 	write(fileno(stdout), exit, strlen(exit));
 
-	tcsetattr(fileno(stdin), TCSANOW, &og_term);
-	tcsetattr(fileno(stdout), TCSANOW, &og_term);
+	tcsetattr(fileno(stdin), TCSANOW, &terminal->og_term);
+	tcsetattr(fileno(stdout), TCSANOW, &terminal->og_term);
 
 	close(terminal->signal_fd);
 #endif
