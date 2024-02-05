@@ -101,7 +101,6 @@ Tm_terminal* tm_terminal() {
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 #endif
-	signal(SIGINT, signal_handle);
 #ifndef _WIN32
 	sigset_t mask;
 	sigemptyset(&mask);
@@ -112,7 +111,7 @@ Tm_terminal* tm_terminal() {
 
 	if(terminal->signal_fd == -1) {
 		tm_set_return(TM_COULDNT_INIT_TERM);
-		return TM_ERROR;
+		return NULL;
 	}
 #endif
 
