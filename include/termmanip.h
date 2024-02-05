@@ -250,29 +250,4 @@ void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 void tm_set_title(char* text);
 
 void tm_win_input_timeout(Tm_window* win, int timeout);
-
-//Bunch of macros that serve the same functionality as other functions except they act upon the default window
-#define tm_print(text, ...) tm_win_print(default_win, text, ## __VA_ARGS__)
-#define tm_cursor(x, y) tm_win_cursor(default_win, x, y)
-#define tm_update() tm_win_update(default_win)
-#define tm_fill(from_x, from_y, to_x, to_y, ch, attrib) tm_win_fill(default_win, from_x, from_y, to_x, to_y, ch, attrib)
-#define tm_attrib(attrib, state) tm_win_attrib(default_win, attrib, state)
-#define tm_background(ch, attrib) tm_win_background(default_win, ch, attrib)
-#define tm_input_str(str, max_size) tm_win_input_str(default_win, str, max_size)
-#define tm_input() tm_win_input(default_win)
-#define tm_input_strf(str, ...) tm_win_input_strf(default_win, str, ## __VA_ARGS__)
-#define tm_dialog(title, message, option_amount, ...) tm_win_dialog(default_win, title, message, option_amount, ## __VA_ARGS__)
-#define tm_button(x, y, columns, rows, text) tm_win_button(default_win, x, y, columns, rows, text)
-#define tm_button_select() tm_win_button_select(default_win);
-#define tm_clear() tm_win_clear(default_win)
-#define tm_scroll(amount, direction) tm_win_scroll(default_win, amount, direction)
-#define tm_flags(flags, state) tm_win_flags(default_win, flags, state)
-#define tm_get_cursor_x() tm_win_get_cursor_x(default_win)
-#define tm_get_cursor_y() tm_win_get_cursor_y(default_win)
-#define tm_get_buffer_columns() tm_win_get_buffer_columns(default_win)
-#define tm_get_buffer_rows() tm_win_get_buffer_rows(default_win)
-#define tm_get_buffer_pos_x() tm_win_get_buffer_pos_x(default_win)
-#define tm_get_buffer_pos_y() tm_win_get_buffer_pos_y(default_win)
-#define tm_input_timeout(amount) tm_win_input_timeout(default_win, amount)
 #endif
-
