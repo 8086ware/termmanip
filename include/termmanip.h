@@ -141,7 +141,11 @@ typedef struct {
 	int output_len;
 
 	uint16_t flags;
-#ifndef _WIN32
+#ifdef _WIN32
+	DWORD og_input_mode;
+	DWORD og_output_mode;
+#else
+	struct termios og_term;
 	int signal_fd;
 #endif
 	_Bool resized;
@@ -174,15 +178,8 @@ typedef struct Tm_window {
 	int input_timeout;
 } Tm_window;
 
-extern Tm_window* default_win;
-extern Tm_terminal* terminal;
-
-#ifdef _WIN32
-extern DWORD og_input_mode;
-extern DWORD og_output_mode;
-#else
-extern struct termios og_term;
-#endif
+Tm_terminal* tm_terminal();
+int tm_terminal_free(Tm_terminal* terminal);
 
 Tm_window* tm_window(int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
