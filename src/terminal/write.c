@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include "terminal.h"
 
-void terminal_write(int x, int y, char ch, uint32_t attrib) {
+void terminal_write(Tm_terminal* terminal, int x, int y, char ch, uint32_t attrib) {
 	int position = y * terminal->columns + x;
 
 	if(position > terminal->columns * terminal->rows - 1 || position < 0) {

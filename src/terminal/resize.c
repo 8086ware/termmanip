@@ -1,11 +1,9 @@
 #include "terminal.h"
 #include "termmanip.h"
 #include <stdlib.h>
-#include "return.h"	
-#include <stdio.h>
 #include <memory.h>
 
-int terminal_resize() {
+int terminal_resize(Tm_terminal* terminal) {
 	int scr_x, scr_y;
 	tm_get_scrsize(&scr_x, &scr_y);
 
@@ -31,15 +29,15 @@ int terminal_resize() {
 		}
 	}
 	
-	terminal_append_output("\x1b[2J");
+	terminal_append_output(terminal, "\x1b[2J");
 
 	for(int y = 0; y < og_rows; y++) {
 		for(int x = 0; x < og_cols; x++) {
-			terminal_write(x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
+			terminal_write(terminal, x, y, temp[y * og_cols + x].disp, temp[y * og_cols + x].attrib);
 		}
 	}
 
-	tm_terminal_update();
+	tm_terminal_update(terminal);
 
 	free(temp);
 

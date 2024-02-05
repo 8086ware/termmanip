@@ -12,11 +12,11 @@
 #include <unistd.h>
 #endif
 
-void tm_terminal_update() {
-	terminal_make_output();
+void tm_terminal_update(Tm_terminal* terminal) {
+	terminal_make_output(terminal);
 
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
-		terminal_append_output("\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
+		terminal_append_output(terminal, "\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 
 		terminal->last_updated_x = terminal->cursor_x - 1;
 		terminal->last_updated_y = terminal->cursor_y;
@@ -41,7 +41,7 @@ void tm_terminal_update() {
 
 	if(bytes_read > 0 && input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
 		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
-		terminal_resize();
+		terminal_resize(terminal);
 		terminal->resized = 1;
 	}
 #else
@@ -54,7 +54,7 @@ void tm_terminal_update() {
 	if(signal_poll.revents & POLLIN) {
 		char buf[1024];
 		read(terminal->signal_fd, &buf, 1024);
-		terminal_resize();
+		terminal_resize(terminal);
 		terminal->resized = 1;
 	}
 #endif

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "return.h"
 
-int terminal_append_output(char* fmt, ...) {
+int terminal_append_output(Tm_terminal* terminal, char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 	char* buffer = malloc(strlen(fmt) + 2048);
