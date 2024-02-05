@@ -4,17 +4,10 @@
 #include "termmanip.h"
 #include <stdint.h>
 
-int terminal_init();
-int terminal_free();
+void terminal_write(Tm_terminal* terminal, int x, int y, char ch, uint32_t attrib);
+void terminal_make_output(Tm_terminal* terminal);
+int terminal_append_output(Tm_terminal* terminal, char* fmt, ...);
 
-void terminal_cursor(int x, int y);
-
-void terminal_attrib(uint32_t attrib);
-
-void terminal_write(int x, int y, char ch, uint32_t attrib);
-void terminal_make_output();
-int terminal_append_output(char* fmt, ...);
-
-int terminal_resize();
+int terminal_resize(Tm_terminal* terminal);
 
 #endif
