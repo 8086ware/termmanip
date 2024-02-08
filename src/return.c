@@ -1,5 +1,4 @@
 #include "termmanip.h"
-#include "error.h"
 
 int tm_return_number = 0;
 
