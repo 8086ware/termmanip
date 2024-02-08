@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "return.h"
 #include <stdio.h>
-#include "signal_handler.h"
 #include <signal.h>
 #include <string.h>
 
