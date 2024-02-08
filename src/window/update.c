@@ -70,25 +70,36 @@ void tm_win_write_to_terminal(Tm_window* win) {
 	}
 
 	int wrapped_lines = 0;
-	for(int y = win->buffer_position_y; y < win->buffer_rows; y++) {
-		while(((y + wrapped_lines) - win->buffer_position_y) * win->columns < win->columns * win->rows) {
-			if(win->physical_buffer[((y + wrapped_lines) - win->buffer_position_y) * win->columns].disp != tm_win_get_background(win).disp || win->physical_buffer[((y + wrapped_lines) - win->buffer_position_y) * win->columns].attrib != tm_win_get_background(win).attrib) {
-				wrapped_lines++;
+
+	if(win->flags & TM_FLAG_WRAP_TEXT) {
+		for(int y = win->buffer_position_y; y < win->buffer_rows; y++) {
+			while(((y + wrapped_lines) - win->buffer_position_y) * win->columns < win->columns * win->rows) {
+				if(win->physical_buffer[((y + wrapped_lines) - win->buffer_position_y) * win->columns].disp != tm_win_get_background(win).disp || win->physical_buffer[((y + wrapped_lines) - win->buffer_position_y) * win->columns].attrib != tm_win_get_background(win).attrib) {
+					wrapped_lines++;
+				}
+
+				else {
+					break;
+				}
 			}
 
-			else {
-				break;
+			for(int x = win->buffer_position_x; x < win->buffer_columns; x++) {
+				if(((y + wrapped_lines) - win->buffer_position_y) * win->columns + (x - win->buffer_position_x) < win->columns * win->rows) {
+					Tm_char ch;
+					ch.disp = win->buffer[y * tm_win_get_buffer_columns(win) + x].disp;
+					ch.attrib = win->buffer[y * tm_win_get_buffer_columns(win) + x].attrib;
+					if(ch.disp != tm_win_get_background(win).disp || ch.attrib != tm_win_get_background(win).attrib) {
+						win->physical_buffer[(y + wrapped_lines - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = ch;
+					}
+				}
 			}
 		}
+	}
 
-		for(int x = win->buffer_position_x; x < win->buffer_columns; x++) {
-			if(((y + wrapped_lines) - win->buffer_position_y) * win->columns + (x - win->buffer_position_x) < win->columns * win->rows) {
-				Tm_char ch;
-				ch.disp = win->buffer[y * tm_win_get_buffer_columns(win) + x].disp;
-				ch.attrib = win->buffer[y * tm_win_get_buffer_columns(win) + x].attrib;
-				if(ch.disp != tm_win_get_background(win).disp || ch.attrib != tm_win_get_background(win).attrib) {
-					win->physical_buffer[(y + wrapped_lines - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = ch;
-				}
+	else {
+		for(int y = win->buffer_position_y; y < win->buffer_position_y + win->rows; y++){ 
+			for(int x = win->buffer_position_x; x < win->buffer_position_x + win->columns; x++){ 
+				win->physical_buffer[(y - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = win->buffer[y * win->buffer_columns + x];
 			}
 		}
 	}
