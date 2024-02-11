@@ -25,7 +25,6 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	int ret = 0;
 
 	check_for_scroll(win);
-	_Bool scroll = 0;
 
 	if(ch == '\x1b') {
 		return 0;
