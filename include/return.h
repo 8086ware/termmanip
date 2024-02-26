@@ -1,5 +1,5 @@
-#ifndef ERROR_H
-#define ERROR_H
+#ifndef RETURN_H
+#define RETURN_H
 
 void tm_set_return(int value);
 
