@@ -1,19 +1,23 @@
 #include "termmanip.h"
 
 int main(void) {
-	tm_init();
+	int scr_x, scr_y;
+	Tm_terminal* terminal = tm_terminal();
+	tm_get_scrsize(&scr_x, &scr_y);
+	Tm_window* win = tm_window(terminal, 0, 0, scr_x, scr_y);
+	
 	tm_set_title("Termmanip Test");
-	tm_dialog("Test", "Testing", 2, "Ok", "No");
-	tm_flags(TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
-	tm_flags(TM_FLAG_TERMINAL_INPUT, 1);
-	tm_input_timeout(0);
+	tm_win_dialog(win, "Test", "Testing", 2, "Ok", "No");
+	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
+	tm_win_flags(win, TM_FLAG_TERMINAL_INPUT, 1);
+	tm_win_input_timeout(win, 0);
 
 	while(1) {
-		tm_attrib(TM_ATTRIB_BG_MAGENTA, 1);
-		tm_win_border(default_win);
-		tm_cursor(1, 0);
-		tm_print("Termmanip Color Test");
-		tm_attrib(TM_ATTRIB_BG_MAGENTA, 0);
+		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 1);
+		tm_win_border(win);
+		tm_win_cursor(win, 1, 0);
+		tm_win_print(win, "Termmanip Color Test");
+		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 0);
 
 		uint32_t color = rand() % 15;
 
@@ -68,16 +72,21 @@ int main(void) {
 				break;
 		}
 
-		int scr_x, scr_y;
 		tm_get_scrsize(&scr_x, &scr_y);
 		
-		tm_fill(rand() % scr_x, rand() % scr_y, rand() % scr_x, rand() % scr_y, ' ', color);
+		tm_win_fill(win, rand() % scr_x, rand() % scr_y, rand() % scr_x, rand() % scr_y, ' ', color);
 
-		if(tm_input().terminal_resized) {
+		Tm_input t = tm_win_input(win);
+		if(t.terminal_resized) {
 			tm_get_scrsize(&scr_x, &scr_y);
-			tm_win_modify(default_win, 0, 0, scr_x, scr_y, 1);
+			tm_win_modify(win, 0, 0, scr_x, scr_y, 1);
+		}
+
+		else if(t.key == TM_KEY_Q) {
+			break;
 		}
 	}
 
-	tm_exit();
+	tm_win_free(win);
+	tm_terminal_free(win);
 }

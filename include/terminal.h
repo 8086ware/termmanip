@@ -1,5 +1,5 @@
-#ifndef SCREEN_H
-#define SCREEN_H
+#ifndef TERMINAL_H 
+#define TERMINAL_H 
 
 #include "termmanip.h"
 #include <stdint.h>
