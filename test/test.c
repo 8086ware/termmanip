@@ -88,5 +88,5 @@ int main(void) {
 	}
 
 	tm_win_free(win);
-	tm_terminal_free(win);
+	tm_terminal_free(terminal);
 }
