@@ -4,11 +4,7 @@
 #define TM_ERROR -1
 
 // Error types
-#define TM_INVALID_CURSOR 1
-#define TM_DIALOG_NO_OPTIONS 3
-#define TM_INVALID_WINDOW_SIZE 4
-#define TM_OUT_OF_MEM 5
-#define TM_COULDNT_INIT_TERM 6
+enum Tm_return {TM_INVALID_CURSOR = 1, TM_DIALOG_NO_OPTIONS = 3, TM_INVALID_WINDOW_SIZE = 4, TM_OUT_OF_MEM = 5, TM_COULDNT_INIT_TERM = 6};
 
 // Child window types
 #define TM_CHILD_NONE 0
