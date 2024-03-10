@@ -161,7 +161,7 @@ typedef struct Tm_window {
 
 	Tm_char background_tm_char;
 	
-	uint16_t flags;
+	enum Window_flags flags;
 
 	uint32_t attrib;
 
