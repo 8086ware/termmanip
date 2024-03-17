@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void tm_win_attrib(Tm_window* win, uint32_t attrib, int state) {
+void tm_win_attrib(Tm_window* win, enum Tm_attrib attrib, int state) {
 	if(state <= 0) {
 		win->attrib &= ~attrib;
 	}

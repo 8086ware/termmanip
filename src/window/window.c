@@ -147,10 +147,10 @@ Tm_char tm_win_get_background(Tm_window* win) {
 	return win->background_tm_char;
 }
 
-uint32_t tm_win_get_attrib(Tm_window* win) {
+enum Tm_attrib tm_win_get_attrib(Tm_window* win) {
 	return win->attrib;
 }
 
-uint16_t tm_win_get_flags(Tm_window* win) {
+enum Tm_window_flags tm_win_get_flags(Tm_window* win) {
 	return win->flags;
 }

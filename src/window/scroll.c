@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "return.h"
 
-int tm_win_scroll(Tm_window* win, int amount, int direction) {
+int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction) {
 	_Bool new_buffer = 0;
 	int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
 	switch(direction) {
