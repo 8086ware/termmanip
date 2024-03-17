@@ -217,8 +217,8 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, int type); // Make child 
 
 void tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 
-void tm_win_attrib(Tm_window* win, uint32_t attrib, int state); // Set the window attribute
-uint32_t tm_win_get_attrib(Tm_window* win); // Get the window attribute
+void tm_win_attrib(Tm_window* win, enum Tm_attrib attrib, int state); // Set the window attribute
+enum Tm_attrib tm_win_get_attrib(Tm_window* win); // Get the window attribute
 
 void tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the window background
 
@@ -235,9 +235,9 @@ void tm_win_clear(Tm_window* win); // Clear win
 
 int tm_return(); // Return the most recent error
 
-int tm_win_scroll(Tm_window* win, int amount, int direction);
+int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction);
 
-uint16_t tm_win_get_flags(Tm_window* win);
+enum Tm_window_flags tm_win_get_flags(Tm_window* win);
 void tm_win_flags(Tm_window* win, uint16_t flags, int state);
 
 void tm_set_title(char* text);
