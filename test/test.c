@@ -1,4 +1,5 @@
 #include "termmanip.h"
+#include <stdlib.h>
 
 int main(void) {
 	int scr_x, scr_y;
@@ -19,7 +20,7 @@ int main(void) {
 		tm_win_print(win, "Termmanip Color Test");
 		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 0);
 
-		uint32_t color = rand() % 15;
+		int color = rand() % 15;
 
 		switch(color) {
 				case 0:
