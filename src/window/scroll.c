@@ -4,7 +4,9 @@
 
 int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction) {
 	_Bool new_buffer = 0;
+
 	int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
+
 	switch(direction) {
 		case TM_SCROLL_DOWN:
 			if(win->buffer_position_y + win->rows + amount > win->buffer_rows) {
@@ -52,7 +54,7 @@ int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction) {
 		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
 		if(win->buffer == NULL) {
-			tm_set_return(TM_OUT_OF_MEM);
+			tm_set_return(win->terminal, TM_OUT_OF_MEM);
 			return TM_ERROR;
 		}
 

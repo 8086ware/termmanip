@@ -31,7 +31,7 @@ Tm_window* tm_win_button_select(Tm_window* win) {
 			button_children = realloc(button_children, (button_children_amount + 1) * sizeof(Tm_window*));
 
 			if(button_children == NULL) {
-				tm_set_return(TM_OUT_OF_MEM);
+				tm_set_return(win->terminal, TM_OUT_OF_MEM);
 				return NULL;
 			}
 

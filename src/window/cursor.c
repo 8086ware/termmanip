@@ -23,7 +23,7 @@ int tm_win_cursor(Tm_window* win, int x, int y) {
 	}
 
 	else if(y < 0 || y > tm_win_get_buffer_rows(win) - 1 || x < 0 || x > tm_win_get_buffer_columns(win) - 1) {
-		tm_set_return(TM_INVALID_CURSOR);
+		tm_set_return(win->terminal, TM_INVALID_CURSOR);
 		return TM_ERROR;
 	}
 

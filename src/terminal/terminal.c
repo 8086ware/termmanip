@@ -17,7 +17,6 @@ Tm_terminal* tm_terminal() {
 	Tm_terminal* terminal = malloc(sizeof(Tm_terminal));
 
 	if(terminal == NULL) {
-		tm_set_return(TM_OUT_OF_MEM);
 		return NULL;
 	}
 
@@ -43,7 +42,7 @@ Tm_terminal* tm_terminal() {
 	terminal->physical_buffer = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	if(terminal->buffer == NULL || terminal->physical_buffer == NULL) {
-		tm_set_return(TM_OUT_OF_MEM);
+		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return NULL;
 	}	
 
@@ -58,7 +57,7 @@ Tm_terminal* tm_terminal() {
 	DWORD mode = 0;
 
 	if(GetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), &mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return NULL;
 	}
 
@@ -67,12 +66,12 @@ Tm_terminal* tm_terminal() {
 	mode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return NULL;
 	}
 
 	if(GetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), &mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return NULL;
 	}
 
@@ -86,7 +85,7 @@ Tm_terminal* tm_terminal() {
 	mode |= ENABLE_WINDOW_INPUT;
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return NULL;
 	}
 
@@ -133,12 +132,12 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	DWORD bytes_written = 0;
 	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), exit, strlen(exit), &bytes_written, NULL);
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), terminal->og_output_mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 
 	if(SetConsoleMode(GetStdHandle(STD_INPUT_HANDLE), terminal->og_input_mode) == 0) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
 	}
 #else

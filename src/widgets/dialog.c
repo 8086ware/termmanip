@@ -6,7 +6,7 @@
 
 int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...) {
 	if(option_amount == 0) {
-		tm_set_return(TM_DIALOG_NO_OPTIONS);
+		tm_set_return(win->terminal, TM_DIALOG_NO_OPTIONS);
 		return TM_ERROR;
 	}
 

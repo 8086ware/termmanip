@@ -145,6 +145,7 @@ typedef struct {
 	int signal_fd;
 #endif
 	_Bool resized;
+	int tm_return_number;
 } Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
@@ -233,7 +234,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 
 void tm_win_clear(Tm_window* win); // Clear win
 
-int tm_return(); // Return the most recent error
+int tm_return(Tm_terminal* terminal); // Return the most recent error
 
 int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction);
 

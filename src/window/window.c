@@ -7,7 +7,7 @@ Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows)
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
-		tm_set_return(TM_OUT_OF_MEM);
+		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return NULL;
 	}
 
@@ -42,7 +42,7 @@ Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows)
 	win->physical_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL) {
-		tm_set_return(TM_OUT_OF_MEM);
+		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return (struct Tm_window*)TM_ERROR;
 	}
 
@@ -81,7 +81,7 @@ int tm_win_free(Tm_window* win) {
 				win->parent->children_amount--;
 
 				if(win->parent->children == NULL && win->parent->children_amount != 0) {
-					tm_set_return(TM_OUT_OF_MEM);
+					tm_set_return(win->terminal, TM_OUT_OF_MEM);
 					return TM_ERROR;
 				}	
 			}

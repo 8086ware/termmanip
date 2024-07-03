@@ -46,7 +46,7 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->columns * win->rows);
 
 		if(win->buffer == NULL) {
-			tm_set_return(TM_OUT_OF_MEM);
+			tm_set_return(win->terminal, TM_OUT_OF_MEM);
 			return TM_ERROR;
 		}
 
