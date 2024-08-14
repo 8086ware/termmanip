@@ -108,7 +108,7 @@ Tm_terminal* tm_terminal() {
 	terminal->signal_fd = signalfd(-1, &mask, 0);
 
 	if(terminal->signal_fd == -1) {
-		tm_set_return(TM_COULDNT_INIT_TERM);
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return NULL;
 	}
 #endif
