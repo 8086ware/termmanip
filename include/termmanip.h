@@ -178,6 +178,7 @@ typedef struct Tm_window {
 
 Tm_terminal* tm_terminal();
 int tm_terminal_free(Tm_terminal* terminal);
+// Create and free terminals
 
 Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
@@ -187,9 +188,9 @@ void tm_get_termsize(int* x, int* y); // Gets the terminal size
 int tm_win_get_cursor_x(Tm_window* win);
 int tm_win_get_cursor_y(Tm_window* win);
 
-int tm_win_get_columns(Tm_window* win); // Gets a windows columns size
-int tm_win_get_rows(Tm_window* win); // Gets a windows rows size
-									 //
+int tm_win_get_columns(Tm_window* win); 
+int tm_win_get_rows(Tm_window* win); 
+									 
 int tm_win_get_pos_x(Tm_window* win);
 int tm_win_get_pos_y(Tm_window* win);
 
@@ -236,12 +237,13 @@ void tm_win_clear(Tm_window* win); // Clear win
 
 int tm_return(Tm_terminal* terminal); // Return the most recent error
 
-int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction);
+int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction); // Scroll window in certain direction. If no space is available, the window buffer extends itself.
 
-enum Tm_window_flags tm_win_get_flags(Tm_window* win);
-void tm_win_flags(Tm_window* win, uint16_t flags, int state);
+enum Tm_window_flags tm_win_get_flags(Tm_window* win); // Returns the windows flags
+void tm_win_flags(Tm_window* win, uint16_t flags, int state); // Adjusts the windows flags turning them on or off (can be combined with OR)
 
-void tm_set_title(char* text);
+void tm_set_title(char* text); // Set the terminal title
 
-void tm_win_input_timeout(Tm_window* win, int timeout);
+void tm_win_input_timeout(Tm_window* win, int timeout); // Set the input timeout
+
 #endif
