@@ -4,7 +4,7 @@
 int main(void) {
 	int scr_x, scr_y;
 	Tm_terminal* terminal = tm_terminal();
-	tm_get_scrsize(&scr_x, &scr_y);
+	tm_get_termsize(&scr_x, &scr_y);
 	Tm_window* win = tm_window(terminal, 0, 0, scr_x, scr_y);
 	
 	tm_set_title("Termmanip Test");
@@ -73,13 +73,13 @@ int main(void) {
 				break;
 		}
 
-		tm_get_scrsize(&scr_x, &scr_y);
+		tm_get_termsize(&scr_x, &scr_y);
 		
 		tm_win_fill(win, rand() % scr_x, rand() % scr_y, rand() % scr_x, rand() % scr_y, ' ', color);
 
 		Tm_input t = tm_win_input(win);
 		if(t.terminal_resized) {
-			tm_get_scrsize(&scr_x, &scr_y);
+			tm_get_termsize(&scr_x, &scr_y);
 			tm_win_modify(win, 0, 0, scr_x, scr_y, 1);
 		}
 

@@ -11,7 +11,7 @@ int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_a
 	}
 
 	int scr_x = 0, scr_y = 0;
-	tm_get_scrsize(&scr_x, &scr_y);
+	tm_get_termsize(&scr_x, &scr_y);
 
 	int columns = win->columns / 2;
 	int rows = win->rows / 2;
