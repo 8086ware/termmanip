@@ -13,7 +13,7 @@
 
 Tm_terminal* tm_terminal() {
 	int scr_columns, scr_rows;
-	tm_get_scrsize(&scr_columns, &scr_rows);
+	tm_get_termsize(&scr_columns, &scr_rows);
 	Tm_terminal* terminal = malloc(sizeof(Tm_terminal));
 
 	if(terminal == NULL) {

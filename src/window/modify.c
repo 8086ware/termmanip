@@ -5,7 +5,7 @@
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool resize_buffer) {
 	int scr_x, scr_y;
 
-	tm_get_scrsize(&scr_x, &scr_y);
+	tm_get_termsize(&scr_x, &scr_y);
 
 	if(rows <= 0) {
 		rows = 1;

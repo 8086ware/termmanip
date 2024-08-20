@@ -182,7 +182,7 @@ int tm_terminal_free(Tm_terminal* terminal);
 Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
-void tm_get_scrsize(int* x, int* y); // Gets the terminalsize
+void tm_get_termsize(int* x, int* y); // Gets the terminal size
 
 int tm_win_get_cursor_x(Tm_window* win);
 int tm_win_get_cursor_y(Tm_window* win);

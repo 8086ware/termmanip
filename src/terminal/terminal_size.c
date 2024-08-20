@@ -5,7 +5,7 @@
 #include <sys/ioctl.h>
 #endif
 
-void tm_get_scrsize(int* x, int* y) {
+void tm_get_termsize(int* x, int* y) {
 #ifdef _WIN32
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);

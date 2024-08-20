@@ -5,7 +5,7 @@
 
 int terminal_resize(Tm_terminal* terminal) {
 	int scr_x, scr_y;
-	tm_get_scrsize(&scr_x, &scr_y);
+	tm_get_termsize(&scr_x, &scr_y);
 
 	Tm_char* temp = malloc(sizeof(Tm_char) * terminal->columns * terminal->rows);
 
