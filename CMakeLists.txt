@@ -6,14 +6,13 @@ set(TERMMANIP_SOURCES src/terminal/makeoutput.c src/terminal/terminal_size.c src
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})
 
-target_include_directories(termmanip PRIVATE include)
+target_include_directories(termmanip PUBLIC include)
 
 install(TARGETS termmanip DESTINATION lib)
 install(FILES include/termmanip.h DESTINATION include)
 
 add_executable(termmanip_test test/test.c)
 target_link_libraries(termmanip_test termmanip)
-target_include_directories(termmanip_test PRIVATE include)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	target_compile_options(termmanip PRIVATE -Wall -fsanitize=address)
