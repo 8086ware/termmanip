@@ -157,6 +157,9 @@ typedef struct Tm_window {
 	int buffer_position_x, buffer_position_y, buffer_columns, buffer_rows;
 	int cursor_x, cursor_y;
 
+	char* name;
+	struct Tm_window* selected_child_window;
+
 	struct Tm_window* parent;
 	struct Tm_window** children;
 
@@ -180,7 +183,7 @@ Tm_terminal* tm_terminal();
 int tm_terminal_free(Tm_terminal* terminal);
 // Create and free terminals
 
-Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows); // Creates new window
+Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_termsize(int* x, int* y); // Gets the terminal size

@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <stdlib.h>
 #include "return.h"
+#include <string.h>
 
-Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows) {
+Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows) {
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {
@@ -17,6 +18,12 @@ Tm_window* tm_window(Tm_terminal* terminal, int x, int y, int columns, int rows)
 	
 	win->parent = NULL;
 	win->children = NULL;
+
+	win->selected_child_window = NULL;
+
+	win->name = malloc(strlen(name) + 1);
+	strcpy(win->name, name);
+	win->name[strlen(name) + 1] = '\0';
 
 	win->children_amount = 0;
 	win->child_type = TM_CHILD_NONE;
