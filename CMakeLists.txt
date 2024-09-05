@@ -11,7 +11,6 @@ set(TERMMANIP_SOURCES
 	src/window/modify.c 
 	src/window/update.c 
 	src/window/cursor.c 
-	src/window/border.c 
 	src/window/parent.c 
 	src/window/fill.c 
 	src/window/attrib.c 

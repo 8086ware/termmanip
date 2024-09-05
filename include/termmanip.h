@@ -85,6 +85,7 @@ enum Tm_window_flags {
 	TM_FLAG_TERMINAL_INPUT = 0b0000000001000000, 
 	TM_FLAG_WRAP_TEXT =      0b0000000010000000, 
 	TM_FLAG_CHILD_SELECT =   0b0000000100000000, 
+	TM_FLAG_BORDER       =   0b0000001000000000, 
 	TM_FLAG_ALL =            0b1111111111111111
 };
 
@@ -232,7 +233,6 @@ int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cur
 
 int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
 
-void tm_win_border(Tm_window* win); // Border a window
 int tm_win_parent(Tm_window* parent, Tm_window* child, enum Tm_child_type type); // Make child be a child to parent window
 
 void tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib

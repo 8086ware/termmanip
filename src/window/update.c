@@ -60,6 +60,29 @@ void tm_win_write_to_terminal(Tm_window* win) {
 			}
 		}
 
+		if(win->flags & TM_FLAG_BORDER) {
+			for(int i = -1; i < win->columns + 1; i++) {
+				terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y - 1, '\x71', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			}
+
+			for(int i = -1; i < win->columns + 1; i++) {
+				terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y + win->rows, '\x71', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			}
+
+			for(int i = -1; i < win->rows + 1; i++) {
+				terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y + i, '\x78', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			}
+
+			for(int i = -1; i < win->rows + 1; i++) {
+				terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + i, '\x78', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			}
+
+			terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y - 1, '\x6c', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y - 1, '\x6b', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y + win->rows, '\x6d', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+			terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + win->rows, '\x6a', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		}
+
 		win->terminal->flags = tm_win_get_flags(win);
 	}
 
