@@ -30,5 +30,7 @@ void tm_win_child_select(Tm_window* win, Tm_input* input) {
 				input->child_window_selected = 1;
 			}
 			break;
+		default:
+			break;
 	}
 }
