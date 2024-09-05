@@ -191,6 +191,10 @@ Tm_input tm_win_input(Tm_window* win) {
 		}
 	}
 
+	if(win->flags & TM_FLAG_CHILD_SELECT) {
+		tm_win_child_select(win, &input);
+	}
+
 	return input;
 }
 
