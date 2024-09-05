@@ -158,7 +158,10 @@ typedef struct Tm_window {
 	int cursor_x, cursor_y;
 
 	char* name;
+	int name_length;
+
 	struct Tm_window* selected_child_window;
+	int selected_child_window_id;
 
 	struct Tm_window* parent;
 	struct Tm_window** children;
