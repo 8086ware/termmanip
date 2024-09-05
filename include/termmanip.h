@@ -119,6 +119,8 @@ typedef struct {
 
 	int mouse_x;
 	int mouse_y;
+
+	_Bool child_window_selected;
 } Tm_input;
 
 typedef struct {
@@ -186,7 +188,7 @@ Tm_terminal* tm_terminal();
 int tm_terminal_free(Tm_terminal* terminal);
 // Create and free terminals
 
-Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows); // Creates new window
+Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_child_type child_type); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_termsize(int* x, int* y); // Gets the terminal size
