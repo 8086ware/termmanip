@@ -113,6 +113,8 @@ int tm_win_free(Tm_window* win) {
 	win->children = NULL;
 	free(win->buffer);
 	win->buffer = NULL;
+	free(win->name);
+	win->name = NULL;
 	free(win);
 
 	return 0;
