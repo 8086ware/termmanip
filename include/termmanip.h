@@ -9,9 +9,9 @@ enum Tm_return {TM_INVALID_CURSOR = 1, TM_DIALOG_NO_OPTIONS = 3, TM_INVALID_WIND
 // Child window types
 
 enum Tm_child_type {
-	TM_CHILD_NONE = 0,
-	TM_CHILD_NORMAL = 1,
-	TM_CHILD_BUTTON = 2,
+	TM_CHILD_NONE, 
+	TM_CHILD_NORMAL,
+	TM_CHILD_BUTTON,
 };
 
 enum Tm_attrib {
