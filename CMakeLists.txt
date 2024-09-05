@@ -29,6 +29,7 @@ set(TERMMANIP_SOURCES
 	src/title.c 
 	src/window/timeout.c 
 	src/window/process_esc_input.c 
+	src/window/child_select.c 
 )
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})
