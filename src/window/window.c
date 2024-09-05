@@ -71,6 +71,10 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	
 	tm_win_input_timeout(win, -1);
 
+	if(parent != NULL) {
+		tm_win_parent(parent, win, child_type);
+	}
+
 	return win;
 }
 
