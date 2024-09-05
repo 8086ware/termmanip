@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include "terminal.h"
-#include <ctype.h>
 #include "process_esc_input.h"
 #include <time.h>
 
