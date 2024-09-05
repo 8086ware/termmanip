@@ -11,10 +11,8 @@ int tm_win_parent(Tm_window* parent, Tm_window* child, enum Tm_child_type type) 
 			tm_win_cursor(child, child->columns / 2 - child->name_length / 2, child->rows / 2);
 			tm_win_print(child, "%s", child->name);
 			break;
-		case TM_CHILD_TEXTBOX:
-			tm_win_print(child, "%s", child->name);
+		default:
 			break;
-		break;
 	}
 	
 	parent->children = realloc(parent->children, (parent->children_amount + 1) * sizeof(Tm_window*));
