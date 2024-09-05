@@ -5,10 +5,9 @@ int main(void) {
 	int scr_x, scr_y;
 	Tm_terminal* terminal = tm_terminal();
 	tm_get_termsize(&scr_x, &scr_y);
-	Tm_window* win = tm_window(terminal, 0, 0, scr_x, scr_y);
+	Tm_window* win = tm_window(terminal, "window", 0, 0, scr_x, scr_y, NULL, TM_CHILD_NONE);
 	
 	tm_set_title("Termmanip Test");
-	tm_win_dialog(win, "Test", "Testing", 2, "Ok", "No");
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
 	tm_win_flags(win, TM_FLAG_TERMINAL_INPUT, 1);
 	tm_win_input_timeout(win, 0);
