@@ -15,18 +15,22 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	win->terminal = terminal;
 
 	win->buffer = NULL;
-	
-	win->parent = NULL;
+
 	win->children = NULL;
 
 	win->selected_child_window = NULL;
+	win->selected_child_window_id = 0;
+
+	win->children_amount = 0;
+
+	win->parent = NULL;
+
+	win->child_type = TM_CHILD_NONE;
 
 	win->name = malloc(strlen(name) + 1);
 	strcpy(win->name, name);
-	win->name[strlen(name) + 1] = '\0';
-
-	win->children_amount = 0;
-	win->child_type = TM_CHILD_NONE;
+	win->name[strlen(name)] = '\0';
+	win->name_length = strlen(name) + 1;
 
 	win->flags = 0;
 
