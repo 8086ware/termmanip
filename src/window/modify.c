@@ -31,6 +31,12 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		rows -= scr_y - (y + rows);
 	}
 
+	int flags = win->flags;
+
+	tm_win_flags(win, TM_ATTRIB_ALL, 0);
+
+	update_terminal_flags(win);
+
 	win->position_x = x;
 	win->position_y = y;
 
@@ -65,6 +71,10 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 			tm_win_scroll(win, (win->buffer_position_y + rows) - win->buffer_rows, TM_SCROLL_DOWN);
 		}
 	}
+
+	tm_win_flags(win, flags, 1);
+
+	update_terminal_flags(win);
 
 	return 0;
 }
