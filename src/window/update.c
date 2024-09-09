@@ -26,7 +26,7 @@ void tm_win_write_to_terminal(Tm_window* win) {
 	// Update win->terminal flags
 
 	if(win->flags != win->terminal->flags) {
-		update_terminal_flags(win, parent_x, parent_y);
+		update_terminal_flags(win);
 	}
 
 	// Loop through window and put its buffer on the win->terminal buffer
