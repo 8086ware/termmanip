@@ -5,16 +5,19 @@ int main(void) {
 	int scr_x, scr_y;
 	Tm_terminal* terminal = tm_terminal();
 	tm_get_termsize(&scr_x, &scr_y);
-	Tm_window* win = tm_window(terminal, "window", 0, 0, scr_x, scr_y, NULL, TM_CHILD_NONE);
+	scr_x -= 2;
+	scr_y -= 2;
+	Tm_window* win = tm_window(terminal, "window", 1, 1, scr_x, scr_y, NULL, TM_CHILD_NONE);
 	
 	tm_set_title("Termmanip Test");
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);
 	tm_win_flags(win, TM_FLAG_TERMINAL_INPUT, 1);
 	tm_win_input_timeout(win, 0);
 
+	tm_win_flags(win, TM_FLAG_BORDER, 1);
+
 	while(1) {
 		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 1);
-		tm_win_border(win);
 		tm_win_cursor(win, 1, 0);
 		tm_win_print(win, "Termmanip Color Test");
 		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 0);
@@ -79,7 +82,9 @@ int main(void) {
 		Tm_input t = tm_win_input(win);
 		if(t.terminal_resized) {
 			tm_get_termsize(&scr_x, &scr_y);
-			tm_win_modify(win, 0, 0, scr_x, scr_y, 1);
+			scr_x -= 2;
+			scr_y -= 2;
+			tm_win_modify(win, 1, 1, scr_x, scr_y, 1);
 		}
 
 		else if(t.key == TM_KEY_Q) {
