@@ -1,5 +1,6 @@
 #include "termmanip.h"
 #include "terminal.h"
+#include <stdlib.h>
 
 void update_terminal_flags(Tm_window* win) {
 	Tm_window* parent = win->parent;
