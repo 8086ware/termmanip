@@ -107,6 +107,8 @@ typedef struct {
 // the characters and attributes to be written at an x,y, it has an attrib variable which identifies the last attribute used, an output char array which is
 // the output to be put on terminal (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
+typedef struct Tm_window Tm_window;
+
 typedef struct {
 	_Bool ctrl_down;
 	_Bool alt_down;
@@ -159,6 +161,8 @@ typedef struct {
 #endif
 	_Bool resized;
 	int tm_return_number;
+	
+	Tm_window* last_updated_window;
 } Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),

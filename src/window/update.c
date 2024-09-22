@@ -83,6 +83,8 @@ void tm_win_write_to_terminal(Tm_window* win) {
 		}	
 	}
 
+	win->terminal->last_updated_window = win;
+
 	for(int i = 0; i < win->children_amount; i++) {
 		tm_win_write_to_terminal(win->children[i]);
 	}

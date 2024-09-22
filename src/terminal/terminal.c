@@ -122,6 +122,8 @@ Tm_terminal* tm_terminal() {
 #else
 	write(fileno(stdout), init, strlen(init));
 #endif
+
+	terminal->last_updated_window = NULL;
 	return terminal;
 }
 
