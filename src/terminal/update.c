@@ -22,12 +22,8 @@ void tm_terminal_update(Tm_terminal* terminal) {
 		terminal->last_updated_y = terminal->cursor_y;
 	}
 
-#ifdef _WIN32
-	DWORD bytes_written = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), terminal->output, terminal->output_len, &bytes_written, NULL);
-#else
 	write(fileno(stdout), terminal->output, terminal->output_len);
-#endif
+
 	free(terminal->output);
 	terminal->output_len = 0;
 	terminal->output = NULL;

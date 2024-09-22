@@ -99,6 +99,7 @@ Tm_terminal* tm_terminal() {
 
 	tcsetattr(fileno(stdin), TCSANOW, &term);
 #endif
+
 #ifndef _WIN32
 	sigset_t mask;
 	sigemptyset(&mask);
@@ -114,14 +115,10 @@ Tm_terminal* tm_terminal() {
 #endif
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
-
 #ifdef _WIN32
-	DWORD bytes_written = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), init, strlen(init), &bytes_written, NULL);
 	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-#else
-	write(fileno(stdout), init, strlen(init));
 #endif
+	write(fileno(stdout), init, strlen(init));
 
 	terminal->last_updated_window = NULL;
 	return terminal;
@@ -130,9 +127,8 @@ Tm_terminal* tm_terminal() {
 int tm_terminal_free(Tm_terminal* terminal) {
 	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l\x1b[?1003l\x1b[?1006l";
 
+	write(fileno(stdout), exit, strlen(exit));
 #ifdef _WIN32
-	DWORD bytes_written = 0;
-	WriteConsole(GetStdHandle(STD_OUTPUT_HANDLE), exit, strlen(exit), &bytes_written, NULL);
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), terminal->og_output_mode) == 0) {
 		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
 		return TM_ERROR;
@@ -143,13 +139,12 @@ int tm_terminal_free(Tm_terminal* terminal) {
 		return TM_ERROR;
 	}
 #else
-	write(fileno(stdout), exit, strlen(exit));
-
 	tcsetattr(fileno(stdin), TCSANOW, &terminal->og_term);
 	tcsetattr(fileno(stdout), TCSANOW, &terminal->og_term);
 
 	close(terminal->signal_fd);
 #endif
+
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal->physical_buffer);
@@ -157,6 +152,7 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	free(terminal);
 
 	terminal = NULL;
+
 
 	return 0;
 }
