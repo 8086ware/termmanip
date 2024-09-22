@@ -1,6 +1,7 @@
 #include "termmanip.h"
 #include <stdlib.h>
 #include "return.h"
+#include "terminal.h"
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool resize_buffer) {
 	int scr_x, scr_y;
