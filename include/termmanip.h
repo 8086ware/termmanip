@@ -14,6 +14,8 @@ enum Tm_child_type {
 	TM_CHILD_BUTTON,
 };
 
+// Tm_char attributes
+
 enum Tm_attrib {
 	TM_ATTRIB_FG_MASK =            0b00000000111111110000000000000000,
 	TM_ATTRIB_BG_MASK =            0b11111111000000000000000000000000,
@@ -67,6 +69,8 @@ enum Tm_attrib {
 	TM_ATTRIB_ALL             =    0b11111111111111111111111111111111
 };
 
+// Scroll directions
+
 enum Tm_scroll {
 	TM_SCROLL_UP = 0,
 	TM_SCROLL_DOWN = 1,
@@ -107,7 +111,7 @@ typedef struct {
 // the characters and attributes to be written at an x,y, it has an attrib variable which identifies the last attribute used, an output char array which is
 // the output to be put on terminal (usually a bunch of ansi escape codes), uint16_t flags which is the last window updated flags.
 
-typedef struct Tm_window Tm_window;
+typedef struct Tm_window Tm_window; // Struct prototype to include Tm_window in Tm_terminal
 
 typedef struct {
 	_Bool ctrl_down;
@@ -135,6 +139,8 @@ typedef struct {
 
 	_Bool child_window_selected;
 } Tm_input;
+
+// Tm_input structure holds input information returned by tm_win_input
 
 typedef struct {
 	int columns, rows;

@@ -32,6 +32,8 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		rows -= scr_y - (y + rows);
 	}
 
+	// Save flags and turn them all off when modifying the window, for example TM_FLAG_BORDER which needs to be removed when modifying a window
+
 	int flags = win->flags;
 
 	tm_win_flags(win, TM_ATTRIB_ALL, 0);
@@ -73,6 +75,7 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		}
 	}
 
+	// Turn all the flags previously had on and update the terminal flags
 	tm_win_flags(win, flags, 1);
 
 	update_terminal_flags(win);

@@ -3,7 +3,7 @@
 #include "return.h"
 
 int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction) {
-	_Bool new_buffer = 0;
+	_Bool new_buffer = 0; // This is turned on when the window buffer needs to be extended
 
 	int og_cols = win->buffer_columns, og_rows = win->buffer_rows;
 
@@ -50,9 +50,8 @@ int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction) {
 			temp[i] = win->buffer[i];
 		}
 
-
 		win->buffer = realloc(win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
-
+		
 		if(win->buffer == NULL) {
 			tm_set_return(win->terminal, TM_OUT_OF_MEM);
 			return TM_ERROR;
