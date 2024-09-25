@@ -68,7 +68,7 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 1);
 
 	tm_win_cursor(win, 0, 0);
-	
+
 	tm_win_input_timeout(win, -1);
 
 	if(parent != NULL) {
@@ -83,28 +83,36 @@ int tm_win_free(Tm_window* win) {
 		return 0;
 	}
 
+	// Remove win from its parents child window array if it is a child
+
+	int win_parent_child_id = 0;
+
 	if(win->child_type != TM_CHILD_NONE) {
 		for(int i = 0; i < win->parent->children_amount; i++) {
 			if(win->parent->children[i] == win) {
-				Tm_window* temp = win->parent->children[win->parent->children_amount - 1];
-
-				win->parent->children[win->parent->children_amount - 1] = win;
-				win->parent->children[i] = temp;
-
-				win->parent->children = realloc(win->parent->children, sizeof(Tm_window) * (win->parent->children_amount - 1));
-
-				win->parent->children_amount--;
-
-				if(win->parent->children == NULL && win->parent->children_amount != 0) {
-					tm_set_return(win->terminal, TM_OUT_OF_MEM);
-					return TM_ERROR;
-				}	
+				i = win_parent_child_id;
+				break;
 			}
 		}
+
+		for(int i = win_parent_child_id; i < win->parent->children_amount - 1; i++) {
+			win->parent->children[i] = win->parent->children[i + 1];
+		}
+
+		win->parent->children = realloc(win->parent->children, sizeof(Tm_window*) * win->parent->children_amount - 1);
+
+		if(win->parent->children == NULL) {
+			tm_set_return(win->terminal, TM_OUT_OF_MEM);
+			return TM_ERROR;
+		}
+		
+		win->parent->children_amount--;
 	}
 
-	for(int i = 0; i < win->children_amount; i++) {
-		tm_win_free(win->children[i]);
+	int total_child_window_amount = win->children_amount;
+
+	for(int i = 0; i < total_child_window_amount; i++) {
+		tm_win_free(win->children[0]);
 	}
 
 	free(win->physical_buffer);
