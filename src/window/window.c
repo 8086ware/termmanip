@@ -52,7 +52,7 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	win->buffer = malloc(sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 	win->physical_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
-	if(win->buffer == NULL) {
+	if(win->buffer == NULL || win->physical_buffer == NULL) {
 		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return (struct Tm_window*)TM_ERROR;
 	}
