@@ -28,6 +28,12 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	win->child_type = TM_CHILD_NONE;
 
 	win->name = malloc(strlen(name) + 1);
+
+	if (win->name == NULL) {
+		tm_set_return(terminal, TM_OUT_OF_MEM);
+		return (struct Tm_window*)TM_ERROR;
+	}
+
 	strcpy(win->name, name);
 	win->name[strlen(name)] = '\0';
 	win->name_length = strlen(name) + 1;
