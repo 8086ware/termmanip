@@ -4,7 +4,7 @@
 #define TM_ERROR -1
 
 // Error types
-enum Tm_return {TM_INVALID_CURSOR = 1, TM_DIALOG_NO_OPTIONS = 3, TM_INVALID_WINDOW_SIZE = 4, TM_OUT_OF_MEM = 5, TM_COULDNT_INIT_TERM = 6};
+enum Tm_return {TM_INVALID_CURSOR = 1, TM_INVALID_WINDOW_SIZE = 4, TM_OUT_OF_MEM = 5, TM_COULDNT_INIT_TERM = 6};
 
 // Child window types
 
@@ -255,11 +255,6 @@ void tm_win_background(Tm_window* win, char ch, uint32_t attrib); // Set the win
 Tm_input tm_win_input(Tm_window* win); // Get a single char and return it
 void tm_win_input_str(Tm_window* win, char* str, int max_size); // Get a string
 void tm_win_input_strf(Tm_window* win, char* str, ...);
-															   
-Tm_window* tm_win_button(Tm_window* win, int x, int y, int columns, int rows, char* text); // Put a button in the window
-Tm_window* tm_win_button_select(Tm_window* win); // Start selecting buttons
-
-int tm_win_dialog(Tm_window* win, char* title, char* message, const int option_amount, ...); // Make a new dialog in win
 
 void tm_win_clear(Tm_window* win); // Clear win
 
