@@ -206,6 +206,8 @@ typedef struct Tm_window {
 	enum Tm_attrib attrib;
 
 	int input_timeout;
+
+	int wrapped_lines;
 } Tm_window;
 
 Tm_terminal* tm_terminal();
