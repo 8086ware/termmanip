@@ -72,23 +72,4 @@ void update_terminal_flags(Tm_window* win) {
 		terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + win->rows, '\x6a', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
 	}
 
-	else if ((win->flags & TM_FLAG_BORDER) == 0 && win->terminal->last_updated_window == win) {
-		for (int i = -1; i < win->columns + 1; i++) {
-			terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y - 1, ' ', 0);
-		}
-
-		for (int i = -1; i < win->columns + 1; i++) {
-			terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y + win->rows, ' ', 0);
-		}
-
-		for (int i = -1; i < win->rows + 1; i++) {
-			terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y + i, ' ', 0);
-		}
-
-		for (int i = -1; i < win->rows + 1; i++) {
-			terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + i, ' ', 0);
-		}
-	}
-
-	win->terminal->flags = win->flags;
 }
