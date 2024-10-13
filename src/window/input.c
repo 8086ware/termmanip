@@ -18,7 +18,7 @@ Tm_input tm_win_input(Tm_window* win) {
 	input.key = TM_KEY_NONE;
 	_Bool read_input = 0;
 
-	tm_win_update(win);
+	tm_terminal_update(win->terminal);
 
 	if(win->terminal->resized) {
 		if(win->flags & TM_FLAG_TERMINAL_INPUT) {
@@ -187,7 +187,7 @@ Tm_input tm_win_input(Tm_window* win) {
 				return input;
 			}
 
-			tm_win_update(win);
+			tm_terminal_update(win->terminal);
 		}
 	}
 
@@ -232,7 +232,7 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 				tm_win_putch(win, tm_win_get_background(win).disp, tm_win_get_background(win).attrib);
 				tm_win_cursor(win, tempX - 1, tempY);
 
-				tm_win_update(win);
+				tm_terminal_update(win->terminal);
 
 				continue;
 			}
@@ -245,7 +245,7 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 					i++;
 				}
 
-				tm_win_update(win);
+				tm_terminal_update(win->terminal);
 			}
 		}
 	}
