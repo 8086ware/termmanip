@@ -13,6 +13,43 @@
 #endif
 
 void tm_terminal_update(Tm_terminal* terminal) {
+	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
+		terminal_write(terminal, i, 0, ' ', 0);
+	}
+
+	int parent_x = 0;
+	int parent_y = 0;
+
+	Tm_window* parent = NULL;
+
+	for(int i = 0; i < terminal->window_amount; i++) {
+		parent = terminal->windows[i]->parent;
+
+		while(parent != NULL) {	
+			parent_x += parent->position_x;
+			parent_y += parent->position_y;
+
+			parent = parent->parent;
+		}
+
+		terminal_write_win_to_terminal(terminal->windows[i], parent_x, parent_y);
+
+		parent_x = 0;
+		parent_y = 0;
+	}
+
+	parent = terminal->last_updated_window->parent;
+
+	while(parent != NULL) {	
+		parent_x += parent->position_x;
+		parent_y += parent->position_y;
+
+		parent = parent->parent;
+	}
+
+	terminal->cursor_x = terminal->last_updated_window->cursor_x - terminal->last_updated_window->buffer_position_x + terminal->last_updated_window->position_x + parent_x;
+	terminal->cursor_y = terminal->last_updated_window->cursor_y - terminal->last_updated_window->buffer_position_y + terminal->last_updated_window->position_y + parent_y + terminal->last_updated_window->wrapped_lines;
+
 	terminal_make_output(terminal);
 
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {

@@ -1,6 +1,4 @@
 #include "termmanip.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include "terminal.h"
 
 #ifdef _WIN32
@@ -10,19 +8,7 @@
 #include <termios.h>
 #endif
 
-void tm_win_write_to_terminal(Tm_window* win) {
-	int parent_x = 0;
-	int parent_y = 0;
-
-	Tm_window* parent = win->parent;
-
-	while(parent != NULL) {	
-		parent_x += tm_win_get_pos_x(parent);
-		parent_y += tm_win_get_pos_y(parent);
-
-		parent = parent->parent;
-	}
-
+void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) {
 	// Update win->terminal flags
 
 	if(win->flags != win->terminal->flags) {
@@ -78,9 +64,6 @@ void tm_win_write_to_terminal(Tm_window* win) {
 		}
 	}
 
-	win->terminal->cursor_x = tm_win_get_cursor_x(win) - tm_win_get_buffer_pos_x(win) + tm_win_get_pos_x(win) + parent_x, 
-	win->terminal->cursor_y = tm_win_get_cursor_y(win) + wrapped_lines - tm_win_get_buffer_pos_y(win) + tm_win_get_pos_y(win) + parent_y;
-
 	// Loop through window and put its buffer on the win->terminal buffer
 
 	for(int y = 0; y < win->rows; y++) {
@@ -92,15 +75,5 @@ void tm_win_write_to_terminal(Tm_window* win) {
 			terminal_write(win->terminal, (tm_win_get_pos_x(win) + parent_x + x), (tm_win_get_pos_y(win) + parent_y + y), ch.disp, ch.attrib);
 		}	
 	}
-
-	win->terminal->last_updated_window = win;
-
-	for(int i = 0; i < win->children_amount; i++) {
-		tm_win_write_to_terminal(win->children[i]);
-	}
 }
 
-void tm_win_update(Tm_window* win) {
-	tm_win_write_to_terminal(win);
-	tm_terminal_update(win->terminal);
-}
