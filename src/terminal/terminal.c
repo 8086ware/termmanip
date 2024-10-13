@@ -20,6 +20,9 @@ Tm_terminal* tm_terminal() {
 		return NULL;
 	}
 
+	terminal->windows = NULL;
+	terminal->window_amount = 0;
+
 	terminal->columns = scr_columns;
 	terminal->rows = scr_rows;
 
@@ -148,6 +151,7 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal->physical_buffer);
+	free(terminal->windows);
 
 	free(terminal);
 

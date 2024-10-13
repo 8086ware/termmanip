@@ -169,6 +169,9 @@ typedef struct {
 	int tm_return_number;
 	
 	Tm_window* last_updated_window;
+
+	Tm_window** windows;
+	int window_amount;
 } Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
