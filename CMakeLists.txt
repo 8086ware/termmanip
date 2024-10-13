@@ -9,7 +9,6 @@ set(TERMMANIP_SOURCES
 	src/window/window.c 
 	src/window/print.c 
 	src/window/modify.c 
-	src/window/update.c 
 	src/window/cursor.c 
 	src/window/parent.c 
 	src/window/fill.c 
@@ -30,6 +29,7 @@ set(TERMMANIP_SOURCES
 	src/window/process_esc_input.c 
 	src/window/child_select.c 
 	src/terminal/update_flags.c
+	src/terminal/win_write.c
 )
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})
