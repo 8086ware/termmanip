@@ -9,11 +9,47 @@
 #endif
 
 void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) {
-	// Update win->terminal flags
+	if (win->flags & TM_FLAG_SHADOW) {
+		for (int y = 1; y < tm_win_get_rows(win); y++) {
+			Tm_char ch;
+			ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
+			ch.disp = win->terminal->buffer[(y + tm_win_get_pos_y(win)) * win->terminal->columns + (tm_win_get_columns(win) + tm_win_get_pos_x(win))].disp;
 
-	if(win->flags != win->terminal->flags) {
-		update_terminal_flags(win);
+			terminal_write(win->terminal, tm_win_get_pos_x(win) + tm_win_get_columns(win) + parent_x, tm_win_get_pos_y(win) + y + parent_y, ch.disp, ch.attrib);
+		}
+
+		for (int x = 1; x < tm_win_get_columns(win) + 1; x++) {
+			Tm_char ch;
+			ch.attrib = TM_ATTRIB_BG_BLACK | TM_ATTRIB_FG_BRIGHTBLACK;
+			ch.disp = win->terminal->buffer[(tm_win_get_rows(win) + tm_win_get_pos_y(win)) * win->terminal->columns + (x + tm_win_get_pos_x(win))].disp;
+
+			terminal_write(win->terminal, tm_win_get_pos_x(win) + x + parent_x, tm_win_get_pos_y(win) + tm_win_get_rows(win) + parent_y, ch.disp, ch.attrib);
+		}
 	}
+
+	if (win->flags & TM_FLAG_BORDER) {
+		for (int i = -1; i < win->columns + 1; i++) {
+			terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y - 1, '\x71', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		}
+
+		for (int i = -1; i < win->columns + 1; i++) {
+			terminal_write(win->terminal, parent_x + win->position_x + i, parent_y + win->position_y + win->rows, '\x71', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		}
+
+		for (int i = -1; i < win->rows + 1; i++) {
+			terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y + i, '\x78', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		}
+
+		for (int i = -1; i < win->rows + 1; i++) {
+			terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + i, '\x78', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		}
+
+		terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y - 1, '\x6c', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y - 1, '\x6b', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		terminal_write(win->terminal, parent_x + win->position_x - 1, parent_y + win->position_y + win->rows, '\x6d', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+		terminal_write(win->terminal, parent_x + win->position_x + win->columns, parent_y + win->position_y + win->rows, '\x6a', win->background_tm_char.attrib | TM_ATTRIB_ALTERNATE);
+	}
+
 
 	for(int i = 0; i < win->columns * win->rows; i++) {
 		win->physical_buffer[i] = tm_win_get_background(win);
