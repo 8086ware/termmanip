@@ -118,12 +118,13 @@ Tm_terminal* tm_terminal() {
 #endif
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
-#ifdef _WIN32
-	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-#endif
+
 	write(fileno(stdout), init, strlen(init));
 
 	terminal->last_updated_window = NULL;
+#ifdef _WIN32
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+#endif
 	return terminal;
 }
 
