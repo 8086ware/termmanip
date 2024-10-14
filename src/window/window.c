@@ -14,6 +14,20 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	win->terminal = terminal;
 
+	Tm_window** windows_temp = NULL;
+	windows_temp = realloc(terminal->windows, sizeof(Tm_window*) * (terminal->window_amount + 1));
+
+	if(windows_temp == NULL) {
+		tm_set_return(terminal, TM_OUT_OF_MEM);
+		return (struct Tm_window*)TM_ERROR;
+	}
+
+	terminal->windows = windows_temp;
+
+	terminal->window_amount++;
+
+	terminal->windows[terminal->window_amount - 1] = win;
+
 	win->buffer = NULL;
 
 	win->children = NULL;
