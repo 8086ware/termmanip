@@ -47,6 +47,24 @@ void tm_terminal_update(Tm_terminal* terminal) {
 		parent = parent->parent;
 	}
 
+	if (terminal->last_updated_window->flags & TM_FLAG_CURSOR_VISIBLE && (terminal->flags & TM_FLAG_CURSOR_VISIBLE) == 0) {
+		terminal_append_output(terminal, "\x1b[?25h");
+	}
+
+	else if ((terminal->last_updated_window->flags & TM_FLAG_CURSOR_VISIBLE) == 0 && terminal->flags & TM_FLAG_CURSOR_VISIBLE) {
+		terminal_append_output(terminal, "\x1b[?25l");
+	}
+
+	if (terminal->last_updated_window->flags & TM_FLAG_MOUSE_INPUT && (terminal->flags & TM_FLAG_MOUSE_INPUT) == 0) {
+		terminal_append_output(terminal, "\x1b[?1003h\x1b[?1006h");
+	}
+
+	else if ((terminal->last_updated_window->flags & TM_FLAG_MOUSE_INPUT) == 0 && terminal->flags & TM_FLAG_MOUSE_INPUT) {
+		terminal_append_output(terminal, "\x1b[?1003l\x1b[?1006l");
+	}
+
+	terminal->flags = terminal->last_updated_window->flags;
+
 	terminal->cursor_x = terminal->last_updated_window->cursor_x - terminal->last_updated_window->buffer_position_x + terminal->last_updated_window->position_x + parent_x;
 	terminal->cursor_y = terminal->last_updated_window->cursor_y - terminal->last_updated_window->buffer_position_y + terminal->last_updated_window->position_y + parent_y + terminal->last_updated_window->wrapped_lines;
 
