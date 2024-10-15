@@ -84,7 +84,6 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 		}
 	}
 
-	win->terminal->last_updated_window = win;
 	return ret;
 }
 
