@@ -25,6 +25,10 @@ int terminal_resize(Tm_terminal* terminal) {
 	clear_ch.disp = ' ';
 	clear_ch.attrib = 0;
 
+#ifdef _WIN32
+	terminal->flags |= TM_FLAG_CURSOR_VISIBLE; // On windows cursor becomes visible when resizing window
+#endif
+
 	memset(terminal->physical_buffer, &clear_ch, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	tm_terminal_update(terminal);
