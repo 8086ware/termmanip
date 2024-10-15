@@ -67,7 +67,7 @@ int tm_terminal_update(Tm_terminal* terminal) {
 
 			if (terminal->windows[i]->physical_window->buffer == NULL) {
 				tm_set_return(terminal, TM_OUT_OF_MEM);
-				return;
+				return TM_ERROR;
 			}
 
 			memcpy(terminal->windows[i]->physical_window->buffer, terminal->windows[i]->buffer, sizeof(Tm_char) * terminal->windows[i]->buffer_columns * terminal->windows[i]->buffer_rows);

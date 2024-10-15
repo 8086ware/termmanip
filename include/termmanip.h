@@ -241,7 +241,7 @@ Tm_char tm_win_get_background(Tm_window* win);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool resize_buffer); // Modifies a windows x, y, columns and rows
 
-void tm_terminal_update(Tm_terminal* terminal); // Puts the internal terminal onto the terminal
+int tm_terminal_update(Tm_terminal* terminal); // Puts the internal terminal onto the terminal
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
 int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute
