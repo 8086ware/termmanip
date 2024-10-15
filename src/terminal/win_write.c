@@ -9,6 +9,12 @@
 #endif
 
 void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) {
+	Tm_char* result_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
+
+	if (result_buffer == NULL) {
+		return;
+	}
+
 	if (win->flags & TM_FLAG_SHADOW) {
 		for (int y = 1; y < tm_win_get_rows(win); y++) {
 			Tm_char ch;
@@ -52,7 +58,7 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 
 
 	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->physical_buffer[i] = tm_win_get_background(win);
+		result_buffer[i] = tm_win_get_background(win);
 	}
 
 	win->wrapped_lines = 0;
@@ -63,7 +69,7 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 				// If the beginning of a line in the physical buffer (which is always win->columns * win->rows) has something written to it after 
 				// that means the row has wrapped and it will keep checking each extra row if it has wrapped again and increase wrapped_lines
 
-				if(win->physical_buffer[((y + win->wrapped_lines) - win->buffer_position_y) * win->columns].disp != tm_win_get_background(win).disp || win->physical_buffer[((y + win->wrapped_lines) - win->buffer_position_y) * win->columns].attrib != tm_win_get_background(win).attrib) {
+				if(result_buffer[((y + win->wrapped_lines) - win->buffer_position_y) * win->columns].disp != tm_win_get_background(win).disp || result_buffer[((y + win->wrapped_lines) - win->buffer_position_y) * win->columns].attrib != tm_win_get_background(win).attrib) {
 					win->wrapped_lines++;
 				}
 
@@ -85,7 +91,7 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 					ch.attrib = win->buffer[y * tm_win_get_buffer_columns(win) + x].attrib;
 
 					if(ch.disp != tm_win_get_background(win).disp || ch.attrib != tm_win_get_background(win).attrib) {
-						win->physical_buffer[(y + win->wrapped_lines - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = ch;
+						result_buffer[(y + win->wrapped_lines - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = ch;
 					}
 				}
 			}
@@ -95,7 +101,7 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 	else {
 		for(int y = win->buffer_position_y; y < win->buffer_position_y + win->rows; y++){ 
 			for(int x = win->buffer_position_x; x < win->buffer_position_x + win->columns; x++){ 
-				win->physical_buffer[(y - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = win->buffer[y * win->buffer_columns + x];
+				result_buffer[(y - win->buffer_position_y) * win->columns + (x - win->buffer_position_x)] = win->buffer[y * win->buffer_columns + x];
 			}
 		}
 	}
@@ -105,11 +111,13 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 	for(int y = 0; y < win->rows; y++) {
 		for(int x = 0; x < win->columns; x++) {
 			Tm_char ch;
-			ch.disp = win->physical_buffer[y * tm_win_get_columns(win) + x].disp;
-			ch.attrib = win->physical_buffer[y * tm_win_get_columns(win) + x].attrib;
+			ch.disp = result_buffer[y * tm_win_get_columns(win) + x].disp;
+			ch.attrib = result_buffer[y * tm_win_get_columns(win) + x].attrib;
 
 			terminal_write(win->terminal, (tm_win_get_pos_x(win) + parent_x + x), (tm_win_get_pos_y(win) + parent_y + y), ch.disp, ch.attrib);
 		}	
 	}
+
+	free(result_buffer);
 }
 
