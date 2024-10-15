@@ -12,7 +12,32 @@
 #include <unistd.h>
 #endif
 
-void tm_terminal_update(Tm_terminal* terminal) {
+int tm_terminal_update(Tm_terminal* terminal) {
+#ifdef _WIN32
+	INPUT_RECORD input;
+	DWORD bytes_read;
+	PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
+
+	if (bytes_read > 0 && input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
+		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
+		terminal_resize(terminal);
+		terminal->resized = 1;
+	}
+#else
+	struct pollfd signal_poll;
+	signal_poll.fd = terminal->signal_fd;
+	signal_poll.events = POLLIN;
+
+	poll(&signal_poll, 1, 0);
+
+	if (signal_poll.revents & POLLIN) {
+		char buf[1024];
+		read(terminal->signal_fd, &buf, 1024);
+		terminal_resize(terminal);
+		terminal->resized = 1;
+	}
+#endif
+
 	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
 		terminal_write(terminal, i, 0, ' ', 0);
 	}
@@ -112,30 +137,5 @@ void tm_terminal_update(Tm_terminal* terminal) {
 	terminal->output = NULL;
 
 	memcpy(terminal->physical_buffer, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
-
-#ifdef _WIN32
-	INPUT_RECORD input;
-	DWORD bytes_read;
-	PeekConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
-
-	if(bytes_read > 0 && input.EventType == WINDOW_BUFFER_SIZE_EVENT) {
-		ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &input, 1, &bytes_read);
-		terminal_resize(terminal);
-		terminal->resized = 1;
-	}
-#else
-	struct pollfd signal_poll;
-	signal_poll.fd = terminal->signal_fd;
-	signal_poll.events = POLLIN;
-
-	poll(&signal_poll, 1, 0);
-
-	if(signal_poll.revents & POLLIN) {
-		char buf[1024];
-		read(terminal->signal_fd, &buf, 1024);
-		terminal_resize(terminal);
-		terminal->resized = 1;
-	}
-#endif
 }
 
