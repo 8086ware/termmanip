@@ -23,17 +23,45 @@ void tm_terminal_update(Tm_terminal* terminal) {
 	Tm_window* parent = NULL;
 
 	for(int i = 0; i < terminal->window_amount; i++) {
-		parent = terminal->windows[i]->parent;
+		if(terminal->windows[i]->update) {
+			parent = terminal->windows[i]->parent;
 
-		while(parent != NULL) {	
-			parent_x += parent->position_x;
-			parent_y += parent->position_y;
+			while (parent != NULL) {
+				parent_x += parent->position_x;
+				parent_y += parent->position_y;
 
-			parent = parent->parent;
+				parent = parent->parent;
+			}
+
+			Tm_char* temp_physical_window_buffer = terminal->windows[i]->physical_window->buffer;
+
+			memcpy(terminal->windows[i]->physical_window, terminal->windows[i], sizeof(Tm_window));
+			terminal->windows[i]->physical_window->physical_window = NULL;
+
+			terminal->windows[i]->physical_window->buffer = realloc(temp_physical_window_buffer, sizeof(Tm_char) * terminal->windows[i]->buffer_columns * terminal->windows[i]->buffer_rows);
+
+			if (terminal->windows[i]->physical_window->buffer == NULL) {
+				tm_set_return(terminal, TM_OUT_OF_MEM);
+				return;
+			}
+
+			memcpy(terminal->windows[i]->physical_window->buffer, terminal->windows[i]->buffer, sizeof(Tm_char) * terminal->windows[i]->buffer_columns * terminal->windows[i]->buffer_rows);
+			terminal->windows[i]->update = 0;
 		}
 
-		terminal_write_win_to_terminal(terminal->windows[i], parent_x, parent_y);
+		else {
+			parent = terminal->windows[i]->physical_window->parent;
 
+			while (parent != NULL) {
+				parent_x += parent->position_x;
+				parent_y += parent->position_y;
+
+				parent = parent->parent;
+			}
+		}
+		
+		terminal_write_win_to_terminal(terminal->windows[i]->physical_window, parent_x, parent_y);
+		
 		parent_x = 0;
 		parent_y = 0;
 	}

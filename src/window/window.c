@@ -30,6 +30,8 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	terminal->windows[terminal->window_amount - 1] = win;
 	}
 
+	win->update = 0;
+
 	win->buffer = NULL;
 
 	win->children = NULL;

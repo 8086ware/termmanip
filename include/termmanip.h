@@ -209,6 +209,8 @@ typedef struct Tm_window {
 	int input_timeout;
 
 	int wrapped_lines;
+
+	_Bool update;
 } Tm_window;
 
 Tm_terminal* tm_terminal();
