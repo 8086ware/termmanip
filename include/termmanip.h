@@ -197,7 +197,8 @@ typedef struct Tm_window {
 	int children_amount;
 
 	Tm_char* buffer;
-	Tm_char* physical_buffer;
+
+	struct Tm_window* physical_window;
 
 	Tm_char background_tm_char;
 	

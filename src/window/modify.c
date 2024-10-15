@@ -38,12 +38,6 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 	win->columns = columns;
 	win->rows = rows;
 
-	win->physical_buffer = realloc(win->physical_buffer, sizeof(Tm_char) * win->columns * win->rows);
-
-	if (win->physical_buffer == NULL) {
-		tm_set_return(win->terminal, TM_OUT_OF_MEM);
-		return TM_ERROR;
-	}
 
 	if(resize_buffer) {
 		win->buffer_columns = columns;
