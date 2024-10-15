@@ -18,8 +18,6 @@ int terminal_resize(Tm_terminal* terminal) {
 		return TM_ERROR;
 	}
 
-	terminal_append_output(terminal, "\x1b[2J");
-	
 	Tm_char clear_ch;
 
 	clear_ch.disp = ' ';
@@ -30,8 +28,7 @@ int terminal_resize(Tm_terminal* terminal) {
 #endif
 
 	memset(terminal->physical_buffer, &clear_ch, sizeof(Tm_char) * terminal->columns * terminal->rows);
-
-	tm_terminal_update(terminal);
+	memset(terminal->buffer, &clear_ch, sizeof(Tm_char) * terminal->columns * terminal->rows);
 
 	return 0;
 }
