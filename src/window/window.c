@@ -72,7 +72,6 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	win->buffer_rows = win->rows;
 
 	win->buffer = malloc(sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
-	win->physical_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
 	if(win->buffer == NULL) {
 		tm_set_return(terminal, TM_OUT_OF_MEM);
@@ -81,10 +80,6 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 	tm_win_background(win, ' ', 0);
-
-	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->physical_buffer[i] = tm_win_get_background(win);
-	}
 
 	tm_win_clear(win);
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 1);
@@ -157,8 +152,9 @@ int tm_win_free(Tm_window* win) {
 		tm_win_free(win->children[0]);
 	}
 
-	free(win->physical_buffer);
-	win->physical_buffer = NULL;
+	free(win->physical_window->buffer);
+	free(win->physical_window);
+
 	free(win->children);
 	win->children = NULL;
 	free(win->buffer);
