@@ -1,5 +1,6 @@
 #include "terminal.h"
 #include "termmanip.h"
+#include "return.h"
 #include <stdlib.h>
 
 int terminal_resize(Tm_terminal* terminal) {
@@ -11,6 +12,11 @@ int terminal_resize(Tm_terminal* terminal) {
 
 	terminal->buffer = realloc(terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
 	terminal->physical_buffer = realloc(terminal->physical_buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
+
+	if (terminal->buffer == NULL || terminal->physical_buffer == NULL) {
+		tm_set_return(terminal, TM_OUT_OF_MEM);
+		return TM_ERROR;
+	}
 
 	terminal_append_output(terminal, "\x1b[2J");
 	
