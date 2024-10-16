@@ -3,7 +3,7 @@
 
 int tm_win_update(Tm_window* win) {
 	tm_win_mark_for_update(win);
-	tm_terminal_update(win->terminal);
+	return tm_terminal_update(win->terminal);
 }
 
 void tm_win_mark_for_update(Tm_window* win) {
