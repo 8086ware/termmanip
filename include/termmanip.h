@@ -278,6 +278,6 @@ void tm_win_input_timeout(Tm_window* win, int timeout); // Set the input timeout
 void tm_win_child_select(Tm_window* win, Tm_input* input);
 
 int tm_win_update(Tm_window* win);
-int tm_win_mark_for_update(Tm_window* win);
+void tm_win_mark_for_update(Tm_window* win);
 
 #endif
