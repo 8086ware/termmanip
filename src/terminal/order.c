@@ -1,7 +1,7 @@
 #include "termmanip.h"
 #include "terminal.h"
 
-int terminal_win_order_topmost(Tm_window* win) {
+void terminal_win_order_topmost(Tm_window* win) {
 	int win_id = 0;
 	for (int i = 0; i < win->terminal->window_amount; i++) {
 		if (win == win->terminal->windows[i]) {
