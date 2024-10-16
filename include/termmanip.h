@@ -169,6 +169,9 @@ typedef struct {
 	int tm_return_number;
 	
 	Tm_window* last_updated_window;
+
+	Tm_window** windows;
+	int window_amount;
 } Tm_terminal;
 
 // Tm_window structure is a very important structure. It has the position x and y of the window, the columns and rows, the cursor position, its parent and children (if it has any),
@@ -194,7 +197,8 @@ typedef struct Tm_window {
 	int children_amount;
 
 	Tm_char* buffer;
-	Tm_char* physical_buffer;
+
+	struct Tm_window* physical_window;
 
 	Tm_char background_tm_char;
 	
@@ -203,6 +207,10 @@ typedef struct Tm_window {
 	enum Tm_attrib attrib;
 
 	int input_timeout;
+
+	int wrapped_lines;
+
+	_Bool update;
 } Tm_window;
 
 Tm_terminal* tm_terminal();
@@ -233,9 +241,7 @@ Tm_char tm_win_get_background(Tm_window* win);
 
 int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool resize_buffer); // Modifies a windows x, y, columns and rows
 
-void tm_win_write_to_terminal(Tm_window* win); // Writes the window to the terminal structure but doesn't display to the actual terminal
-void tm_terminal_update(Tm_terminal* terminal); // Puts the internal terminal onto the terminal
-void tm_win_update(Tm_window* win); // Updates a window by using tm_win_write_to_terminal and tm_terminal_update
+int tm_terminal_update(Tm_terminal* terminal); // Puts the internal terminal onto the terminal
 
 int tm_win_putch(Tm_window* win, char ch, uint32_t attrib); // Put a char at x, y and an attribute
 int tm_win_puts(Tm_window * win, char* str, uint32_t attrib); // Put a string at x, y and an attribute
@@ -270,4 +276,8 @@ void tm_set_title(char* text); // Set the terminal title
 void tm_win_input_timeout(Tm_window* win, int timeout); // Set the input timeout
 														
 void tm_win_child_select(Tm_window* win, Tm_input* input);
+
+int tm_win_update(Tm_window* win);
+int tm_win_mark_for_update(Tm_window* win);
+
 #endif

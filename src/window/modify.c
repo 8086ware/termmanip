@@ -32,26 +32,12 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 		rows -= scr_y - (y + rows);
 	}
 
-	// Save flags and turn them all off when modifying the window, for example TM_FLAG_BORDER which needs to be removed when modifying a window
-
-	int flags = win->flags;
-
-	tm_win_flags(win, TM_ATTRIB_ALL, 0);
-
-	update_terminal_flags(win);
-
 	win->position_x = x;
 	win->position_y = y;
 
 	win->columns = columns;
 	win->rows = rows;
 
-	win->physical_buffer = realloc(win->physical_buffer, sizeof(Tm_char) * win->columns * win->rows);
-
-	if (win->physical_buffer == NULL) {
-		tm_set_return(win->terminal, TM_OUT_OF_MEM);
-		return TM_ERROR;
-	}
 
 	if(resize_buffer) {
 		win->buffer_columns = columns;
@@ -79,11 +65,6 @@ int tm_win_modify(Tm_window* win, int x, int y, int columns, int rows, _Bool res
 			tm_win_scroll(win, (win->buffer_position_y + rows) - win->buffer_rows, TM_SCROLL_DOWN);
 		}
 	}
-
-	// Turn all the flags previously had on and update the terminal flags
-	tm_win_flags(win, flags, 1);
-
-	update_terminal_flags(win);
 
 	return 0;
 }

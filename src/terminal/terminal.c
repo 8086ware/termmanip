@@ -20,6 +20,9 @@ Tm_terminal* tm_terminal() {
 		return NULL;
 	}
 
+	terminal->windows = NULL;
+	terminal->window_amount = 0;
+
 	terminal->columns = scr_columns;
 	terminal->rows = scr_rows;
 
@@ -115,12 +118,13 @@ Tm_terminal* tm_terminal() {
 #endif
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
-#ifdef _WIN32
-	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-#endif
+
 	write(fileno(stdout), init, strlen(init));
 
 	terminal->last_updated_window = NULL;
+#ifdef _WIN32
+	FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+#endif
 	return terminal;
 }
 
@@ -148,6 +152,7 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal->physical_buffer);
+	free(terminal->windows);
 
 	free(terminal);
 

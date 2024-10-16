@@ -14,6 +14,24 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	win->terminal = terminal;
 
+	if (terminal != NULL) {
+		Tm_window** windows_temp = NULL;
+		windows_temp = realloc(terminal->windows, sizeof(Tm_window*) * (terminal->window_amount + 1));
+
+		if (windows_temp == NULL) {
+			tm_set_return(terminal, TM_OUT_OF_MEM);
+			return (struct Tm_window*)TM_ERROR;
+		}
+
+		terminal->windows = windows_temp;
+
+		terminal->window_amount++;
+
+		terminal->windows[terminal->window_amount - 1] = win;
+	}
+
+	win->update = 0;
+
 	win->buffer = NULL;
 
 	win->children = NULL;
@@ -54,21 +72,18 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	win->buffer_columns = win->columns;
 	win->buffer_rows = win->rows;
+	
+	win->wrapped_lines = 0;
 
 	win->buffer = malloc(sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
-	win->physical_buffer = malloc(sizeof(Tm_char) * win->columns * win->rows);
 
-	if(win->buffer == NULL || win->physical_buffer == NULL) {
+	if(win->buffer == NULL) {
 		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return (struct Tm_window*)TM_ERROR;
 	}
 
 	tm_win_attrib(win, TM_ATTRIB_ALL, 0);
 	tm_win_background(win, ' ', 0);
-
-	for(int i = 0; i < win->columns * win->rows; i++) {
-		win->physical_buffer[i] = tm_win_get_background(win);
-	}
 
 	tm_win_clear(win);
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 1);
@@ -80,6 +95,26 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 	if(parent != NULL) {
 		tm_win_parent(parent, win, child_type);
 	}
+
+	win->physical_window = malloc(sizeof(Tm_window));
+
+	if (win->physical_window == NULL) {
+		tm_set_return(terminal, TM_OUT_OF_MEM);
+		return (struct Tm_window*)TM_ERROR;
+	}
+
+	memcpy(win->physical_window, win, sizeof(Tm_window));
+
+	win->physical_window->physical_window = NULL;
+
+	win->physical_window->buffer = malloc(sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
+
+	if (win->physical_window->buffer == NULL) {
+		tm_set_return(terminal, TM_OUT_OF_MEM);
+		return (struct Tm_window*)TM_ERROR;
+	}
+
+	memcpy(win->physical_window->buffer, win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
 	return win;
 }
@@ -120,9 +155,10 @@ int tm_win_free(Tm_window* win) {
 	for(int i = 0; i < total_child_window_amount; i++) {
 		tm_win_free(win->children[0]);
 	}
+	
+	free(win->physical_window->buffer);
+	free(win->physical_window);
 
-	free(win->physical_buffer);
-	win->physical_buffer = NULL;
 	free(win->children);
 	win->children = NULL;
 	free(win->buffer);
