@@ -27,8 +27,11 @@ int terminal_resize(Tm_terminal* terminal) {
 	terminal->flags |= TM_FLAG_CURSOR_VISIBLE; // On windows cursor becomes visible when resizing window
 #endif
 
-	memset(terminal->physical_buffer, &clear_ch, sizeof(Tm_char) * terminal->columns * terminal->rows);
-	memset(terminal->buffer, &clear_ch, sizeof(Tm_char) * terminal->columns * terminal->rows);
+	terminal_append_output(terminal, "\x1b[2J");
+
+	for(int i = 0; i < terminal->columns * terminal->rows; i++) {
+		terminal->physical_buffer[i] = clear_ch;
+	}
 
 	return 0;
 }
