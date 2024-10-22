@@ -137,5 +137,6 @@ int tm_terminal_update(Tm_terminal* terminal) {
 	terminal->output = NULL;
 
 	memcpy(terminal->physical_buffer, terminal->buffer, sizeof(Tm_char) * terminal->columns * terminal->rows);
+	return 0;
 }
 
