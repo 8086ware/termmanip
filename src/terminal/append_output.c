@@ -7,13 +7,17 @@
 #include "return.h"
 
 int terminal_append_output(Tm_terminal* terminal, char* fmt, ...) {
-	va_list args;
-	va_start(args, fmt);
-	char* buffer = malloc(strlen(fmt) + 2048);
-	vsprintf(buffer, fmt, args);
+	va_list args_len;
+	va_list args_output;
 
-	va_end(args);
-	int len = strlen(buffer);
+	va_start(args_len, fmt);
+	va_copy(args_output, args_len);
+
+	int len = vsnprintf(NULL, 0, fmt, args_len);
+
+	va_end(args_len);
+
+	len++; // Include null terminator because vsnprintf
 
 	terminal->output = realloc(terminal->output, terminal->output_len + len);
 
@@ -22,13 +26,11 @@ int terminal_append_output(Tm_terminal* terminal, char* fmt, ...) {
 		return TM_ERROR;
 	}
 
-	for(int i = 0; i < len; i++) {
-		terminal->output[terminal->output_len + i] = buffer[i];
-	}
+	vsnprintf(&terminal->output[terminal->output_len], len, fmt, args_output);
 
-	terminal->output_len += len;
-	free(buffer);
+	va_end(args_output);
 
+	terminal->output_len += len - 1; // Negative 1 because we will overwrite the added null terminator next call
 	return 0;
 }
 
