@@ -56,6 +56,24 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 	}
 
 	else {
+		// If the cursor is in an incorrect position and the scroll flag isnt on then correct it
+
+		if(win->cursor_x > tm_win_get_buffer_columns(win) - 1) {
+			win->cursor_x = tm_win_get_buffer_columns(win) - 1;
+		}
+
+		else if(win->cursor_x < 0) {
+			win->cursor_x = 0;
+		}
+
+		if(win->cursor_y > tm_win_get_buffer_rows(win) - 1) {
+			win->cursor_y = tm_win_get_buffer_rows(win) - 1;
+		}
+
+		else if(win->cursor_y < 0) {
+			win->cursor_y = 0;
+		}
+
 		// Print the character
 
 		win->cursor_x++;
@@ -70,18 +88,6 @@ int tm_win_putch(Tm_window* win, char ch, uint32_t attrib) {
 
 	if(win->cursor_x < 0) {
 		win->cursor_x = 0;
-	}
-
-	// If the cursor is in an incorrect position and the scroll flag isnt on then correct it
-
-	if((win->flags & TM_FLAG_SCROLL) == 0) {
-		if(win->cursor_x > tm_win_get_buffer_columns(win) - 1) {
-			win->cursor_x = tm_win_get_buffer_columns(win) - 1;
-		}
-
-		if(win->cursor_y > tm_win_get_buffer_rows(win) - 1) {
-			win->cursor_y = tm_win_get_buffer_rows(win) - 1;
-		}
 	}
 
 	return ret;
