@@ -94,13 +94,21 @@ Tm_terminal* tm_terminal() {
 
 #else 
 	struct termios term;
-	tcgetattr(fileno(stdin), &term);
+
+	if(tcgetattr(fileno(stdin), &term) == -1) {
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
+		return NULL;
+	}
+
 	terminal->og_term = term;
 
 	term.c_lflag &= ~ECHO;
 	term.c_lflag &= ~ICANON;
 
-	tcsetattr(fileno(stdin), TCSANOW, &term);
+	if(tcsetattr(fileno(stdin), TCSANOW, &term) == -1) {
+		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
+		return NULL;
+	}
 #endif
 
 #ifndef _WIN32
