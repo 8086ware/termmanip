@@ -16,7 +16,7 @@ int main(void) {
 
 	tm_win_flags(win, TM_FLAG_BORDER, 1);
 
-	while(1) {
+	for(int i = 0; i < 1000; i++) {
 		tm_win_attrib(win, TM_ATTRIB_BG_MAGENTA, 1);
 		tm_win_cursor(win, 1, 0);
 		tm_win_print(win, "Termmanip Color Test");
