@@ -175,7 +175,7 @@ int tm_win_free(Tm_window* win) {
 	int total_child_window_amount = win->children_amount;
 
 	for(int i = 0; i < total_child_window_amount; i++) {
-		tm_win_free(win->children[0]);
+		tm_win_free(win->children[0]); // Keep freeing children as they all fall into the first index of the array 
 	}
 	
 	free(win->physical_window->buffer);
