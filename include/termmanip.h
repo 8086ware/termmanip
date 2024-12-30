@@ -80,7 +80,7 @@ enum Tm_scroll {
 
 // Window flags
 
-enum Tm_window_flags {
+enum Tm_flags {
 	TM_FLAG_ECHO =           0b0000000000000010, 
 	TM_FLAG_CURSOR_VISIBLE = 0b0000000000000100,
 	TM_FLAG_SCROLL =         0b0000000000001000, 
@@ -202,7 +202,7 @@ typedef struct Tm_window {
 
 	Tm_char background_tm_char;
 	
-	enum Tm_window_flags flags;
+	enum Tm_flags flags;
 
 	enum Tm_attrib attrib;
 
