@@ -65,7 +65,7 @@ Tm_input tm_win_input(Tm_window* win) {
 				ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE), &buffer, 1, &bytes_read);
 
 				if(buffer.EventType == KEY_EVENT) {
-					if(buffer.Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) {
+					if(buffer.Event.KeyEvent.uChar.AsciiChar == TM_KEY_ESC) { // Is this an escape sequence?
 						while(bytes_read != 0) {
 							GetNumberOfConsoleInputEvents(GetStdHandle(STD_INPUT_HANDLE), &bytes_read);
 
@@ -83,7 +83,7 @@ Tm_input tm_win_input(Tm_window* win) {
 						read_input = 1;
 					}
 
-					else {
+					else { // If not, just read the input normally
 						if(buffer.Event.KeyEvent.bKeyDown) {
 							input.key = buffer.Event.KeyEvent.uChar.AsciiChar;
 							if(input.key != 0) {
@@ -169,6 +169,9 @@ Tm_input tm_win_input(Tm_window* win) {
 #endif
 		} while(!read_input);
 	}
+
+	// Is the key a control character?
+
 	if((input.key < 32 && input.key > 0) || input.key == 127) {
 		input.ctrl_character = input.key;
 
@@ -176,7 +179,9 @@ Tm_input tm_win_input(Tm_window* win) {
 			input.key = TM_KEY_QUESTION;
 		}
 
-		input.key += 64;
+		else {
+			input.key += 64; // Convert control character to letter 
+		}
 
 		input.ctrl_down = 1;
 	}
