@@ -150,6 +150,28 @@ int tm_win_free(Tm_window* win) {
 		win->parent->children_amount--;
 	}
 
+	int win_terminal_id = 0;
+
+	for (int i = 0; i < win->terminal->window_amount; i++) {
+		if (win->terminal->windows[i] == win) {
+			i = win_terminal_id;
+			break;
+		}
+	}
+
+	for (int i = win_terminal_id; i < win->terminal->window_amount - 1; i++) {
+		win->terminal->windows[i] = win->terminal->windows[i + 1];
+	}
+
+	win->terminal->windows = realloc(win->terminal->windows, sizeof(Tm_window*) * win->terminal->window_amount - 1);
+
+	if (win->terminal->windows == NULL) {
+		tm_set_return(win->terminal, TM_OUT_OF_MEM);
+		return TM_ERROR;
+	}
+
+	win->terminal->window_amount--;
+
 	int total_child_window_amount = win->children_amount;
 
 	for(int i = 0; i < total_child_window_amount; i++) {
