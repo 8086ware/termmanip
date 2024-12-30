@@ -249,7 +249,7 @@ int tm_win_print(Tm_window* win, char* fmt, ...); // Print at current window cur
 
 int tm_win_cursor(Tm_window* win, int x, int y); // Set window cursor position
 
-int tm_win_parent(Tm_window* parent, Tm_window* child, enum Tm_child_type type); // Make child be a child to parent window
+int tm_win_parent(Tm_window* parent, Tm_window* child); // Make child be a child to parent window
 
 void tm_win_fill(Tm_window* win, int from_x, int from_y, int to_x, int to_y, char ch, uint32_t attrib); // Fill from from_x, from_y to to_x, to_y with ch and attrib
 
