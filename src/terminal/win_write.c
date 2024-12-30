@@ -83,6 +83,7 @@ void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y) 
 		
 			// Write the buffer to the physical buffer depending on how many lines that were wrapped previously
 			// For example, if row 0 wrapped once, then write row 1 on row 2, row 2 on row 3 etc
+			// Then we check again
 
 			for(int x = win->buffer_position_x; x < win->buffer_columns; x++) {
 				if(((y + win->wrapped_lines) - win->buffer_position_y) * win->columns + (x - win->buffer_position_x) < win->columns * win->rows) {
