@@ -123,6 +123,7 @@ int tm_terminal_update(Tm_terminal* terminal) {
 
 	terminal_make_output(terminal);
 
+	// Is the actual cursor on the terminal screen (the last written character) matching to the inner structure terminal cursor
 	if(terminal->last_updated_x + 1 != terminal->cursor_x || terminal->last_updated_y != terminal->cursor_y) {
 		terminal_append_output(terminal, "\x1b[%d;%dH", terminal->cursor_y + 1, terminal->cursor_x + 1);
 
