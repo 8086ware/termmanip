@@ -128,7 +128,7 @@ int tm_win_free(Tm_window* win) {
 
 	int win_parent_child_id = 0;
 
-	if(win->child_type != TM_CHILD_NONE) {
+	if(win->parent != NULL) {
 		for(int i = 0; i < win->parent->children_amount; i++) {
 			if(win->parent->children[i] == win) {
 				i = win_parent_child_id;
