@@ -8,10 +8,10 @@ enum Tm_return {TM_INVALID_CURSOR = 1, TM_INVALID_WINDOW_SIZE = 4, TM_OUT_OF_MEM
 
 // Child window types
 
-enum Tm_child_type {
-	TM_CHILD_NONE, 
-	TM_CHILD_NORMAL,
-	TM_CHILD_BUTTON,
+enum Tm_window_type {
+	TM_WIN_NONE, 
+	TM_WIN_BUTTON,
+	TM_WIN_DIALOG,
 };
 
 // Tm_char attributes
@@ -192,7 +192,7 @@ typedef struct Tm_window {
 	struct Tm_window* parent;
 	struct Tm_window** children;
 
-	enum Tm_child_type child_type;
+	enum Tm_window_type type;
 
 	int children_amount;
 
