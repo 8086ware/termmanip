@@ -160,6 +160,11 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	free(terminal->buffer);
 	free(terminal->output);
 	free(terminal->physical_buffer);
+
+	for (int i = 0; i < terminal->window_amount; i++) {
+		tm_win_free(terminal->windows[i]);
+	}
+
 	free(terminal->windows);
 
 	free(terminal);
