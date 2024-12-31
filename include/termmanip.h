@@ -137,7 +137,7 @@ typedef struct {
 	int mouse_x;
 	int mouse_y;
 
-	_Bool child_window_selected;
+	Tm_window* win_selected;
 } Tm_input;
 
 // Tm_input structure holds input information returned by tm_win_input
