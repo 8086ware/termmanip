@@ -210,6 +210,8 @@ typedef struct Tm_window {
 	int wrapped_lines;
 
 	_Bool update;
+
+	_Bool selectable;
 } Tm_window;
 
 Tm_terminal* tm_terminal();
