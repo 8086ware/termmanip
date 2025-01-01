@@ -218,7 +218,7 @@ Tm_terminal* tm_terminal();
 int tm_terminal_free(Tm_terminal* terminal);
 // Create and free terminals
 
-Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_child_type child_type); // Creates new window
+Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_window_type type, int extra_arg_count, ...); // Creates new window
 int tm_win_free(Tm_window* win); // Frees and deletes a window
 
 void tm_get_termsize(int* x, int* y); // Gets the terminal size
@@ -276,8 +276,6 @@ void tm_set_title(char* text); // Set the terminal title
 
 void tm_win_input_timeout(Tm_window* win, int timeout); // Set the input timeout
 														
-void tm_win_child_select(Tm_window* win, Tm_input* input);
-
 int tm_win_update(Tm_window* win);
 void tm_win_mark_for_update(Tm_window* win);
 

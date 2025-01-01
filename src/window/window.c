@@ -4,7 +4,7 @@
 #include "return.h"
 #include <string.h>
 
-Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_child_type child_type) {
+Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_window_type type, int extra_arg_count, ...) {
 	Tm_window* win = malloc(sizeof(Tm_window));
 
 	if(win == NULL) {

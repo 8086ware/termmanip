@@ -29,7 +29,6 @@ set(TERMMANIP_SOURCES
 	src/title.c 
 	src/window/timeout.c 
 	src/window/process_esc_input.c 
-	src/window/child_select.c 
 	src/terminal/win_write.c
 	src/window/update.c 
 	src/terminal/order.c
