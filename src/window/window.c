@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "return.h"
 #include <string.h>
+#include <stdarg.h>
 
 Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int columns, int rows, Tm_window* parent, enum Tm_window_type type, int extra_arg_count, ...) {
 	Tm_window* win = malloc(sizeof(Tm_window));
@@ -11,6 +12,9 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 		tm_set_return(terminal, TM_OUT_OF_MEM);
 		return NULL;
 	}
+
+	va_list list;
+	va_start(list, extra_arg_count);
 
 	win->terminal = terminal;
 
