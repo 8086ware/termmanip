@@ -7,7 +7,7 @@ int main(void) {
 	tm_get_termsize(&scr_x, &scr_y);
 	scr_x -= 2;
 	scr_y -= 2;
-	Tm_window* win = tm_window(terminal, "window", 1, 1, scr_x, scr_y, NULL, TM_CHILD_NONE);
+	Tm_window* win = tm_window(terminal, "window", 1, 1, scr_x, scr_y, NULL, TM_WIN_NONE, 0);
 	
 	tm_set_title("Termmanip Test");
 	tm_win_flags(win, TM_FLAG_ECHO | TM_FLAG_CURSOR_VISIBLE, 0);

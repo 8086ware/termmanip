@@ -11,7 +11,7 @@ int main(void) {
 	int term_cols, term_rows;
 	tm_get_termsize(&term_cols, &term_rows);
 
-	Tm_window* win = tm_window(terminal, "test", 0, 0, term_cols, term_rows, NULL, TM_CHILD_NONE);
+	Tm_window* win = tm_window(terminal, "test", 0, 0, term_cols, term_rows, NULL, TM_WIN_NONE, 0);
 
 	if(win == NULL) {
 		return 1;
