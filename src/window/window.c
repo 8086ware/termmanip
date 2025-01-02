@@ -117,6 +117,46 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	memcpy(win->physical_window->buffer, win->buffer, sizeof(Tm_char) * win->buffer_columns * win->buffer_rows);
 
+	int dialog_x = 0;
+	int dialog_y = 0;
+
+	int dialog_length_x = 0;
+	int dialog_length_y = 0;
+
+	switch(type) {
+		case TM_WIN_BUTTON:
+			tm_win_cursor(win, win->columns / 2 - win->name_length / 2, win->rows / 2);
+			tm_win_print(win, "%s", win->name);
+			tm_win_flags(win, TM_FLAG_BORDER | TM_FLAG_WINDOW_SELECT, 1);
+			win->selectable = 1;
+			break;
+		case TM_WIN_DIALOG:
+			tm_win_print(win, "%s", win->name);
+
+			dialog_length_x = win->columns / extra_arg_count;
+			dialog_length_y = win->rows / 2;
+
+			dialog_y = win->rows - dialog_length_y - 1;
+
+			for (int i = 0; i < extra_arg_count; i++) {
+				char* arg = va_arg(list, char*);
+
+				Tm_window* button = tm_window(terminal, arg, dialog_x + 1, dialog_y, dialog_length_x - 2, dialog_length_y, win, TM_WIN_BUTTON, 0);
+				tm_win_flags(button, TM_FLAG_BORDER, 1);
+				dialog_x += dialog_length_x;
+			}
+
+			tm_win_flags(win, TM_FLAG_BORDER | TM_FLAG_WINDOW_SELECT, 1);
+
+			win->selectable = 0;
+			break;
+		default:
+			win->selectable = 0;
+			break;
+	}
+
+	va_end(list);
+
 	return win;
 }
 
