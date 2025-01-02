@@ -78,7 +78,6 @@ Tm_input tm_win_input(Tm_window* win) {
 								}
 							}
 						}
-
 						escape_input[escape_s_amount] = '\0';
 						process_esc_input(&input, escape_input);
 						read_input = 1;
@@ -248,8 +247,6 @@ void tm_win_input_str(Tm_window* win, char* str, int max_size) {
 
 				continue;
 			}
-
-
 
 			if(tm_win_print(win, "%c", t.key) != TM_ERROR) {
 				if(i <= max_size) {

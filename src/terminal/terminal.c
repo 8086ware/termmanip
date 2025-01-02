@@ -168,11 +168,8 @@ int tm_terminal_free(Tm_terminal* terminal) {
 	}
 
 	free(terminal->windows);
-
 	free(terminal);
 
 	terminal = NULL;
-
-
 	return 0;
 }
