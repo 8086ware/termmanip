@@ -30,7 +30,7 @@ Tm_input tm_win_input(Tm_window* win) {
 		win->terminal->resized = 0;
 	}
 
-	char escape_input[120];
+	char escape_input[4096];
 	int escape_s_amount = 0;
 
 	int remaining_time = win->input_timeout;
