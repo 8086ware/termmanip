@@ -44,7 +44,7 @@ Tm_window* tm_window(Tm_terminal* terminal, char* name, int x, int y, int column
 
 	win->parent = NULL;
 
-	win->child_type = TM_CHILD_NONE;
+	win->type = type;
 
 	win->name = malloc(strlen(name) + 1);
 
