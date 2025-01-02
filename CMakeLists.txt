@@ -32,6 +32,7 @@ set(TERMMANIP_SOURCES
 	src/terminal/win_write.c
 	src/window/update.c 
 	src/terminal/order.c
+	src/terminal/win_select.c
 )
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})

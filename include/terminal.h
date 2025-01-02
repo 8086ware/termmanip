@@ -10,5 +10,6 @@ int terminal_append_output(Tm_terminal* terminal, char* fmt, ...);
 int terminal_resize(Tm_terminal* terminal);
 void terminal_write_win_to_terminal(Tm_window* win, int parent_x, int parent_y); // Writes the window to the terminal structure but doesn't display to the actual terminal
 void terminal_win_order_topmost(Tm_window* win);
+int terminal_win_select(Tm_terminal* terminal, Tm_input* input);
 
 #endif
