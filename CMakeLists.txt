@@ -58,3 +58,7 @@ add_test(scroll test_scroll)
 add_executable(test_modify test/modify.c)
 target_link_libraries(test_modify termmanip)
 add_test(modify test_modify)
+
+add_executable(test_dialogselect test/dialog_select.c)
+target_link_libraries(test_dialogselect termmanip)
+add_test(dialogselect test_dialogselect)
