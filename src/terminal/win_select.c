@@ -114,9 +114,10 @@ int terminal_win_select(Tm_terminal* terminal, Tm_input* input) {
 
 			if (terminal->windows[terminal->selected_window_id]->parent->type == TM_WIN_DIALOG) {
 				tm_win_free(terminal->windows[terminal->selected_window_id]->parent);
-				finished = 1;
 				terminal->selected_window_id = -1;
 			}
+
+			finished = 1;
 		}
 	}
 
