@@ -4,6 +4,7 @@
 #include "terminal.h"
 #include "process_esc_input.h"
 #include <time.h>
+#include "terminal.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -196,8 +197,14 @@ Tm_input tm_win_input(Tm_window* win) {
 		}
 	}
 
-	if(win->flags & TM_FLAG_CHILD_SELECT) {
-		tm_win_child_select(win, &input);
+	int finished = 0;
+
+	if (win->flags & TM_FLAG_WINDOW_SELECT) {
+		finished = terminal_win_select(win->terminal, &input);
+	}
+
+	if (!finished && win->type == TM_WIN_DIALOG) {
+		tm_win_input(win);
 	}
 
 	return input;
