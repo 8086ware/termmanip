@@ -20,6 +20,8 @@ Tm_terminal* tm_terminal() {
 		return NULL;
 	}
 
+	terminal->selected_window_id = -1;
+
 	terminal->windows = NULL;
 	terminal->window_amount = 0;
 
