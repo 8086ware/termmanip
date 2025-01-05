@@ -1,5 +1,6 @@
 #include "termmanip.h"
 #include "terminal.h"
+#include <stdlib.h>
 
 int terminal_win_select(Tm_terminal* terminal, Tm_input* input) {
 	int prev_selected_window_id = terminal->selected_window_id;
