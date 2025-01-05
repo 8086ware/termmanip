@@ -269,7 +269,7 @@ int tm_return(Tm_terminal* terminal); // Return the most recent error
 
 int tm_win_scroll(Tm_window* win, int amount, enum Tm_scroll direction); // Scroll window in certain direction. If no space is available, the window buffer extends itself.
 
-enum Tm_window_flags tm_win_get_flags(Tm_window* win); // Returns the windows flags
+enum Tm_flags tm_win_get_flags(Tm_window* win); // Returns the windows flags
 void tm_win_flags(Tm_window* win, uint16_t flags, int state); // Adjusts the windows flags turning them on or off (can be combined with OR)
 
 void tm_set_title(char* text); // Set the terminal title

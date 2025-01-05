@@ -281,6 +281,6 @@ enum Tm_attrib tm_win_get_attrib(Tm_window* win) {
 	return win->attrib;
 }
 
-enum Tm_window_flags tm_win_get_flags(Tm_window* win) {
+enum Tm_flags tm_win_get_flags(Tm_window* win) {
 	return win->flags;
 }
