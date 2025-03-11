@@ -4,6 +4,10 @@ project(termmanip LANGUAGES C VERSION 0.5.1 DESCRIPTION "A FOSS library that ena
 
 include(CTest)
 
+set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE)
+
+include(CPack)
+
 set(TERMMANIP_SOURCES 
 	src/terminal/makeoutput.c
 	src/terminal/terminal_size.c 
