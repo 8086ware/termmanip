@@ -131,7 +131,7 @@ int tm_terminal_update(Tm_terminal* terminal) {
 		terminal->last_updated_y = terminal->cursor_y;
 	}
 
-	write(fileno(stdout), terminal->output, terminal->output_len);
+	fwrite(terminal->output, sizeof(char), terminal->output_len, stdout);
 
 	free(terminal->output);
 	terminal->output_len = 0;

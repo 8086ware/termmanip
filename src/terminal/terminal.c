@@ -129,7 +129,7 @@ Tm_terminal* tm_terminal() {
 
 	char init[] = "\x1b[?1049h\x1b[2J\x1b[H\x1b[0m";
 
-	write(fileno(stdout), init, strlen(init));
+	fwrite(init, sizeof(char), strlen(init), stdout);
 
 	terminal->last_updated_window = NULL;
 #ifdef _WIN32
@@ -141,7 +141,7 @@ Tm_terminal* tm_terminal() {
 int tm_terminal_free(Tm_terminal* terminal) {
 	char exit[] = "\x1b[0m\x1b(B\x1b[?25h\x1b[?1049l\x1b[?1003l\x1b[?1006l";
 
-	write(fileno(stdout), exit, strlen(exit));
+	fwrite(exit, sizeof(char), strlen(exit), stdout);
 #ifdef _WIN32
 	if(SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), terminal->og_output_mode) == 0) {
 		tm_set_return(terminal, TM_COULDNT_INIT_TERM);
