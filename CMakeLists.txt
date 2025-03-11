@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(termmanip)
+project(termmanip LANGUAGES C VERSION 0.5.1 DESCRIPTION "A FOSS library that enables you to make TUIs and manipulate the text on your terminal on POSIX and windows systems")
 
 include(CTest)
 
