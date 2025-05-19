@@ -41,10 +41,21 @@ set(TERMMANIP_SOURCES
 
 add_library(termmanip STATIC ${TERMMANIP_SOURCES})
 
-target_include_directories(termmanip PUBLIC include)
+target_include_directories(termmanip PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 
-install(TARGETS termmanip DESTINATION lib)
+install(TARGETS termmanip EXPORT termmanipTargets DESTINATION lib)
 install(FILES include/termmanip.h DESTINATION include)
+
+install(EXPORT termmanipTargets FILE termmanipTargets.cmake DESTINATION lib/cmake/termmanip)
+
+include(CMakePackageConfigHelpers)
+
+configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/Config.cmake.in termmanipConfig.cmake INSTALL_DESTINATION lib/cmake/termmanip)
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/termmanipConfigVersion.cmake VERSION ${termmanip_VERSION_MAJOR}.${termmanip_VERSION_MINOR} COMPATIBILITY AnyNewerVersion)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/termmanipConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/termmanipConfigVersion.cmake DESTINATION lib/cmake/termmanip)
+
+export(PACKAGE termmanip)
 
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	target_compile_options(termmanip PUBLIC -Wall -fsanitize=address)
