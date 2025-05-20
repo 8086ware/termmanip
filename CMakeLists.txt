@@ -55,8 +55,6 @@ write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/termmanipConfigVers
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/termmanipConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/termmanipConfigVersion.cmake DESTINATION lib/cmake/termmanip)
 
-export(PACKAGE termmanip)
-
 if(CMAKE_BUILD_TYPE MATCHES Debug)
 	target_compile_options(termmanip PUBLIC -Wall -fsanitize=address)
 	target_link_options(termmanip PUBLIC -Wall -fsanitize=address)
